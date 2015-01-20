@@ -1,0 +1,23 @@
+sudo:
+  false
+
+language:
+  php
+
+php:
+  - 5.5
+  - 5.6
+  - 7
+  - hhvm
+
+before_script:
+  - composer self-update
+  - composer install --no-interaction --prefer-source
+
+script:
+  - test "5.5" == "${TRAVIS_PHP_VERSION}" && vendor/bin/phpcs --standard=PSR2 library || echo
+  - test "5.5" == "${TRAVIS_PHP_VERSION}" && vendor/bin/phpmd library text cleancode,codesize,controversial,design,naming,unusedcode || echo
+  - vendor/bin/phpunit
+
+notifications:
+  email: false
