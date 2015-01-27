@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Respect\Validation</title>
+
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/highlight.tomorrow-night.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://respect.github.io/Validation/">
+                Respect\Validation
+                <small class="hidden-xs hidden-sm">
+                    The most awesome validation engine ever created for PHP
+                </small>
+            </a>
+
+                            <a href="https://github.com/Respect/Validation">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                                                    <p class="text-muted">
+                                Table of contents
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation//">
+                                            Home
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/contributing.html">
+                                            Contributing
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/index.html">
+                                            Feature Guide
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/install.html">
+                                            Installation
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/license.html">
+                                            License
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/validators.html">
+                                            Validators
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        
+                    </nav>
+
+                
+                <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1>Feature Guide</h1>
+<h2>Namespace Import</h2>
+<p>Respect\Validation is namespaced, but you can make your life easier by importing
+a single class into your context:</p>
+<pre><code class="language-php">use Respect\Validation\Validator as v;</code></pre>
+<h2>Simple Validation</h2>
+<p>The Hello World validator is something like this:</p>
+<pre><code class="language-php">$number = 123;
+v::numeric()-&gt;validate($number); //true</code></pre>
+<h2>Chained Validation</h2>
+<p>It is possible to use validators in a chain. Sample below validates a string
+containing numbers and letters, no whitespace and length between 1 and 15.</p>
+<pre><code class="language-php">$usernameValidator = v::alnum()-&gt;noWhitespace()-&gt;length(1,15);
+$usernameValidator-&gt;validate('alganet'); //true</code></pre>
+<h2>Validating Object Attributes</h2>
+<p>Given this simple object:</p>
+<pre><code class="language-php">$user = new stdClass;
+$user-&gt;name = 'Alexandre';
+$user-&gt;birthdate = '1987-07-01';</code></pre>
+<p>Is possible to validate its attributes in a single chain:</p>
+<pre><code class="language-php">$userValidator = v::attribute('name', v::string()-&gt;length(1,32))
+                  -&gt;attribute('birthdate', v::date()-&gt;minimumAge(18));
+
+$userValidator-&gt;validate($user); //true</code></pre>
+<p>Validating array keys is also possible using <code>v::key()</code></p>
+<p>Note that we used <code>v::string()</code> and <code>v::date()</code> in the beginning of the validator.
+Although is not mandatory, it is a good practice to use the type of the
+validated object as the first node in the chain.</p>
+<h2>Input optional</h2>
+<p>All validators treat input as optional and will accept empty string input as valid,
+unless otherwise stated in the documentation.</p>
+<p>We use the <code>v:notEmpty()</code> validator prefixed to disallow empty input and effectively
+define the field as mandatory as input will be required or validation will fail.</p>
+<pre><code class="language-php">v::string()-&gt;notEmpty()-&gt;validate(''); //false input required</code></pre>
+<h2>Negating Rules</h2>
+<p>You can use the <code>v::not()</code> to negate any rule:</p>
+<pre><code class="language-php">v::not(v::int())-&gt;validate(10); //false, input must not be integer</code></pre>
+<h2>Validator Reuse</h2>
+<p>Once created, you can reuse your validator anywhere. Remember $usernameValidator?</p>
+<pre><code class="language-php">$usernameValidator-&gt;validate('respect');            //true
+$usernameValidator-&gt;validate('alexandre gaigalas'); //false
+$usernameValidator-&gt;validate('#$%');                //false</code></pre>
+<h2>Exception Types</h2>
+<ul>
+<li><code>Repect\Validation\Exceptions\ExceptionInterface</code>:
+<ul>
+<li>All exceptions implement this interface;</li>
+</ul></li>
+<li><code>Respect\Validation\Exceptions\ValidationExceptionInterface</code>:
+<ul>
+<li>Extends the <code>Repect\Validation\Exceptions\ExceptionInterface</code> interface</li>
+<li>Use when calling <code>check()</code></li>
+<li>All validation exceptions implement this interface</li>
+<li>Interface has one method: <code>getMainMessage()</code></li>
+</ul></li>
+<li><code>Respect\Validation\Exceptions\NestedValidationExceptionInterface</code>:
+<ul>
+<li>Extends the <code>Respect\Validation\Exceptions\ValidationExceptionInterface</code> interface</li>
+<li>Use when calling <code>assert()</code></li>
+<li>Interface has three methods: <code>getFullMessage()</code>, <code>findMessages()</code>, and <code>getMainMessage()</code>.</li>
+</ul></li>
+</ul>
+<h2>Informative Exceptions</h2>
+<p>When something goes wrong, Validation can tell you exactly what's going on. For this,
+we use the <code>assert()</code> method instead of <code>validate()</code>:</p>
+<pre><code class="language-php">use Respect\Validation\Exceptions\NestedValidationExceptionInterface
+
+try {
+    $usernameValidator-&gt;assert('really messed up screen#name');
+} catch(NestedValidationExceptionInterface $exception) {
+   echo $exception-&gt;getFullMessage();
+}</code></pre>
+<p>The printed message is exactly this, as a text tree:</p>
+<pre><code>\-All of the 3 required rules must pass
+  |-"really messed up screen#name" must contain only letters (a-z) and digits (0-9)
+  |-"really messed up screen#name" must not contain whitespace
+  \-"really messed up screen#name" must have a length between 1 and 15</code></pre>
+<h2>Getting Messages</h2>
+<p>The text tree is fine, but unusable on a HTML form or something more custom. You can use
+<code>findMessages()</code> for that:</p>
+<pre><code class="language-php">use Respect\Validation\Exceptions\NestedValidationExceptionInterface
+
+try {
+    $usernameValidator-&gt;assert('really messed up screen#name');
+} catch(NestedValidationExceptionInterface $exception) {
+    var_dump($exception-&gt;findMessages(array('alnum', 'length', 'noWhitespace')));
+}</code></pre>
+<p><code>findMessages()</code> returns an array with messages from the requested validators.</p>
+<h2>Custom Messages</h2>
+<p>Getting messages as an array is fine, but sometimes you need to customize them in order
+to present them to the user. This is possible using the <code>findMessages()</code> method as well:</p>
+<pre><code class="language-php">$errors = $exception-&gt;findMessages(array(
+    'alnum'        =&gt; '{{name}} must contain only letters and digits',
+    'length'       =&gt; '{{name}} must not have more than 15 chars',
+    'noWhitespace' =&gt; '{{name}} cannot contain spaces'
+));</code></pre>
+<p>For all messages, the <code>{{name}}</code> and <code>{{input}}</code> variable is available for templates.</p>
+<h2>Custom Rules</h2>
+<p>You also can use your own rules:</p>
+<pre><code class="language-php">v::with('My\\Validation\\Rules\\');
+v::myRule(); // Try to load "My\Validation\Rules\MyRule" if any</code></pre>
+<p>By default <code>with()</code> appends the given prefix, but you can change this behavior
+in order to overwrite default rules:</p>
+<pre><code class="language-php">v::with('My\\Validation\\Rules\\', true);
+v::alnum(); // Try to use "My\Validation\Rules\Alnum" if any</code></pre>
+<h2>Validator Name</h2>
+<p>On <code>v::attribute()</code> and <code>v::key()</code>, <code>{{name}}</code> is the attribute/key name. For others,
+is the same as the input. You can customize a validator name using:</p>
+<pre><code class="language-php">v::date('Y-m-d')-&gt;between('1980-02-02', 'now')-&gt;setName('Member Since');</code></pre>
+<h2>Zend/Symfony Validators</h2>
+<p>It is also possible to reuse validators from other frameworks if they are installed:</p>
+<pre><code class="language-php">$hostnameValidator = v::zend('Hostname')-&gt;assert('google.com');
+$timeValidator     = v::sf('Time')-&gt;assert('22:00:01');</code></pre>
+<h2>Validation Methods</h2>
+<p>We've seen <code>validate()</code> that returns true or false and <code>assert()</code> that throws a complete
+validation report. There is also a <code>check()</code> method that returns an Exception
+only with the first error found:</p>
+<pre><code class="language-php">use Respect\Validation\Exceptions\ValidationExceptionInterface
+
+try {
+    $usernameValidator-&gt;check('really messed up screen#name');
+} catch(ValidationExceptionInterface $exception) {
+    echo $exception-&gt;getMainMessage();
+}</code></pre>
+<p>Message:</p>
+<pre><code>"really messed up screen#name" must contain only letters (a-z) and digits (0-9)</code></pre>
+<p>See also:</p>
+<ul>
+<li><a href="../contributing.html">Contributing</a></li>
+<li><a href="install.html">Installation</a></li>
+<li><a href="../license.html">License</a></li>
+<li><a href="validators.html">Validators</a></li>
+</ul>
+                </section>
+
+            </div>
+        </main>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

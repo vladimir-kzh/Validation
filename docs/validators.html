@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Respect\Validation</title>
+
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/highlight.tomorrow-night.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://respect.github.io/Validation/">
+                Respect\Validation
+                <small class="hidden-xs hidden-sm">
+                    The most awesome validation engine ever created for PHP
+                </small>
+            </a>
+
+                            <a href="https://github.com/Respect/Validation">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                                                    <p class="text-muted">
+                                Table of contents
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation//">
+                                            Home
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/contributing.html">
+                                            Contributing
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/index.html">
+                                            Feature Guide
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/install.html">
+                                            Installation
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/license.html">
+                                            License
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/validators.html">
+                                            Validators
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        
+                    </nav>
+
+                
+                <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1>Validators</h1>
+<h2>Types</h2>
+<ul>
+<li><a href="arr.html">Arr</a></li>
+<li><a href="bool.html">Bool</a></li>
+<li><a href="date.html">Date</a></li>
+<li><a href="false.html">False</a></li>
+<li><a href="float.html">Float</a></li>
+<li><a href="instance.html">Instance</a></li>
+<li><a href="int.html">Int</a></li>
+<li><a href="nullvalue.html">NullValue</a></li>
+<li><a href="numeric.html">Numeric</a></li>
+<li><a href="object.html">Object</a></li>
+<li><a href="string.html">String</a></li>
+<li><a href="true.html">True</a></li>
+<li><a href="type.html">Type</a></li>
+<li><a href="xdigit.html">Xdigit</a></li>
+</ul>
+<h2>Generics</h2>
+<ul>
+<li><a href="alwaysinvalid.html">AlwaysInvalid</a></li>
+<li><a href="alwaysvalid.html">AlwaysValid</a></li>
+<li><a href="call.html">Call</a></li>
+<li><a href="callback.html">Callback</a></li>
+<li><a href="filtervar.html">FilterVar</a></li>
+<li><a href="not.html">Not</a></li>
+<li><a href="type.html">Type</a></li>
+<li><a href="when.html">When</a></li>
+</ul>
+<h2>Comparing Values</h2>
+<ul>
+<li><a href="between.html">Between</a></li>
+<li><a href="equals.html">Equals</a></li>
+<li><a href="max.html">Max</a></li>
+<li><a href="min.html">Min</a></li>
+</ul>
+<h2>Numeric</h2>
+<ul>
+<li><a href="between.html">Between</a></li>
+<li><a href="bool.html">Bool</a></li>
+<li><a href="even.html">Even</a></li>
+<li><a href="float.html">Float</a></li>
+<li><a href="int.html">Int</a></li>
+<li><a href="multiple.html">Multiple</a></li>
+<li><a href="negative.html">Negative</a></li>
+<li><a href="notempty.html">NotEmpty</a></li>
+<li><a href="numeric.html">Numeric</a></li>
+<li><a href="odd.html">Odd</a></li>
+<li><a href="perfectsquare.html">PerfectSquare</a></li>
+<li><a href="positive.html">Positive</a></li>
+<li><a href="primenumber.html">PrimeNumber</a></li>
+<li><a href="roman.html">Roman</a></li>
+<li><a href="xdigit.html">Xdigit</a></li>
+</ul>
+<h2>String</h2>
+<ul>
+<li><a href="alnum.html">Alnum</a></li>
+<li><a href="alpha.html">Alpha</a></li>
+<li><a href="between.html">Between</a></li>
+<li><a href="charset.html">Charset</a></li>
+<li><a href="cntrl.html">Cntrl</a></li>
+<li><a href="consonant.html">Consonant</a></li>
+<li><a href="contains.html">Contains</a></li>
+<li><a href="digit.html">Digit</a></li>
+<li><a href="endswith.html">EndsWith</a></li>
+<li><a href="graph.html">Graph</a></li>
+<li><a href="in.html">In</a></li>
+<li><a href="length.html">Length</a></li>
+<li><a href="lowercase.html">Lowercase</a></li>
+<li><a href="notempty.html">NotEmpty</a></li>
+<li><a href="nowhitespace.html">NoWhitespace</a></li>
+<li><a href="prnt.html">Prnt</a></li>
+<li><a href="punct.html">Punct</a></li>
+<li><a href="regex.html">Regex</a></li>
+<li><a href="slug.html">Slug</a></li>
+<li><a href="space.html">Space</a></li>
+<li><a href="startswith.html">StartsWith</a></li>
+<li><a href="uppercase.html">Uppercase</a></li>
+<li><a href="version.html">Version</a></li>
+<li><a href="vowel.html">Vowel</a></li>
+<li><a href="xdigit.html">Xdigit</a></li>
+</ul>
+<h2>Arrays</h2>
+<ul>
+<li><a href="arr.html">Arr</a></li>
+<li><a href="contains.html">Contains</a></li>
+<li><a href="each.html">Each</a></li>
+<li><a href="endswith.html">EndsWith</a></li>
+<li><a href="in.html">In</a></li>
+<li><a href="key.html">Key</a></li>
+<li><a href="length.html">Length</a></li>
+<li><a href="notempty.html">NotEmpty</a></li>
+<li><a href="startswith.html">StartsWith</a></li>
+</ul>
+<h2>Objects</h2>
+<ul>
+<li><a href="attribute.html">Attribute</a></li>
+<li><a href="instance.html">Instance</a></li>
+<li><a href="length.html">Length</a></li>
+</ul>
+<h2>Date and Time</h2>
+<ul>
+<li><a href="between.html">Between</a></li>
+<li><a href="date.html">Date</a></li>
+<li><a href="leapdate.html">LeapDate</a></li>
+<li><a href="leapyear.html">LeapYear</a></li>
+<li><a href="minimumage.html">MinimumAge</a></li>
+</ul>
+<h2>Group Validators</h2>
+<ul>
+<li><a href="allof.html">AllOf</a></li>
+<li><a href="noneof.html">NoneOf</a></li>
+<li><a href="oneof.html">OneOf</a></li>
+</ul>
+<h2>Regional</h2>
+<ul>
+<li><a href="countrycode.html">CountryCode</a></li>
+<li><a href="postalcode.html">PostalCode</a></li>
+<li><a href="tld.html">Tld</a></li>
+</ul>
+<h2>Files</h2>
+<ul>
+<li><a href="directory.html">Directory</a></li>
+<li><a href="executable.html">Executable</a></li>
+<li><a href="exists.html">Exists</a></li>
+<li><a href="file.html">File</a></li>
+<li><a href="readable.html">Readable</a></li>
+<li><a href="symboliclink.html">SymbolicLink</a></li>
+<li><a href="uploaded.html">Uploaded</a></li>
+<li><a href="writable.html">Writable</a></li>
+</ul>
+<h2>Banking</h2>
+<ul>
+<li><a href="bank.html">Bank</a></li>
+<li><a href="bankaccount.html">BankAccount</a></li>
+<li><a href="bic.html">Bic</a></li>
+</ul>
+<h2>Other</h2>
+<ul>
+<li><a href="cnh.html">Cnh</a></li>
+<li><a href="cnpj.html">Cnpj</a></li>
+<li><a href="cpf.html">Cpf</a></li>
+<li><a href="domain.html">Domain</a></li>
+<li><a href="email.html">Email</a></li>
+<li><a href="hexrgbcolor.html">HexRgbColor</a></li>
+<li><a href="ip.html">Ip</a></li>
+<li><a href="json.html">Json</a></li>
+<li><a href="macaddress.html">MacAddress</a></li>
+<li><a href="nfeaccesskey.html">NfeAccessKey</a></li>
+<li><a href="phone.html">Phone</a></li>
+<li><a href="sf.html">Sf</a></li>
+<li><a href="url.html">Url</a></li>
+<li><a href="zend.html">Zend</a></li>
+</ul>
+<h2>Yes/No</h2>
+<ul>
+<li><a href="no.html">No</a></li>
+<li><a href="yes.html">Yes</a></li>
+</ul>
+<h2>Alphabetically</h2>
+<ul>
+<li><a href="allof.html">AllOf</a></li>
+<li><a href="alnum.html">Alnum</a></li>
+<li><a href="alpha.html">Alpha</a></li>
+<li><a href="alwaysinvalid.html">AlwaysInvalid</a></li>
+<li><a href="alwaysvalid.html">AlwaysValid</a></li>
+<li><a href="arr.html">Arr</a></li>
+<li><a href="attribute.html">Attribute</a></li>
+<li><a href="bank.html">Bank</a></li>
+<li><a href="bankaccount.html">BankAccount</a></li>
+<li><a href="between.html">Between</a></li>
+<li><a href="bic.html">Bic</a></li>
+<li><a href="bool.html">Bool</a></li>
+<li><a href="call.html">Call</a></li>
+<li><a href="callback.html">Callback</a></li>
+<li><a href="charset.html">Charset</a></li>
+<li><a href="cnh.html">Cnh</a></li>
+<li><a href="cnpj.html">Cnpj</a></li>
+<li><a href="cntrl.html">Cntrl</a></li>
+<li><a href="consonant.html">Consonant</a></li>
+<li><a href="contains.html">Contains</a></li>
+<li><a href="countrycode.html">CountryCode</a></li>
+<li><a href="cpf.html">Cpf</a></li>
+<li><a href="creditcard.html">CreditCard</a></li>
+<li><a href="date.html">Date</a></li>
+<li><a href="digit.html">Digit</a></li>
+<li><a href="directory.html">Directory</a></li>
+<li><a href="domain.html">Domain</a></li>
+<li><a href="each.html">Each</a></li>
+<li><a href="email.html">Email</a></li>
+<li><a href="endswith.html">EndsWith</a></li>
+<li><a href="equals.html">Equals</a></li>
+<li><a href="even.html">Even</a></li>
+<li><a href="executable.html">Executable</a></li>
+<li><a href="exists.html">Exists</a></li>
+<li><a href="false.html">False</a></li>
+<li><a href="file.html">File</a></li>
+<li><a href="filtervar.html">FilterVar</a></li>
+<li><a href="float.html">Float</a></li>
+<li><a href="graph.html">Graph</a></li>
+<li><a href="hexrgbcolor.html">HexRgbColor</a></li>
+<li><a href="in.html">In</a></li>
+<li><a href="instance.html">Instance</a></li>
+<li><a href="int.html">Int</a></li>
+<li><a href="ip.html">Ip</a></li>
+<li><a href="json.html">Json</a></li>
+<li><a href="key.html">Key</a></li>
+<li><a href="leapdate.html">LeapDate</a></li>
+<li><a href="leapyear.html">LeapYear</a></li>
+<li><a href="length.html">Length</a></li>
+<li><a href="lowercase.html">Lowercase</a></li>
+<li><a href="macaddress.html">MacAddress</a></li>
+<li><a href="max.html">Max</a></li>
+<li><a href="min.html">Min</a></li>
+<li><a href="minimumage.html">MinimumAge</a></li>
+<li><a href="multiple.html">Multiple</a></li>
+<li><a href="negative.html">Negative</a></li>
+<li><a href="nfeaccesskey.html">NfeAccessKey</a></li>
+<li><a href="no.html">No</a></li>
+<li><a href="nowhitespace.html">NoWhitespace</a></li>
+<li><a href="noneof.html">NoneOf</a></li>
+<li><a href="not.html">Not</a></li>
+<li><a href="notempty.html">NotEmpty</a></li>
+<li><a href="nullvalue.html">NullValue</a></li>
+<li><a href="numeric.html">Numeric</a></li>
+<li><a href="object.html">Object</a></li>
+<li><a href="odd.html">Odd</a></li>
+<li><a href="oneof.html">OneOf</a></li>
+<li><a href="perfectsquare.html">PerfectSquare</a></li>
+<li><a href="phone.html">Phone</a></li>
+<li><a href="positive.html">Positive</a></li>
+<li><a href="postalcode.html">PostalCode</a></li>
+<li><a href="primenumber.html">PrimeNumber</a></li>
+<li><a href="prnt.html">Prnt</a></li>
+<li><a href="punct.html">Punct</a></li>
+<li><a href="readable.html">Readable</a></li>
+<li><a href="regex.html">Regex</a></li>
+<li><a href="roman.html">Roman</a></li>
+<li><a href="sf.html">Sf</a></li>
+<li><a href="slug.html">Slug</a></li>
+<li><a href="space.html">Space</a></li>
+<li><a href="startswith.html">StartsWith</a></li>
+<li><a href="string.html">String</a></li>
+<li><a href="symboliclink.html">SymbolicLink</a></li>
+<li><a href="tld.html">Tld</a></li>
+<li><a href="true.html">True</a></li>
+<li><a href="type.html">Type</a></li>
+<li><a href="uploaded.html">Uploaded</a></li>
+<li><a href="uppercase.html">Uppercase</a></li>
+<li><a href="url.html">Url</a></li>
+<li><a href="version.html">Version</a></li>
+<li><a href="vowel.html">Vowel</a></li>
+<li><a href="when.html">When</a></li>
+<li><a href="writable.html">Writable</a></li>
+<li><a href="xdigit.html">Xdigit</a></li>
+<li><a href="yes.html">Yes</a></li>
+<li><a href="zend.html">Zend</a></li>
+</ul>
+<p>See also:</p>
+<ul>
+<li><a href="../contributing.html">Contributing</a></li>
+<li><a href="index.html">Feature Guide</a></li>
+<li><a href="install.html">Installation</a></li>
+<li><a href="../license.html">License</a></li>
+</ul>
+                </section>
+
+            </div>
+        </main>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

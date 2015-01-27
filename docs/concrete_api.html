@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Respect\Validation</title>
+
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/highlight.tomorrow-night.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://respect.github.io/Validation/">
+                Respect\Validation
+                <small class="hidden-xs hidden-sm">
+                    The most awesome validation engine ever created for PHP
+                </small>
+            </a>
+
+                            <a href="https://github.com/Respect/Validation">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                                                    <p class="text-muted">
+                                Table of contents
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation//">
+                                            Home
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/contributing.html">
+                                            Contributing
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/index.html">
+                                            Feature Guide
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/install.html">
+                                            Installation
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/license.html">
+                                            License
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/validators.html">
+                                            Validators
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        
+                    </nav>
+
+                
+                <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1>Concrete API</h1>
+<p>There are many micro-frameworks that rely on magic methods. We don't. In this
+document we're gonna explore the Respect\Validation API without fluent interfaces
+or magic methods. We'll use a traditional dependency injection approach.</p>
+<pre><code class="language-php">use Respect\Validation\Validator as v;
+
+$usernameValidator = v::alnum()-&gt;noWhitespace()-&gt;length(1,15);
+$usernameValidator-&gt;validate('alganet'); //true</code></pre>
+<p>If you <code>var_dump($usernameValidator)</code>, you'll see a composite of objects with
+<code>Respect\Validation\Rules\Alnum</code>, <code>Respect\Validation\Rules\NoWhitespace</code> and
+<code>Respect\Validation\Rules\Length</code>. There is a specific object for each rule, and
+the chain only builds the structure. You can build it by yourself:</p>
+<pre><code class="language-php">use Respect\Validation\Rules;
+
+$usernameValidator = new Rules\AllOf(
+    new Rules\Alnum(),
+    new Rules\NoWhitespace(),
+    new Rules\Length(1, 15)
+);
+$usernameValidator-&gt;validate('alganet'); //true</code></pre>
+<p>This is still a very lean API. You can use it in any dependency injection
+container or test it in the way you want. Nesting is still possible:</p>
+<pre><code class="language-php">use Respect\Validation\Rules;
+
+$usernameValidator = new Rules\AllOf(
+    new Rules\Alnum(),
+    new Rules\NoWhitespace(),
+    new Rules\Length(1, 15)
+);
+$userValidator = new Rules\Key('name', $usernameValidator);
+$userValidator-&gt;validate(['name' =&gt; 'alganet']); //true</code></pre>
+<h2>How It Works?</h2>
+<p>The Respect\Validation chain is an
+<a href="http://martinfowler.com/bliki/InternalDslStyle.html">internal DSL</a>.
+It acts in the creational realm of objects (where Abstract Factories and Builders
+live), and it's only job is to make rule construction terse and fluent.</p>
+<h2>FAQ</h2>
+<blockquote>
+<p>Is <code>v</code> in <code>v::something</code> a class name?</p>
+</blockquote>
+<p>No! The class is <code>Respect\Validation\Validator</code>, we suggest <code>v</code> as a very short alias.</p>
+<blockquote>
+<p>Is <code>v::something()</code> a static call?</p>
+</blockquote>
+<p>Yes. Just like the default <code>DateTime::createFromFormat()</code> or
+<code>Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration()</code>. It builds
+something complex and returns for you.</p>
+<blockquote>
+<p>I really don't like static calls, can I avoid it?</p>
+</blockquote>
+<p>Yes. Just use <code>$validator = new Validator();</code> each time you want a new validator,
+and continue from there.</p>
+<blockquote>
+<p>Do you have a static method for each rule?</p>
+</blockquote>
+<p>No. We use <code>__callStatic()</code>.</p>
+<blockquote>
+<p>Magic methods are slow! Why do you use them?</p>
+</blockquote>
+<p>They're optional. If you use the <code>new</code> interface, they won't be called.</p>
+<p>(still, do some benchmarks, you'd be surprised with our implementation).</p>
+                </section>
+
+            </div>
+        </main>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

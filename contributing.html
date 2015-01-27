@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Respect\Validation</title>
+
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/highlight.tomorrow-night.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://respect.github.io/Validation/">
+                Respect\Validation
+                <small class="hidden-xs hidden-sm">
+                    The most awesome validation engine ever created for PHP
+                </small>
+            </a>
+
+                            <a href="https://github.com/Respect/Validation">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                                                    <p class="text-muted">
+                                Table of contents
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation//">
+                                            Home
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/contributing.html">
+                                            Contributing
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/index.html">
+                                            Feature Guide
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/install.html">
+                                            Installation
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/license.html">
+                                            License
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/validators.html">
+                                            Validators
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        
+                    </nav>
+
+                
+                <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1>Contributing</h1>
+<p>Contributions to Respect\Validation are always welcome. You make our lives
+easier by sending us your contributions through
+<a href="http://help.github.com/pull-requests">GitHub pull requests</a>.</p>
+<p>Pull requests for bug fixes must be based on the current stable branch whereas
+pull requests for new features must be based on <code>master</code>.</p>
+<p>Due to time constraints, we are not always able to respond as quickly as we
+would like. Please do not take delays personal and feel free to remind us here,
+on IRC, or on Gitter if you feel that we forgot to respond.</p>
+<p>Please see the <a href="http://respect.github.io/Validation">project documentation</a>
+before proceeding. You should also know about <a href="http://www.php-fig.org">PHP-FIG</a>'s
+standards and basic unit testing, but we're sure you can learn that just by
+looking at other rules. Pick the simple ones like <code>Int</code> to begin.</p>
+<p>Before writing anything, make sure there is no validator that already does what
+you need. Also, it would be awesome if you
+<a href="http://github.com/Respect/Validation/issues">open an issue</a> before starting,
+so if anyone has the same idea the guy will see that you're already doing that.</p>
+<h2>Adding a new validator</h2>
+<p>A common validator (rule) on Respect\Validation is composed of three classes:</p>
+<ul>
+<li><code>library/Rules/YourRuleName.php</code>: the rule itself</li>
+<li><code>library/Exceptions/YourRuleNameException.php</code>: the exception thrown by the rule</li>
+<li><code>tests/Rules/YourRuleNameTest.php</code>: tests for the rule</li>
+</ul>
+<p>Classes are pretty straightforward. In the sample below, we're going to create a
+validator that validates if a string is equal &quot;Hello World&quot;.</p>
+<h2>Samples</h2>
+<p>The rule itself needs to implement the <code>Validatable</code> interface.
+Also, it is convenient to extend the <code>AbstractRule</code>.
+Doing that, you'll only need to declare one method: <code>validate($input)</code>.
+This method must return <code>true</code> or <code>false</code>.</p>
+<p>If your validator class is <code>HelloWorld</code>, it will be available as <code>v::helloWorld()</code>
+and will natively have support for chaining and everything else.</p>
+<pre><code class="language-php">namespace Respect\Validation\Rules;
+
+class HelloWorld extends AbstractRule
+{
+    public function validate($input)
+    {
+        return $input === 'Hello World';
+    }
+}</code></pre>
+<p>Just that and we're done with the rule code. The Exception requires you to
+declare messages used by <code>assert()</code> and <code>check()</code>. Messages are declared in
+affirmative and negative moods, so if anyone calls <code>v::not(v::helloWorld())</code> the
+library will show the appropriate message.</p>
+<pre><code class="language-php">namespace Respect\Validation\Exceptions;
+
+class HelloWorldException extends ValidationException
+{
+    public static $defaultTemplates = array(
+        self::MODE_DEFAULT =&gt; array(
+            self::STANDARD =&gt; '{{name}} must be a Hello World',
+        ),
+        self::MODE_NEGATIVE =&gt; array(
+            self::STANDARD =&gt; '{{name}} must not be a Hello World',
+        )
+    );
+}</code></pre>
+<p>Finally, we need to test if everything is running smooth:</p>
+<pre><code class="language-php">namespace Respect\Validation\Rules;
+
+class HelloWorldTest extends \PHPUnit_Framework_TestCase
+{
+    public function testShouldValidateAValidHelloWorld()
+    {
+        $rule = new HelloWorld();
+
+        $this-&gt;assertTrue($rule-&gt;validate('Hello World'));
+    }
+
+    public function testNotValidateAnInvalidHelloWorld()
+    {
+        $rule = new HelloWorld();
+
+        $this-&gt;assertFalse($rule-&gt;validate('Hello Moon'));
+    }
+
+    /**
+     * @expectedException Respect\Validation\Exceptions\HelloWorldException
+     * @expectedExceptionMessage "Hello Mars" must be a Hello World
+     */
+    public function testShouldThowsTheRightExceptionWhenChecking()
+    {
+        $rule = new HelloWorld();
+
+        $rule-&gt;check('Hello Mars');
+    }
+}</code></pre>
+<p>PS.: We strongly recommend you use <a href="https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers">Data Providers</a>.</p>
+<h2>Documentation</h2>
+<p>Our docs at <a href="http://respect.github.io/Validation">http://respect.github.io/Validation</a> are generated from our Markdown
+files using <a href="http://couscous.io/">Couscous</a>. Add your brand new rule there and
+everything will be updated as soon as possible.</p>
+<h2>Running Tests</h2>
+<p>After run <code>composer install</code> on the library's root directory you must run PHPUnit.</p>
+<h3>Linux</h3>
+<p>You can test the project using the commands:</p>
+<pre><code class="language-sh">$ vendor/bin/phpunit</code></pre>
+<h3>Windows</h3>
+<p>You can test the project using the commands:</p>
+<pre><code class="language-sh">&gt; vendor\bin\phpunit</code></pre>
+<p>No test should fail.</p>
+<p>You can tweak the PHPUnit's settings by copying <code>phpunit.xml.dist</code> to <code>phpunit.xml</code>
+and changing it according to your needs.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
