@@ -75,7 +75,7 @@
 
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1>Concrete API</h1>
+                    <h1 id="concrete-api">Concrete API</h1>
 <p>There are many micro-frameworks that rely on magic methods. We don't. In this
 document we're gonna explore the Respect\Validation API without fluent interfaces
 or magic methods. We'll use a traditional dependency injection approach.</p>
@@ -106,12 +106,12 @@ $usernameValidator = new Rules\AllOf(
 );
 $userValidator = new Rules\Key('name', $usernameValidator);
 $userValidator-&gt;validate(['name' =&gt; 'alganet']); //true</code></pre>
-<h2>How It Works?</h2>
+<h2 id="how-it-works">How It Works?</h2>
 <p>The Respect\Validation chain is an
 <a href="http://martinfowler.com/bliki/InternalDslStyle.html">internal DSL</a>.
 It acts in the creational realm of objects (where Abstract Factories and Builders
 live), and it's only job is to make rule construction terse and fluent.</p>
-<h2>FAQ</h2>
+<h2 id="faq">FAQ</h2>
 <blockquote>
 <p>Is <code>v</code> in <code>v::something</code> a class name?</p>
 </blockquote>

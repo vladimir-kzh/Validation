@@ -75,7 +75,7 @@
 
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1>Contributing</h1>
+                    <h1 id="contributing">Contributing</h1>
 <p>Contributions to Respect\Validation are always welcome. You make our lives
 easier by sending us your contributions through
 <a href="http://help.github.com/pull-requests">GitHub pull requests</a>.</p>
@@ -92,7 +92,7 @@ looking at other rules. Pick the simple ones like <code>Int</code> to begin.</p>
 you need. Also, it would be awesome if you
 <a href="http://github.com/Respect/Validation/issues">open an issue</a> before starting,
 so if anyone has the same idea the guy will see that you're already doing that.</p>
-<h2>Adding a new validator</h2>
+<h2 id="adding-a-new-validator">Adding a new validator</h2>
 <p>A common validator (rule) on Respect\Validation is composed of three classes:</p>
 <ul>
 <li><code>library/Rules/YourRuleName.php</code>: the rule itself</li>
@@ -101,7 +101,7 @@ so if anyone has the same idea the guy will see that you're already doing that.<
 </ul>
 <p>Classes are pretty straightforward. In the sample below, we're going to create a
 validator that validates if a string is equal &quot;Hello World&quot;.</p>
-<h2>Samples</h2>
+<h2 id="samples">Samples</h2>
 <p>The rule itself needs to implement the <code>Validatable</code> interface.
 Also, it is convenient to extend the <code>AbstractRule</code>.
 Doing that, you'll only need to declare one method: <code>validate($input)</code>.
@@ -165,16 +165,16 @@ class HelloWorldTest extends \PHPUnit_Framework_TestCase
     }
 }</code></pre>
 <p>PS.: We strongly recommend you use <a href="https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers">Data Providers</a>.</p>
-<h2>Documentation</h2>
+<h2 id="documentation">Documentation</h2>
 <p>Our docs at <a href="http://respect.github.io/Validation">http://respect.github.io/Validation</a> are generated from our Markdown
 files using <a href="http://couscous.io/">Couscous</a>. Add your brand new rule there and
 everything will be updated as soon as possible.</p>
-<h2>Running Tests</h2>
+<h2 id="running-tests">Running Tests</h2>
 <p>After run <code>composer install</code> on the library's root directory you must run PHPUnit.</p>
-<h3>Linux</h3>
+<h3 id="linux">Linux</h3>
 <p>You can test the project using the commands:</p>
 <pre><code class="language-sh">$ vendor/bin/phpunit</code></pre>
-<h3>Windows</h3>
+<h3 id="windows">Windows</h3>
 <p>You can test the project using the commands:</p>
 <pre><code class="language-sh">&gt; vendor\bin\phpunit</code></pre>
 <p>No test should fail.</p>
