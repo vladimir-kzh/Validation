@@ -109,7 +109,7 @@ define the field as mandatory as input will be required or validation will fail.
 <p>You can use the <code>v::not()</code> to negate any rule:</p>
 <pre><code class="language-php">v::not(v::int())-&gt;validate(10); //false, input must not be integer</code></pre>
 <h2 id="validator-reuse">Validator Reuse</h2>
-<p>Once created, you can reuse your validator anywhere. Remember $usernameValidator?</p>
+<p>Once created, you can reuse your validator anywhere. Remember <code>$usernameValidator</code>?</p>
 <pre><code class="language-php">$usernameValidator-&gt;validate('respect');            //true
 $usernameValidator-&gt;validate('alexandre gaigalas'); //false
 $usernameValidator-&gt;validate('#$%');                //false</code></pre>
@@ -136,7 +136,7 @@ $usernameValidator-&gt;validate('#$%');                //false</code></pre>
 <h2 id="informative-exceptions">Informative Exceptions</h2>
 <p>When something goes wrong, Validation can tell you exactly what's going on. For this,
 we use the <code>assert()</code> method instead of <code>validate()</code>:</p>
-<pre><code class="language-php">use Respect\Validation\Exceptions\NestedValidationExceptionInterface
+<pre><code class="language-php">use Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 
 try {
     $usernameValidator-&gt;assert('really messed up screen#name');
@@ -144,14 +144,14 @@ try {
    echo $exception-&gt;getFullMessage();
 }</code></pre>
 <p>The printed message is exactly this, as a text tree:</p>
-<pre><code>\-All of the 3 required rules must pass
+<pre><code class="language-no-highlight">\-All of the 3 required rules must pass
   |-"really messed up screen#name" must contain only letters (a-z) and digits (0-9)
   |-"really messed up screen#name" must not contain whitespace
   \-"really messed up screen#name" must have a length between 1 and 15</code></pre>
 <h2 id="getting-messages">Getting Messages</h2>
 <p>The text tree is fine, but unusable on a HTML form or something more custom. You can use
 <code>findMessages()</code> for that:</p>
-<pre><code class="language-php">use Respect\Validation\Exceptions\NestedValidationExceptionInterface
+<pre><code class="language-php">use Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 
 try {
     $usernameValidator-&gt;assert('really messed up screen#name');
@@ -188,7 +188,7 @@ $timeValidator     = v::sf('Time')-&gt;assert('22:00:01');</code></pre>
 <p>We've seen <code>validate()</code> that returns true or false and <code>assert()</code> that throws a complete
 validation report. There is also a <code>check()</code> method that returns an Exception
 only with the first error found:</p>
-<pre><code class="language-php">use Respect\Validation\Exceptions\ValidationExceptionInterface
+<pre><code class="language-php">use Respect\Validation\Exceptions\ValidationExceptionInterface;
 
 try {
     $usernameValidator-&gt;check('really messed up screen#name');
@@ -196,7 +196,7 @@ try {
     echo $exception-&gt;getMainMessage();
 }</code></pre>
 <p>Message:</p>
-<pre><code>"really messed up screen#name" must contain only letters (a-z) and digits (0-9)</code></pre>
+<pre><code class="language-no-highlight">"really messed up screen#name" must contain only letters (a-z) and digits (0-9)</code></pre>
 <p>See also:</p>
 <ul>
 <li><a href="../contributing.html">Contributing</a></li>
