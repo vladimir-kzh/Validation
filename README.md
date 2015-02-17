@@ -1,9 +1,10 @@
----
-currentMenu: home
----
-# Couscous Dark template
+# RespectCouscous
 
-![](screenshot.png)
+The [Couscous](http://couscous.io) template for [Respect](http://respect.li) projects.
+
+## Screenshot
+
+![Screenshot](screenshot.png)
 
 ## Usage
 
@@ -11,7 +12,7 @@ To use the template, set it up in your `couscous.yml` configuration file:
 
 ```yaml
 template:
-    url: https://github.com/CouscousPHP/Template-Dark
+    url: https://github.com/Respect/RespectCouscous
 ```
 
 ## Configuration
@@ -45,11 +46,10 @@ menu:
                     # Or absolute urls
                     absoluteUrl: https://example.com
         other:
-            name: Other topics
             items:
 ```
 
-Note that the menu items can also contain HTML:
+Note that `name` in sections are optional and the menu items can also contain HTML:
 
 ```yaml
 home:
@@ -69,3 +69,15 @@ currentMenu: home
 
 # Welcome
 ```
+
+
+## Preview
+
+You can preview this template by checking out the repository and running `couscous preview`.
+
+## License
+
+See [LICENSE](LICENSE.md) file.
+
+This template is based on [Template-Basic](https://github.com/CouscousPHP/Template-Basic)
+and uses [Twitter Bootstrap](http://getbootstrap.com) and [highlight.js](https://highlightjs.org).

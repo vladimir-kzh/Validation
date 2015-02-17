@@ -6,9 +6,9 @@
 
         <title>Respect\Validation</title>
 
-        <link rel="stylesheet" href="http://respect.github.io/Validation/css/bootstrap.min.css">
-        <link rel="stylesheet" href="http://respect.github.io/Validation/css/font-awesome.min.css">
-        <link rel="stylesheet" href="http://respect.github.io/Validation/css/highlight.tomorrow-night.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
         <link rel="stylesheet" href="http://respect.github.io/Validation/css/main.css">
     </head>
     <body>
@@ -30,17 +30,13 @@
 
         <main class="container-fluid">
             <div class="row">
+                                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
 
-                
-                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
-
-                                                    <p class="text-muted">
-                                Table of contents
-                            </p>
-
+                        
+                            
                             <ul class="nav nav-pills nav-stacked">
                                                                     <li class="">
-                                        <a href="http://respect.github.io/Validation//">
+                                        <a href="http://respect.github.io/Validation/">
                                             Home
                                         </a>
                                     </li>
@@ -50,7 +46,7 @@
                                         </a>
                                     </li>
                                                                     <li class="">
-                                        <a href="http://respect.github.io/Validation/docs/index.html">
+                                        <a href="http://respect.github.io/Validation/docs/">
                                             Feature Guide
                                         </a>
                                     </li>
@@ -70,9 +66,9 @@
                                         </a>
                                     </li>
                                                             </ul>
+
                         
                     </nav>
-
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="false">False</h1>
@@ -90,22 +86,40 @@ v::false()-&gt;validate('no'); //true</code></pre>
 <ul>
 <li><a href="true.html">True</a></li>
 </ul>
+                    <div id="go-to-top">
+                        <p>&nbsp;</p>
+                        <hr />
+                        <p>
+                            <a class="btn btn-primary btn-sm" href="#" role="button">
+                                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                                Top
+                            </a>
+                        </p>
+                    </div>
                 </section>
-
             </div>
         </main>
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        <script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 
         <script>
             $(function() {
-                $("section>h1").wrap('<div class="page-header" />');
-                // Syntax highlighting
+                // Little tweak for <h1>
+                $("main > h1").wrap('<div class="page-header" />');
                 hljs.initHighlightingOnLoad();
+
+                var goToTop = $('#go-to-top');
+
+                $(window).scroll(function() {
+                    if($(window).scrollTop() + $(window).height() <= $(document).height() - 100) {
+                        return;
+                    }
+
+                    goToTop.fadeIn();
+                });
             });
         </script>
-
     </body>
 </html>
