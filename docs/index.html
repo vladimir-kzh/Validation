@@ -92,7 +92,7 @@ $user-&gt;name = 'Alexandre';
 $user-&gt;birthdate = '1987-07-01';</code></pre>
 <p>Is possible to validate its attributes in a single chain:</p>
 <pre><code class="language-php">$userValidator = v::attribute('name', v::string()-&gt;length(1,32))
-                  -&gt;attribute('birthdate', v::date()-&gt;minimumAge(18));
+                  -&gt;attribute('birthdate', v::date()-&gt;age(18));
 
 $userValidator-&gt;validate($user); //true</code></pre>
 <p>Validating array keys is also possible using <code>v::key()</code></p>
@@ -197,6 +197,7 @@ try {
 }</code></pre>
 <p>Message:</p>
 <pre><code class="language-no-highlight">"really messed up screen#name" must contain only letters (a-z) and digits (0-9)</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="../contributing.html">Contributing</a></li>
