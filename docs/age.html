@@ -71,18 +71,39 @@
                     </nav>
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="installation">Installation</h1>
-<p>Package is available on <a href="http://packagist.org/packages/respect/validation">Packagist</a>,
-you can install it using <a href="http://getcomposer.org">Composer</a>.</p>
-<pre><code class="language-shell">composer require respect/validation</code></pre>
-<p><a href="https://php.net">PHP</a> 5.3+ or <a href="http://hhvm.com">HHVM</a> 3.3+ are required.</p>
-<hr />
+                    <h1 id="age">Age</h1>
+<ul>
+<li><code>v::age(int $minAge)</code></li>
+<li><code>v::age(int $minAge, int $maxAge)</code></li>
+<li><code>v::age(null, int $maxAge)</code></li>
+</ul>
+<p>Validates ranges of years.</p>
+<p>The validated values can be any date value; internally they will be transformed
+into <a href="http://php.net/manual/en/class.datetime.php">DateTime</a> objects according
+to the defined locale settings.</p>
+<p>The examples below validate if the given dates are lower or equal to 18 years ago:</p>
+<pre><code class="language-php">v::age(18)-&gt;validate('17 years ago'); //false
+v::age(18)-&gt;validate('18 years ago'); //true
+v::age(18)-&gt;validate('19 years ago'); //true
+v::age(18)-&gt;validate('1970-01-01'); //true
+v::age(18)-&gt;validate('today'); //false</code></pre>
+<p>The examples below validate if the given dates are between 10 and 50 years ago:</p>
+<pre><code class="language-php">v::age(10, 50)-&gt;validate('9 years ago'); //false
+v::age(10, 50)-&gt;validate('10 years ago'); //true
+v::age(10, 50)-&gt;validate('30 years ago'); //true
+v::age(10, 50)-&gt;validate('50 years ago'); //true
+v::age(10, 50)-&gt;validate('51 years ago'); //false</code></pre>
+<p>The examples below validate if the given dates are greater than or equal to 70 years ago:</p>
+<pre><code class="language-php">v::age(null, 70)-&gt;validate('today'); //true
+v::age(null, 70)-&gt;validate('70 years ago'); //true
+v::age(null, 70)-&gt;validate('71 years ago'); //false</code></pre>
+<p>Message template for this validator includes <code>{{minAge}}</code> and <code>{{maxAge}}</code>.</p>
 <p>See also:</p>
 <ul>
-<li><a href="../contributing.html">Contributing</a></li>
-<li><a href="index.html">Feature Guide</a></li>
-<li><a href="../license.html">License</a></li>
-<li><a href="validators.html">Validators</a></li>
+<li><a href="between.html">Between</a></li>
+<li><a href="date.html">Date</a></li>
+<li><a href="max.html">Max</a></li>
+<li><a href="min.html">Min</a></li>
 </ul>
                     <div id="go-top">
                         <hr />
