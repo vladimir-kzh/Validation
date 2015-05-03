@@ -48,6 +48,8 @@ class DomainTest extends \PHPUnit_Framework_TestCase
             'domain with many dashes' => array('d-o-m-a-i-n.com'),
             'case insentive domain' => array('GoOgLe.CoM'),
             'two letter domain' => array('uk.gov'),
+            'domain with double dashes' => array('something--strange.uk'),
+            'domain with multiple dashes' => array('test---domain.com'),
         );
     }
 
@@ -92,6 +94,9 @@ class DomainTest extends \PHPUnit_Framework_TestCase
             'simple domain' => array('domain.local'),
             'subdmain' => array('sub.domain.local'),
             'domain starting with number' => array('1domain.dev'),
+            'hostname should be valid' => array('localhost'),
+            'hostname with dashes' => array('machine-name'),
+            'hostname with numbers' => array('web01'),
         );
     }
     /**
@@ -125,6 +130,12 @@ class DomainTest extends \PHPUnit_Framework_TestCase
             array('xn--bcher--kva.ch'),
             'Invalid IP address is not a valid domain' => array('1.2.3.256'),
             'Valid IP address is not a valiod domain' => array('1.2.3.4'),
+            'domain starting with a dash is invalid' => array('-not.com'),
+            'domain with spaces is invalid' => array('go google.com'),
+            'domain starting with space is invalid' => array(' google.com'),
+            'domain ending with multiple dashes is invalid' => array('google---.com'),
+            'URL is not a valid domain' => array('http://google.com'),
+            'TLD is not a valid domain' => array('.com')
         );
     }
 
