@@ -5,74 +5,131 @@ use Respect\Validation\Validator as v;
 
 class DomainTest extends \PHPUnit_Framework_TestCase
 {
-    protected $object;
+    protected $validator;
 
     protected function setUp()
     {
-        $this->object = new Domain;
+        $this->validator = new Domain;
     }
 
     /**
-     * @dataProvider providerForDomain
-     *
+     * @dataProvider provideValidDomainWithValidTld
      */
-    public function testValidDomainsShouldReturnTrue($input, $tldcheck=true)
+    public function testValidDomainWithValidTld($domain)
     {
-        $this->object->tldCheck($tldcheck);
-        $this->assertTrue($this->object->__invoke($input));
-        $this->assertTrue($this->object->assert($input));
-        $this->assertTrue($this->object->check($input));
+        $this->validator->tldCheck(true);
+
+        $this->assertTrue(
+            $this->validator->__invoke($domain),
+            'Validation with Callable interface.'
+        );
+        $this->assertTrue(
+            $this->validator->assert($domain),
+            'Validation with `assert` API.'
+        );
+        $this->assertTrue(
+            $this->validator->check($domain),
+            'Validation with `check` API.'
+        );
+    }
+
+    public function provideValidDomainWithValidTld()
+    {
+        return array(
+            'simple domain' => array('example.com'),
+            'domain with punycode' => array('xn--bcher-kva.ch'),
+            'subdomain on punycode domain' => array('mail.xn--bcher-kva.ch'),
+            'domain with hypjen' => array('example-hyphen.com'),
+            'one letter domain' => array('t.co'),
+            'subdomain with one letter domain' => array('dev.t.co'),
+            'org tld' => array('apache.org'),
+            'google' => array('google.com'),
+            'io tld' => array('git.io'),
+            'domain with many dashes' => array('d-o-m-a-i-n.com'),
+            'case insentive domain' => array('GoOgLe.CoM'),
+            'two letter domain' => array('uk.gov'),
+        );
     }
 
     /**
-     * @dataProvider providerForNotDomain
+     * @dataProvider provideValidDomainWithInvalidTld
+     */
+    public function testValidDomainsWithInvalidTldsWhenTldCheckIsEnabledFails($domain)
+    {
+        $this->validator->tldCheck(true);
+
+        $this->assertFalse(
+            $this->validator->validate($domain),
+            'Validation with `validate` API.'
+        );
+    }
+
+    /**
+     * @dataProvider provideValidDomainWithInvalidTld
+     */
+    public function testValidDomainWithoutTldCheck($domain)
+    {
+        $this->validator->tldCheck(false);
+
+        $this->assertTrue(
+            $this->validator->__invoke($domain),
+            'Validation with Callable interface.'
+        );
+        $this->assertTrue(
+            $this->validator->assert($domain),
+            'Validation with `assert` API.'
+        );
+        $this->assertTrue(
+            $this->validator->check($domain),
+            'Validation with `check` API.'
+        );
+    }
+
+    public function provideValidDomainWithInvalidTld()
+    {
+        return array(
+            'domain with dash' => array('my-app.local'),
+            'simple domain' => array('domain.local'),
+            'subdmain' => array('sub.domain.local'),
+            'domain starting with number' => array('1domain.dev'),
+        );
+    }
+    /**
+     * @dataProvider provideInvalidDomains
      * @expectedException Respect\Validation\Exceptions\ValidationException
      */
     public function testNotDomain($input, $tldcheck=true)
     {
-        $this->object->tldCheck($tldcheck);
-        $this->assertFalse($this->object->check($input));
+        $this->validator->tldCheck($tldcheck);
+        $this->assertFalse($this->validator->check($input));
     }
 
     /**
-     * @dataProvider providerForNotDomain
+     * @dataProvider provideInvalidDomains
      * @expectedException Respect\Validation\Exceptions\DomainException
      */
     public function testNotDomainCheck($input, $tldcheck=true)
     {
-        $this->object->tldCheck($tldcheck);
-        $this->assertFalse($this->object->assert($input));
+        $this->validator->tldCheck($tldcheck);
+        $this->assertFalse($this->validator->assert($input));
     }
 
-    public function providerForDomain()
+    public function provideInvalidDomains()
     {
         return array(
-            array('111111111111domain.local', false),
-            array('111111111111.domain.local', false),
-            array('example.com'),
-            array('xn--bcher-kva.ch'),
-            array('mail.xn--bcher-kva.ch'),
-            array('example-hyphen.com'),
-        );
-    }
-
-    public function providerForNotDomain()
-    {
-        return array(
-            array(null),
-            array(''),
-            array('2222222domain.local'),
+            'null is not a valid domain' => array(null),
+            'empty string is not a valid domain' => array(''),
             array('example--invalid.com'),
-            array('-example-invalid.com'),
-            array('example.invalid.-com'),
+            'domain starting with dash is not valid' => array('-example-invalid.com'),
+            'TLD with dash is not valid' => array('example.invalid.-com'),
             array('xn--bcher--kva.ch'),
-            array('1.2.3.256'),
-            array('1.2.3.4'),
+            'Invalid IP address is not a valid domain' => array('1.2.3.256'),
+            'Valid IP address is not a valiod domain' => array('1.2.3.4'),
         );
     }
 
     /**
-     * @dataProvider providerForDomain
+     * @dataProvider provideValidDomainWithValidTld
      */
     public function testBuilder($validDomain, $checkTLD=true)
     {
