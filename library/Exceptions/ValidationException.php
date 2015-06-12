@@ -52,6 +52,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
         return $this->context;
     }
 
+    // I guess it will need some recursion, not sure
     public function __set($name, $value)
     {
         $this->context[$name] = $value;
