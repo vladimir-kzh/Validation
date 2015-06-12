@@ -12,6 +12,7 @@ namespace Respect\Validation\Exceptions;
 use InvalidArgumentException;
 use IteratorAggregate;
 use SplObjectStorage;
+use RecursiveIteratorIterator;
 
 class ValidationException extends InvalidArgumentException implements ExceptionInterface, IteratorAggregate
 {
@@ -185,16 +186,57 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
      */
     public function getIterator()
     {
-        return $this->getChildren();
-    }
-
-    public function getChildren()
-    {
         if (!$this->children instanceof SplObjectStorage) {
             $this->children = isset($this->context['children']) ? $this->context['children'] : new SplObjectStorage();
         }
 
         return $this->children;
+    }
+
+    public function getChildren()
+    {
+        $childrenExceptions = new SplObjectStorage();
+
+        $exceptionIterator = new RecursiveExceptionIterator($this);
+        $iteratorIterator = new RecursiveIteratorIterator($exceptionIterator, RecursiveIteratorIterator::SELF_FIRST);
+
+        $lastDepth = 0;
+        $lastDepthOriginal = 0;
+        $knownDepths = [];
+        foreach ($iteratorIterator as $childException) {
+            if ($childException->hasChildren()
+                && $childException->getChildren()->count() < 2) {
+                continue;
+            }
+
+            $currentDepth = $lastDepth;
+            $currentDepthOriginal = $iteratorIterator->getDepth() + 1;
+
+            if (isset($knownDepths[$currentDepthOriginal])) {
+                $currentDepth = $knownDepths[$currentDepthOriginal];
+            } elseif ($currentDepthOriginal > $lastDepthOriginal) {
+                $currentDepth++;
+            }
+
+            if (!isset($knownDepths[$currentDepthOriginal])) {
+                $knownDepths[$currentDepthOriginal] = $currentDepth;
+            }
+
+            $lastDepth = $currentDepth;
+            $lastDepthOriginal = $currentDepthOriginal;
+
+            $childrenExceptions->attach(
+                $childException,
+                [
+                    'depth' => $currentDepth,
+                    'depth_original' => $currentDepthOriginal,
+                    'previous_depth' => $lastDepth,
+                    'previous_depth_original' => $lastDepthOriginal,
+                ]
+            );
+        }
+
+        return $childrenExceptions;
     }
 
     public function hasChildren()
@@ -208,7 +250,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
     public function getFullMessage()
     {
         $marker = '-';
-        $children = $this->getIterator();
+        $children = $this->getChildren();
         $messages = [sprintf('%s %s', $marker, $this->getMessage())];
         foreach ($children as $exception) {
             $depth = $children[$exception]['depth'];
@@ -225,7 +267,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
     public function getMessages()
     {
         $messages = [$this->getMessage()];
-        foreach ($this->getIterator() as $exception) {
+        foreach ($this->getChildren() as $exception) {
             $messages[] = $exception->getMessage();
         }
 
