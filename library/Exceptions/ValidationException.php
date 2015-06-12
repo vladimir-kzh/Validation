@@ -185,6 +185,11 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
      */
     public function getIterator()
     {
+        return $this->getChildren();
+    }
+
+    public function getChildren()
+    {
         if (!$this->children instanceof SplObjectStorage) {
             $this->children = isset($this->context['children']) ? $this->context['children'] : new SplObjectStorage();
         }

@@ -31,6 +31,28 @@ final class Not extends AbstractProxy
         $context = ['input' => $input, 'mode' => ValidationException::MODE_NEGATIVE];
         $factory = Validator::getDefaultFactory();
 
-        throw $factory->createException($this->getRule(), $context);
+        $rule = $this->filterRule($this->getRule());
+
+        throw $factory->createException($rule, $context);
+    }
+
+    /**
+     * @return RuleInterface
+     */
+    private function filterRule(RuleInterface $rule)
+    {
+        if (!$rule instanceof AllOf) {
+            return $rule;
+        }
+
+        foreach ($rule->getRules() as $childRule) {
+            if ($childRule instanceof AllOf) {
+                return $this->filterRule($childRule);
+            }
+
+            return $childRule;
+        }
+
+        return $rule;
     }
 }

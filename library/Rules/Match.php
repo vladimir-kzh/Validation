@@ -16,7 +16,7 @@ final class Match implements RuleInterface
     /**
      * @var string
      */
-    private $pattern;
+    public $pattern;
 
     /**
      * @param string $pattern

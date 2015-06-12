@@ -98,8 +98,11 @@ class Factory
      */
     public function createException(RuleInterface $rule, array $context)
     {
+        $context += get_object_vars($rule);
+
         $ruleName = get_class($rule);
         $ruleShortName = substr(strrchr($ruleName, '\\'), 1);
+
         foreach ($this->getNamespaces() as $namespace) {
             $exceptionClassName = $namespace.'\\Exceptions\\'.$ruleShortName.'Exception';
             if (!class_exists($exceptionClassName)) {
