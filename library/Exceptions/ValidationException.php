@@ -58,6 +58,13 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
         $this->context[$name] = $value;
 
         $this->message = $this->createMessage();
+
+        foreach ($this->getChildren() as $exception) {
+            if ($exception->label) {
+                continue;
+            }
+            $exception->label = $this->label;
+        }
     }
 
     public function __get($name)

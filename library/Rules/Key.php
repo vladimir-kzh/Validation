@@ -38,12 +38,17 @@ final class Key implements RuleInterface
      */
     public function assert($input)
     {
-        if (!isset($input[$this->key])) {
+        $keyExists = array_key_exists($this->key, $input);
+        if ($this->mandatory && !$keyExists) {
             throw new KeyException(['input' => $input, 'key' => $this->key]);
         }
 
+        if (!$keyExists) {
+            return;
+        }
+
         try {
-            $this->rule->assert($input);
+            $this->rule->assert($input[$this->key]);
         } catch (ValidationException $exception) {
             $exception->label = $this->key;
             $exception->input = $input[$this->key];
