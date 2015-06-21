@@ -29,7 +29,7 @@ final class Not extends AbstractProxy
         }
 
         $context = ['input' => $input, 'mode' => ValidationException::MODE_NEGATIVE];
-        $factory = Validator::getDefaultFactory();
+        $factory = Validator::getFactory();
 
         $rule = $this->filterRule($this->getRule());
 

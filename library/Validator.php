@@ -32,35 +32,20 @@ class Validator extends AllOf
     /**
      * @var Factory
      */
-    protected $factory;
-
-    /**
-     * @var Factory
-     */
-    protected static $defaultFactory;
-
-    /**
-     * Creates a new validator.
-     *
-     * @param Factory $factory
-     */
-    public function __construct(Factory $factory = null)
-    {
-        $this->factory = $factory ?: static::getDefaultFactory();
-    }
+    protected static $factory;
 
     /**
      * Returns the default factory.
      *
      * @return Factory
      */
-    public static function getDefaultFactory()
+    public static function getFactory()
     {
-        if (null === static::$defaultFactory) {
-            static::$defaultFactory = new Factory();
+        if (null === static::$factory) {
+            static::$factory = new Factory();
         }
 
-        return static::$defaultFactory;
+        return static::$factory;
     }
 
     /**
@@ -113,7 +98,7 @@ class Validator extends AllOf
      */
     public function __call($ruleName, array $arguments)
     {
-        $rule = $this->factory->createRule($ruleName, $arguments);
+        $rule = static::getFactory()->createRule($ruleName, $arguments);
 
         $this->addRule($rule);
 
@@ -146,7 +131,7 @@ class Validator extends AllOf
         try {
             $this->assert($input);
         } catch (ValidationException $exception) {
-            $exception = $this->factory->createFilteredException($exception);
+            $exception = static::getFactory()->createFilteredException($exception);
             $exception->label = $this->label;
 
             throw $exception;
@@ -159,7 +144,7 @@ class Validator extends AllOf
             parent::assert($input);
         } catch (ValidationException $exception) {
             $exception->label = $this->label;
-            $exception->children = $this->factory->createFilteredChildrenException($exception);
+            $exception->children = static::getFactory()->createFilteredChildrenException($exception);
 
             throw $exception;
         }
