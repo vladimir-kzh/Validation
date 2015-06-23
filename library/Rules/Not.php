@@ -10,13 +10,16 @@
 namespace Respect\Validation\Rules;
 
 use Respect\Validation\Exceptions\ValidationException;
+use Respect\Validation\Helpers\FactoryAwareHelper;
 use Respect\Validation\Validator;
 
 /**
  * Negates any rule.
  */
-final class Not extends AbstractProxy
+final class Not extends AbstractProxy implements FactoryAware
 {
+    use FactoryAwareHelper;
+
     /**
      * {@inheritDoc}
      */
@@ -29,11 +32,9 @@ final class Not extends AbstractProxy
         }
 
         $context = ['input' => $input, 'mode' => ValidationException::MODE_NEGATIVE];
-        $factory = Validator::getFactory();
-
         $rule = $this->filterRule($this->getRule());
 
-        throw $factory->createException($rule, $context);
+        throw $this->getFactory()->createException($rule, $context);
     }
 
     /**

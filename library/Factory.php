@@ -15,6 +15,7 @@ use Respect\Validation\Exceptions\ComponentException;
 use Respect\Validation\Exceptions\RecursiveExceptionIterator;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Rules\Assertable;
+use Respect\Validation\Rules\FactoryAware;
 use SplObjectStorage;
 
 class Factory
@@ -82,7 +83,12 @@ class Factory
                 throw new ComponentException(sprintf('"%s" is not a valid respect rule', $ruleClassName));
             }
 
-            return $reflection->newInstanceArgs($settings);
+            $instance = $reflection->newInstanceArgs($settings);
+            if ($instance instanceof FactoryAware) {
+                $instance->setFactory($this);
+            }
+
+            return $instance;
         }
 
         throw new ComponentException(sprintf('"%s" is not a valid rule name', $ruleName));
