@@ -14,7 +14,7 @@ use ReflectionClass;
 use Respect\Validation\Exceptions\ComponentException;
 use Respect\Validation\Exceptions\RecursiveExceptionIterator;
 use Respect\Validation\Exceptions\ValidationException;
-use Respect\Validation\Rules\RuleInterface;
+use Respect\Validation\Rules\Assertable;
 use SplObjectStorage;
 
 class Factory
@@ -67,7 +67,7 @@ class Factory
      *
      * @throws ComponentException
      *
-     * @return RuleInterface
+     * @return Assertable
      */
     public function createRule($ruleName, array $settings = [])
     {
@@ -78,7 +78,7 @@ class Factory
             }
 
             $reflection = new ReflectionClass($ruleClassName);
-            if (!$reflection->isSubclassOf('Respect\\Validation\\Rules\\RuleInterface')) {
+            if (!$reflection->isSubclassOf('Respect\\Validation\\Rules\\Assertable')) {
                 throw new ComponentException(sprintf('"%s" is not a valid respect rule', $ruleClassName));
             }
 
@@ -89,14 +89,14 @@ class Factory
     }
 
     /**
-     * @param RuleInterface $rule
+     * @param Assertable $rule
      * @param array         $context
      *
      * @throws ComponentException
      *
      * @return ValidationException
      */
-    public function createException(RuleInterface $rule, array $context)
+    public function createException(Assertable $rule, array $context)
     {
         $context += get_object_vars($rule);
 

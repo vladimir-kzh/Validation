@@ -16,7 +16,7 @@ use SplObjectStorage;
 /**
  * Will validate if all inner validators validates.
  */
-class AllOf implements RuleInterface
+class AllOf implements Assertable
 {
     /**
      * @var SplObjectStorage
@@ -37,11 +37,11 @@ class AllOf implements RuleInterface
     }
 
     /**
-     * @param RuleInterface $rule
+     * @param Assertable $rule
      *
      * @return self
      */
-    public function addRule(RuleInterface $rule)
+    public function addRule(Assertable $rule)
     {
         $this->getRules()->attach($rule);
 

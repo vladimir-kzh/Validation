@@ -11,7 +11,7 @@ namespace Respect\Validation\Rules;
 
 use Respect\Validation\Exceptions\MatchException;
 
-final class Match implements RuleInterface
+final class Match implements Assertable
 {
     /**
      * @var string

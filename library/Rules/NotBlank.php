@@ -14,7 +14,7 @@ use Respect\Validation\Exceptions\NotBlankException;
 /**
  * Validates if the given input is not blank.
  */
-final class NotBlank implements RuleInterface
+final class NotBlank implements Assertable
 {
     /**
      * @param mixed $value

@@ -37,9 +37,9 @@ final class Not extends AbstractProxy
     }
 
     /**
-     * @return RuleInterface
+     * @return Assertable
      */
-    private function filterRule(RuleInterface $rule)
+    private function filterRule(Assertable $rule)
     {
         if (!$rule instanceof AllOf) {
             return $rule;

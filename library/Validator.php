@@ -11,15 +11,15 @@ namespace Respect\Validation;
 
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Rules\AllOf;
-use Respect\Validation\Rules\RuleInterface;
+use Respect\Validation\Rules\Assertable;
 
 /**
- * @method static Validator allOf(RuleInterface ...$rule)
+ * @method static Validator allOf(Assertable ...$rule)
  * @method static Validator key()
  * @method static Validator match()
  * @method static Validator notEmpty()
  * @method static Validator notBlank()
- * @method static Validator not(RuleInterface $rule)
+ * @method static Validator not(Assertable $rule)
  * @method static Validator notOptional()
  */
 class Validator extends AllOf

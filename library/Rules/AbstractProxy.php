@@ -12,23 +12,23 @@ namespace Respect\Validation\Rules;
 /**
  * Validates if the given input is not empty.
  */
-abstract class AbstractProxy implements RuleInterface
+abstract class AbstractProxy implements Assertable
 {
     /**
-     * @var RuleInterface
+     * @var Assertable
      */
     private $rule;
 
     /**
-     * @param RuleInterface $rule
+     * @param Assertable $rule
      */
-    public function __construct(RuleInterface $rule)
+    public function __construct(Assertable $rule)
     {
         $this->rule = $rule;
     }
 
     /**
-     * @return RuleInterface
+     * @return Assertable
      */
     public function getRule()
     {

@@ -14,7 +14,7 @@ use Respect\Validation\Exceptions\NotEmptyException;
 /**
  * Validates if the given input is not empty.
  */
-final class NotEmpty implements RuleInterface
+final class NotEmpty implements Assertable
 {
     /**
      * {@inheritDoc}

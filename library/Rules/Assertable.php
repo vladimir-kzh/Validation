@@ -14,7 +14,7 @@ use Respect\Validation\Exceptions\ValidationException;
 /**
  * Default interface for rules.
  */
-interface RuleInterface
+interface Assertable
 {
     /**
      * @param mixed $input

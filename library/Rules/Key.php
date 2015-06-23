@@ -15,7 +15,7 @@ use Respect\Validation\Exceptions\ValidationException;
 /**
  * Validates if the given input is not empty.
  */
-final class Key implements RuleInterface
+final class Key implements Assertable
 {
     private $key;
     private $rule;
@@ -23,10 +23,10 @@ final class Key implements RuleInterface
 
     /**
      * @param mixed         $key
-     * @param RuleInterface $rule
+     * @param Assertable $rule
      * @param bool          $mandatory
      */
-    public function __construct($key, RuleInterface $rule, $mandatory)
+    public function __construct($key, Assertable $rule, $mandatory)
     {
         $this->key = $key;
         $this->rule = $rule;
