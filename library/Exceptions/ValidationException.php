@@ -14,7 +14,7 @@ use IteratorAggregate;
 use SplObjectStorage;
 use RecursiveIteratorIterator;
 
-class ValidationException extends InvalidArgumentException implements ExceptionInterface, IteratorAggregate
+class ValidationException extends InvalidArgumentException implements Throwable, IteratorAggregate
 {
     const MESSAGE_STANDARD = 0;
 
