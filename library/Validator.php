@@ -127,7 +127,7 @@ class Validator extends AllOf
      */
     public function validate($input)
     {
-        $context = $this->factory->createContext($this, ['input' => $input, 'label' => $this->label]);
+        $context = $this->factory->createContext($this, ['input' => $input]);
         $context->applyRule();
 
         return $context->isValid;
@@ -135,12 +135,13 @@ class Validator extends AllOf
 
     /**
      * @param mixed $input
+     * @param array $properties
      *
      * @throws ValidationException
      */
-    public function check($input)
+    public function check($input, array $properties = [])
     {
-        $properties = ['input' => $input, 'label' => $this->label];
+        $properties = ['input' => $input] + $properties + ['label' => $this->label];
         foreach ($this->getRules() as $childRule) {
             $childContext = $this->factory->createContext($childRule, $properties);
             $childContext->applyRule();
@@ -155,12 +156,14 @@ class Validator extends AllOf
 
     /**
      * @param mixed $input
+     * @param array $properties
      *
      * @throws ValidationException
      */
-    public function assert($input)
+    public function assert($input, array $properties = [])
     {
-        $context = $this->factory->createContext($this, ['input' => $input, 'label' => $this->label]);
+        $properties = ['input' => $input] + $properties + ['label' => $this->label];
+        $context = $this->factory->createContext($this, $properties);
         $context->applyRule();
 
         if ($context->isValid) {

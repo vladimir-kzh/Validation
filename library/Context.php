@@ -125,7 +125,10 @@ class Context
      */
     public function createChild(RuleInterface $rule)
     {
-        $childContext = $this->getFactory()->createContext($rule, $this->getProperties());
+        $properties = $this->getProperties();
+        unset($properties['message']); // Should not be inherited, first level only
+
+        $childContext = $this->getFactory()->createContext($rule, $properties);
         $childContext->appendTo($this);
 
         return $childContext;
