@@ -67,7 +67,7 @@ class AllOf implements RuleRequiredInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function apply(Context $context)
     {

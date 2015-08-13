@@ -20,7 +20,7 @@ final class NotOptional implements RuleRequiredInterface
     use OptionalHelper;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function apply(Context $context)
     {

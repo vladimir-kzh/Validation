@@ -12,7 +12,7 @@ namespace Respect\Validation\Exceptions;
 class AllOfException extends ValidationException
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTemplates()
     {

@@ -14,7 +14,7 @@ class KeyException extends ValidationException
     const MESSAGE_KEY = 1;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTemplates()
     {

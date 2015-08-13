@@ -17,7 +17,7 @@ use Respect\Validation\Context;
 final class NotEmpty implements RuleRequiredInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function apply(Context $context)
     {

@@ -41,7 +41,7 @@ final class Not implements RuleRequiredInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function apply(Context $context)
     {

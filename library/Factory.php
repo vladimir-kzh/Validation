@@ -163,7 +163,7 @@ class Factory
             if (isset($knownDepths[$currentDepthOriginal])) {
                 $currentDepth = $knownDepths[$currentDepthOriginal];
             } elseif ($currentDepthOriginal > $lastDepthOriginal) {
-                $currentDepth++;
+                ++$currentDepth;
             }
 
             if (!isset($knownDepths[$currentDepthOriginal])) {

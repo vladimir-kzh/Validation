@@ -39,7 +39,7 @@ final class NotBlank implements RuleRequiredInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function apply(Context $context)
     {

@@ -27,7 +27,7 @@ final class Match implements RuleInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function apply(Context $context)
     {
