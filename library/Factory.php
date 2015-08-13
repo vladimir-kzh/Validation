@@ -55,7 +55,7 @@ class Factory
     /**
      * @param array $contextProperties
      */
-    public function setDefaultContextProperties(array $contextProperties)
+    public function setContextProperties(array $contextProperties)
     {
         $this->contextProperties = $contextProperties;
     }

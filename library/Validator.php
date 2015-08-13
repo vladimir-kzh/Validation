@@ -25,9 +25,9 @@ use Respect\Validation\Rules\RuleInterface;
 class Validator extends AllOf
 {
     /**
-     * @var string
+     * @var array
      */
-    protected $label;
+    protected $properties = ['label' => ''];
 
     /**
      * @var Factory
@@ -64,6 +64,32 @@ class Validator extends AllOf
     }
 
     /**
+     * Defines a set of properties for the validation chain.
+     *
+     * @param array $properties
+     *
+     * @return self
+     */
+    public function setProperties(array $properties)
+    {
+        foreach ($properties as $name => $value) {
+            $this->properties[$name] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns a set of properties for the validation chain.
+     *
+     * @return array
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    /**
      * Defines the label of the current validation chain.
      *
      * @param string $label
@@ -72,7 +98,7 @@ class Validator extends AllOf
      */
     public function setLabel($label)
     {
-        $this->label = (string) $label;
+        $this->properties['label'] = $label;
 
         return $this;
     }
@@ -84,7 +110,7 @@ class Validator extends AllOf
      */
     public function getLabel()
     {
-        return (string) $this->label;
+        return $this->properties['label'];
     }
 
     /**
@@ -141,7 +167,7 @@ class Validator extends AllOf
      */
     public function check($input, array $properties = [])
     {
-        $properties = ['input' => $input] + $properties + ['label' => $this->label];
+        $properties = ['input' => $input] + $properties + $this->getProperties();
         foreach ($this->getRules() as $childRule) {
             $childContext = $this->factory->createContext($childRule, $properties);
             $childContext->applyRule();
@@ -162,7 +188,7 @@ class Validator extends AllOf
      */
     public function assert($input, array $properties = [])
     {
-        $properties = ['input' => $input] + $properties + ['label' => $this->label];
+        $properties = ['input' => $input] + $properties + $this->getProperties();
         $context = $this->factory->createContext($this, $properties);
         $context->applyRule();
 
