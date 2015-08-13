@@ -22,7 +22,7 @@ try {
 }
 ?>
 --EXPECTF--
-- All rules must pass for `Array`
+- All rules must pass for `{"host":"my_host","schema":"my_schema"}`
   - host must match `/\d+/`
   - user key must be present
   - password key must be present

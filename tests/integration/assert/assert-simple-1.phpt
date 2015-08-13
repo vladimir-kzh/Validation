@@ -16,4 +16,4 @@ try {
 }
 ?>
 --EXPECTF--
-All rules must pass for '123'
+All rules must pass for "123"

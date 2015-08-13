@@ -9,6 +9,7 @@
 
 namespace Respect\Validation\Exceptions;
 
+use DateTime;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Respect\Validation\Context;
@@ -112,25 +113,47 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
      */
     private function getPlaceholder()
     {
-        $placeholder = $this->context->input;
-
-        if (is_scalar($placeholder)) {
-            $placeholder = var_export($placeholder, true);
-        }
-
         if ($this->context->label) {
-            $placeholder = $this->context->label;
+            return $this->context->label;
         }
 
-        if (is_array($placeholder)) {
-            $placeholder = '`Array`';
+        if ($this->context->placeholder) {
+            return $this->context->placeholder;
         }
 
-        if (is_object($placeholder)) {
-            $placeholder = sprintf('`%s`', get_class($placeholder));
+        return $this->normalize($this->context->input);
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return string
+     */
+    private function normalize($value)
+    {
+        $options = (JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        if (is_resource($value)) {
+            return '`[resource]`';
         }
 
-        return $placeholder;
+        if (is_array($value)) {
+            return sprintf('`%s`', json_encode($value, $options, 4));
+        }
+
+        if (!is_object($value)) {
+            return json_encode($value, $options);
+        }
+
+        if ($value instanceof DateTime) {
+            return $value->format($this->context->format ?: 'c');
+        }
+
+        if (method_exists($value, '__toString')) {
+            return $value->__toString();
+        }
+
+        return sprintf('`[object] (%s: %s)`', get_class($value), json_encode($value, $options, 2));
     }
 
     /**
@@ -152,6 +175,10 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
                 $value = $match[0];
                 if (isset($params[$match[1]])) {
                     $value = $params[$match[1]];
+                }
+
+                if (!is_scalar($value)) {
+                    return $this->normalize($value);
                 }
 
                 return $value;

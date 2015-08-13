@@ -16,4 +16,4 @@ try {
 }
 ?>
 --EXPECTF--
-'abc' must not match `/^[a-z]{3}$/`
+"abc" must not match `/^[a-z]{3}$/`

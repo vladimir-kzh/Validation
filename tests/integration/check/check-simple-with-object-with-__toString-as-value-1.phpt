@@ -1,5 +1,3 @@
---TEST--
-Should throw the child rule exception when rule fails
 --FILE--
 <?php
 require 'vendor/autoload.php';
@@ -7,13 +5,21 @@ require 'vendor/autoload.php';
 use Respect\Validation\Exceptions\MatchException;
 use Respect\Validation\Validator as v;
 
+class MyClass
+{
+    public function __toString()
+    {
+        return 'Return of __toString()';
+    }
+}
+
 try {
     v::create()
         ->match('/^[a-z]{3}$/')
-        ->check('123');
+        ->check(new MyClass());
 } catch (MatchException $exception) {
     echo $exception->getMessage().PHP_EOL;
 }
 ?>
 --EXPECTF--
-"123" must match `/^[a-z]{3}$/`
+Return of __toString() must match `/^[a-z]{3}$/`

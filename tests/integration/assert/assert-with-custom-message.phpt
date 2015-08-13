@@ -19,5 +19,5 @@ try {
 ?>
 --EXPECTF--
 - Something is not right
-  - '123' must match `/^[a-z]{3}$/`
-  - '123' must match `/^$/`
+  - "123" must match `/^[a-z]{3}$/`
+  - "123" must match `/^$/`

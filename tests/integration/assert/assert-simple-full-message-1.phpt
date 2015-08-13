@@ -18,6 +18,6 @@ try {
 }
 ?>
 --EXPECTF--
-- All rules must pass for '123'
-  - '123' must match `/^[a-z]{3}$/`
-  - '123' must match `/^$/`
+- All rules must pass for "123"
+  - "123" must match `/^[a-z]{3}$/`
+  - "123" must match `/^$/`

@@ -29,7 +29,7 @@ try {
 }
 ?>
 --EXPECTF--
-- All rules must pass for `Array`
+- All rules must pass for `{"database":{"host":"my_host","schema":"my_schema"}}`
   - All rules must pass for database
     - host must match `/\d+/`
     - user key must be present
