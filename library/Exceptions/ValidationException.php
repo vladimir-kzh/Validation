@@ -165,8 +165,8 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
         $params['placeholder'] = $this->getPlaceholder();
         $template = $this->getMessageTemplate();
 
-        if (isset($params['message_filter_callback'])) {
-            $template = call_user_func($params['message_filter_callback'], $template);
+        if (isset($params['translator'])) {
+            $template = call_user_func($params['translator'], $template);
         }
 
         return preg_replace_callback(
