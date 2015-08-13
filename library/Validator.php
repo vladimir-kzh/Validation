@@ -64,6 +64,34 @@ class Validator extends AllOf
     }
 
     /**
+     * Appends a namespace to load rules and exceptions.
+     *
+     * @param string $namespace
+     *
+     * @return self
+     */
+    public function append($namespace)
+    {
+        $this->factory->appendNamespace($namespace);
+
+        return $this;
+    }
+
+    /**
+     * Prepends a namespace to load rules and exceptions.
+     *
+     * @param string $namespace
+     *
+     * @return self
+     */
+    public function prepend($namespace)
+    {
+        $this->factory->prependNamespace($namespace);
+
+        return $this;
+    }
+
+    /**
      * Defines a set of properties for the validation chain.
      *
      * @param array $properties
