@@ -19,4 +19,4 @@ try {
 }
 ?>
 --EXPECTF--
-%d-%d-%dT%d:%d:%d+00:00 must match `/^[a-z]{3}$/`
+"%d-%d-%dT%d:%d:%d+00:00" must match `/^[a-z]{3}$/`

@@ -15,4 +15,4 @@ try {
 }
 ?>
 --EXPECTF--
-`["abc","123"]` must match `/^[a-z]{3}$/`
+{ "abc", "123" } must match `/^[a-z]{3}$/`

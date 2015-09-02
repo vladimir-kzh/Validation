@@ -24,7 +24,7 @@ try {
 }
 ?>
 --EXPECTF--
-- All rules must pass for `{"host":"my_host","user":"my_user","password":"my_password","schema":"my_schema"}`
+- All rules must pass for { "host": "my_host", "user": "my_user", "password": "my_password", "schema": "my_schema" }
   - host must match `/\d+/`
   - user must match `/\d+/`
   - password must match `/\d+/`

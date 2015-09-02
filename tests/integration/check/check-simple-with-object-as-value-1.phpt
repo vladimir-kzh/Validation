@@ -17,4 +17,4 @@ try {
 }
 ?>
 --EXPECTF--
-`[object] (stdClass: {"foo":"abc"})` must match `/^[a-z]{3}$/`
+`[object] (stdClass: { "foo": "abc" })` must match `/^[a-z]{3}$/`

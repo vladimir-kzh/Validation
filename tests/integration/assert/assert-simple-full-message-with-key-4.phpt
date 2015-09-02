@@ -42,7 +42,7 @@ try {
 }
 ?>
 --EXPECTF--
-- All rules must pass for `{"mysql":{"host":"my_host","schema":"my_schema"},"postgresql":{"user":"my_user","password":"my_password"}}`
+- All rules must pass for { "mysql": { "host": "my_host", "schema": "my_schema" }, "postgresql": { "user": "my_user", "password": "my_password" } }
   - All rules must pass for mysql
     - host must match `/\d+/`
     - user key must be present

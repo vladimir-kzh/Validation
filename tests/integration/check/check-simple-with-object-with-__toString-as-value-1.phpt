@@ -22,4 +22,4 @@ try {
 }
 ?>
 --EXPECTF--
-Return of __toString() must match `/^[a-z]{3}$/`
+"Return of __toString()" must match `/^[a-z]{3}$/`

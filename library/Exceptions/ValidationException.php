@@ -22,6 +22,9 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
     const MODE_AFFIRMATIVE = 1;
     const MODE_NEGATIVE = 0;
 
+    const DEFAULT_MAX_DEEPT = 5;
+    const DEFAULT_MAX_COUNT = 10;
+
     /**
      * @var Context
      */
@@ -125,35 +128,118 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
     }
 
     /**
-     * @param mixed $value
+     * @param mixed $raw
+     * @param int $deep
      *
      * @return string
      */
-    private function normalize($value)
+    private function normalizeObject($raw, $deep = 2)
     {
-        $options = (JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $nextDeep = $deep + 1;
 
-        if (is_resource($value)) {
-            return '`[resource]`';
+        if ($raw instanceof Traversable) {
+            return sprintf('`[traversable] (%s: %s)`', get_class($raw), $this->normalize(iterator_to_array($raw), $nextDeep));
         }
 
-        if (is_array($value)) {
-            return sprintf('`%s`', json_encode($value, $options, 4));
+        if ($raw instanceof DateTime) {
+            return sprintf('"%s"', $raw->format('c'));
         }
 
-        if (!is_object($value)) {
-            return json_encode($value, $options);
+        $class = get_class($raw);
+
+        if ($raw instanceof Exception) {
+            $properties = [
+                'message' => $raw->getMessage(),
+                'code' => $raw->getCode(),
+                'file' => $raw->getFile().':'.$raw->getLine(),
+            ];
+
+            return sprintf('`[exception] (%s: %s)`', $class, $this->normalize($properties, $nextDeep));
         }
 
-        if ($value instanceof DateTime) {
-            return $value->format($this->context->format ?: 'c');
+        if (method_exists($raw, '__toString')) {
+            return $this->normalize($raw->__toString(), $nextDeep);
         }
 
-        if (method_exists($value, '__toString')) {
-            return $value->__toString();
+        return sprintf('`[object] (%s: %s)`', $class, $this->normalize(get_object_vars($raw), $nextDeep));
+    }
+
+    /**
+     * @param array $raw
+     * @param int $deep
+     *
+     * @return string
+     */
+    private function normalizeArray(array $raw, $deep = 1)
+    {
+        $nextDeep = $deep + 1;
+
+        if ($nextDeep >= self::DEFAULT_MAX_DEEPT) {
+            return '...';
         }
 
-        return sprintf('`[object] (%s: %s)`', get_class($value), json_encode($value, $options, 2));
+        if (empty($raw)) {
+            return '{ }';
+        }
+
+        $string = '';
+        $total = count($raw);
+        $current = 0;
+        foreach ($raw as $key => $value) {
+            if ($current++ >= self::DEFAULT_MAX_COUNT) {
+                $string .= ' ... ';
+                break;
+            }
+
+            if (!is_int($key)) {
+                $string .= sprintf('%s: ', $this->normalize($key, $nextDeep));
+            }
+
+            $string .= $this->normalize($value, $nextDeep);
+
+            if ($current !== $total) {
+                $string .= ', ';
+            }
+        }
+
+        return sprintf('{ %s }', $string);
+    }
+
+    /**
+     * @param mixed $raw
+     * @param int $deep
+     *
+     * @return string
+     */
+    private function normalize($raw, $deep = 1)
+    {
+        if ($deep >= self::DEFAULT_MAX_DEEPT) {
+            return '...';
+        }
+
+        if (is_object($raw)) {
+            return $this->normalizeObject($raw, $deep);
+        }
+
+        if (is_array($raw)) {
+            return $this->normalizeArray($raw, $deep);
+        }
+
+        if (is_resource($raw)) {
+            return sprintf('`[resource] (%s)`', get_resource_type($raw));
+        }
+
+        if (is_float($raw)) {
+            if (is_infinite($raw)) {
+                return ($raw > 0 ? '' : '-').'INF';
+            }
+
+            if (is_nan($raw)) {
+                return 'NaN';
+            }
+        }
+
+        return json_encode($raw, (JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
     }
 
     /**
