@@ -129,7 +129,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
 
     /**
      * @param mixed $raw
-     * @param int $deep
+     * @param int   $deep
      *
      * @return string
      */
@@ -166,7 +166,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
 
     /**
      * @param array $raw
-     * @param int $deep
+     * @param int   $deep
      *
      * @return string
      */
@@ -207,7 +207,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
 
     /**
      * @param mixed $raw
-     * @param int $deep
+     * @param int   $deep
      *
      * @return string
      */

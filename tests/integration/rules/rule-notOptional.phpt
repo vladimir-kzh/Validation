@@ -4,8 +4,8 @@ Should validate NotOptional rule
 <?php
 require 'vendor/autoload.php';
 
-use Respect\Validation\Validator;
 use Respect\Validation\Rules\NotOptional;
+use Respect\Validation\Validator;
 
 $validator = new Validator();
 $validator->addRule(new NotOptional());

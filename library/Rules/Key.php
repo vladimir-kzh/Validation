@@ -9,8 +9,8 @@
 
 namespace Respect\Validation\Rules;
 
-use Respect\Validation\Exceptions\KeyException;
 use Respect\Validation\Context;
+use Respect\Validation\Exceptions\KeyException;
 
 /**
  * Validates if the given input is not empty.

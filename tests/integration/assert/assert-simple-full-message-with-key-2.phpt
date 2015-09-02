@@ -22,7 +22,7 @@ try {
             'database' => [
                 'host' => 'my_host',
                 'schema' => 'my_schema',
-            ]
+            ],
         ]);
 } catch (ValidatorException $exception) {
     echo $exception->getFullMessage().PHP_EOL;

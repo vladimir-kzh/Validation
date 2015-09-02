@@ -4,8 +4,8 @@ Should validate NotBlank rule
 <?php
 require 'vendor/autoload.php';
 
-use Respect\Validation\Validator;
 use Respect\Validation\Rules\NotBlank;
+use Respect\Validation\Validator;
 
 $validator = new Validator();
 $validator->addRule(new NotBlank());

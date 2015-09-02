@@ -4,8 +4,8 @@ Should validate NotEmpty rule
 <?php
 require 'vendor/autoload.php';
 
-use Respect\Validation\Validator;
 use Respect\Validation\Rules\NotEmpty;
+use Respect\Validation\Validator;
 
 $validator = new Validator();
 $validator->addRule(new NotEmpty());

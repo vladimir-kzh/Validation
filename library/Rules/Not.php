@@ -10,9 +10,9 @@
 namespace Respect\Validation\Rules;
 
 use RecursiveIteratorIterator;
+use Respect\Validation\Context;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\RecursiveContextIterator;
-use Respect\Validation\Context;
 
 /**
  * Negates any rule.

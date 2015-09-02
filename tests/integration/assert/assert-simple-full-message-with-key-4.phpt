@@ -35,7 +35,7 @@ try {
             'postgresql' => [
                 'user' => 'my_user',
                 'password' => 'my_password',
-            ]
+            ],
         ]);
 } catch (ValidatorException $exception) {
     echo $exception->getFullMessage().PHP_EOL;
