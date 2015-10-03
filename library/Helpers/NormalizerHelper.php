@@ -36,7 +36,9 @@ trait NormalizerHelper
         $nextDeep = $deep + 1;
 
         if ($raw instanceof Traversable) {
-            return sprintf('`[traversable] (%s: %s)`', get_class($raw), $this->normalize(iterator_to_array($raw), $nextDeep));
+            $array = iterator_to_array($raw);
+
+            return sprintf('`[traversable] (%s: %s)`', get_class($raw), $this->normalize($array, $nextDeep));
         }
 
         if ($raw instanceof DateTime) {
@@ -104,6 +106,24 @@ trait NormalizerHelper
     }
 
     /**
+     * @param array $raw
+     *
+     * @return string
+     */
+    private function normalizeFloat($raw)
+    {
+        if (is_infinite($raw)) {
+            return ($raw > 0 ? '' : '-').'INF';
+        }
+
+        if (is_nan($raw)) {
+            return 'NaN';
+        }
+
+        return $raw;
+    }
+
+    /**
      * @param mixed $raw
      * @param int   $deep
      *
@@ -128,13 +148,7 @@ trait NormalizerHelper
         }
 
         if (is_float($raw)) {
-            if (is_infinite($raw)) {
-                return ($raw > 0 ? '' : '-').'INF';
-            }
-
-            if (is_nan($raw)) {
-                return 'NaN';
-            }
+            return $this->normalizeFloat($raw);
         }
 
         return json_encode($raw, (JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
