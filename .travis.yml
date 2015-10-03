@@ -5,7 +5,6 @@ language:
   php
 
 php:
-  - 5.5
   - 5.6
   - 7
   - hhvm
@@ -15,8 +14,8 @@ before_script:
   - composer install --no-interaction --prefer-source
 
 script:
-  - test "5.5" == "${TRAVIS_PHP_VERSION}" && vendor/bin/phpcs --standard=PSR2 library || echo
-  - test "5.5" == "${TRAVIS_PHP_VERSION}" && vendor/bin/phpmd library text cleancode,codesize,controversial,design,naming,unusedcode || echo
+  - if [[ "5.6" == "${TRAVIS_PHP_VERSION}" ]]; then vendor/bin/phpcs --standard=PSR2 library; fi
+  - if [[ "5.6" == "${TRAVIS_PHP_VERSION}" ]]; then vendor/bin/phpmd library text cleancode,codesize,controversial,design,naming,unusedcode; fi
   - vendor/bin/phpunit
 
 notifications:
