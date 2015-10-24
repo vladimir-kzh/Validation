@@ -77,12 +77,13 @@
 <li><code>v::contains(mixed $value, boolean $identical = false)</code></li>
 </ul>
 <p>For strings:</p>
-<pre><code class="language-php">v::contains('ipsum')-&gt;validate('lorem ipsum'); //true</code></pre>
+<pre><code class="language-php">v::contains('ipsum')-&gt;validate('lorem ipsum'); // true</code></pre>
 <p>For arrays:</p>
-<pre><code class="language-php">v::contains('ipsum')-&gt;validate(array('ipsum', 'lorem')); //true</code></pre>
+<pre><code class="language-php">v::contains('ipsum')-&gt;validate(['ipsum', 'lorem']); // true</code></pre>
 <p>A second parameter may be passed for identical comparison instead
 of equal comparison.</p>
 <p>Message template for this validator includes <code>{{containsValue}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="startswith.html">StartsWith</a></li>

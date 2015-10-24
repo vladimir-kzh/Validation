@@ -76,16 +76,20 @@
 <li><code>v::url()</code></li>
 </ul>
 <p>Validates if input is an URL:</p>
-<pre><code class="language-php">v::url()-&gt;validate('http://example.com'); //true
-v::url()-&gt;validate('https://www.youtube.com/watch?v=6FOUqQt3Kg0'); //true
-v::url()-&gt;validate('ldap://[::1]'); //true
-v::url()-&gt;validate('mailto:john.doe@example.com'); //true
-v::url()-&gt;validate('news:new.example.com'); //true</code></pre>
+<pre><code class="language-php">v::url()-&gt;validate('http://example.com'); // true
+v::url()-&gt;validate('https://www.youtube.com/watch?v=6FOUqQt3Kg0'); // true
+v::url()-&gt;validate('ldap://[::1]'); // true
+v::url()-&gt;validate('mailto:john.doe@example.com'); // true
+v::url()-&gt;validate('news:new.example.com'); // true</code></pre>
 <p>This rule uses <a href="filtervar.html">FilterVar</a></p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="domain.html">Domain</a></li>
+<li><a href="email.html">Email</a></li>
 <li><a href="filtervar.html">FilterVar</a></li>
+<li><a href="phone.html">Phone</a></li>
+<li><a href="videourl.html">VideoUrl</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

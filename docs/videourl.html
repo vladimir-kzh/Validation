@@ -71,15 +71,34 @@
                     </nav>
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="string">String</h1>
+                    <h1 id="videourl">VideoUrl</h1>
 <ul>
-<li><code>v::string()</code></li>
+<li><code>v::videoUrl()</code></li>
+<li><code>v::videoUrl(string $service)</code></li>
 </ul>
-<p>Validates a string.</p>
-<pre><code class="language-php">v::string()-&gt;validate('hi'); //true</code></pre>
+<p>Validates if the input is a video URL value:</p>
+<pre><code class="language-php">v::videoUrl()-&gt;validate('https://player.vimeo.com/video/71787467'); // true
+v::videoUrl()-&gt;validate('https://vimeo.com/71787467'); // true
+v::videoUrl()-&gt;validate('https://www.youtube.com/embed/netHLn9TScY'); // true
+v::videoUrl()-&gt;validate('https://www.youtube.com/watch?v=netHLn9TScY'); // true
+v::videoUrl()-&gt;validate('https://youtu.be/netHLn9TScY'); // true
+
+v::videoUrl('youtube')-&gt;validate('https://www.youtube.com/watch?v=netHLn9TScY'); // true
+v::videoUrl('vimeo')-&gt;validate('https://vimeo.com/71787467'); // true
+
+v::videoUrl()-&gt;validate('https://youtube.com'); // false
+v::videoUrl('youtube')-&gt;validate('https://vimeo.com/71787467'); // false</code></pre>
+<p>The services accepted are:</p>
+<ul>
+<li>YouTube</li>
+<li>Vimeo</li>
+</ul>
+<p>The <code>$service</code> value is not case-sensitive.</p>
+<p>Message template for this validator includes <code>{{service}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
-<li><a href="alnum.html">Alnum</a></li>
+<li><a href="url.html">Url</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

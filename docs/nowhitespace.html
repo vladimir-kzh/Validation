@@ -77,11 +77,17 @@
 </ul>
 <p>Validates if a string contains no whitespace (spaces, tabs and line breaks);</p>
 <pre><code class="language-php">v::noWhitespace()-&gt;validate('foo bar');  //false
-v::noWhitespace()-&gt;validate("foo\nbar"); //false</code></pre>
-<p>Like other rules the input is still optional.</p>
-<pre><code class="language-php">v::string()-&gt;noWhitespace()-&gt;validate('');  //true
-v::string()-&gt;noWhitespace()-&gt;validate(' '); //false</code></pre>
+v::noWhitespace()-&gt;validate("foo\nbar"); // false</code></pre>
 <p>This is most useful when chaining with other validators such as <code>v::alnum()</code></p>
+<hr />
+<p>See also:</p>
+<ul>
+<li><a href="alnum.html">Alnum</a></li>
+<li><a href="alpha.html">Alpha</a></li>
+<li><a href="notblank.html">NotBlank</a></li>
+<li><a href="notempty.html">NotEmpty</a></li>
+<li><a href="notoptional.html">NotOptional</a></li>
+</ul>
                     <div id="go-top">
                         <hr />
                         <p>

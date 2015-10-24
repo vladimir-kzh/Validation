@@ -78,16 +78,17 @@
 <li><code>v::key(string $name, v $validator, boolean $mandatory = true)</code></li>
 </ul>
 <p>Validates an array key.</p>
-<pre><code class="language-php">$dict = array(
+<pre><code class="language-php">$dict = [
     'foo' =&gt; 'bar'
-);
+];
 
-v::key('foo')-&gt;validate($dict); //true</code></pre>
+v::key('foo')-&gt;validate($dict); // true</code></pre>
 <p>You can also validate the key value itself:</p>
-<pre><code class="language-php">v::key('foo', v::equals('bar'))-&gt;validate($dict); //true</code></pre>
+<pre><code class="language-php">v::key('foo', v::equals('bar'))-&gt;validate($dict); // true</code></pre>
 <p>Third parameter makes the key presence optional:</p>
-<pre><code class="language-php">v::key('lorem', v::string(), false)-&gt;validate($dict); // true</code></pre>
+<pre><code class="language-php">v::key('lorem', v::stringType(), false)-&gt;validate($dict); // true</code></pre>
 <p>The name of this validator is automatically set to the key name.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="attribute.html">Attribute</a></li>

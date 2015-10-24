@@ -77,16 +77,17 @@
 </ul>
 <p>Will validate if all inner validators validates.</p>
 <pre><code class="language-php">v::allOf(
-    v::int(),
+    v::intVal(),
     v::positive()
-)-&gt;validate(15); //true</code></pre>
+)-&gt;validate(15); // true</code></pre>
 <p>This is similar to the chain (which is an allOf already), but
 its syntax allows you to set custom names for every node:</p>
 <pre><code class="language-php">v::allOf(
-    v::int()-&gt;setName('Account Number'),
+    v::intVal()-&gt;setName('Account Number'),
     v::positive()-&gt;setName('Higher Than Zero')
 )-&gt;setName('Positive integer')
- -&gt;validate(15); //true</code></pre>
+ -&gt;validate(15); // true</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="oneof.html">OneOf</a></li>

@@ -73,38 +73,47 @@
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="contributing">Contributing</h1>
 <p>Contributions to Respect\Validation are always welcome. You make our lives
-easier by sending us your contributions through
-<a href="http://help.github.com/pull-requests">GitHub pull requests</a>.</p>
+easier by sending us your contributions through <a href="http://help.github.com/pull-requests" title="GitHub pull requests">pull requests</a>.</p>
 <p>Pull requests for bug fixes must be based on the current stable branch whereas
 pull requests for new features must be based on <code>master</code>.</p>
 <p>Due to time constraints, we are not always able to respond as quickly as we
 would like. Please do not take delays personal and feel free to remind us here,
 on IRC, or on Gitter if you feel that we forgot to respond.</p>
-<p>Please see the <a href="http://respect.github.io/Validation">project documentation</a>
-before proceeding. You should also know about <a href="http://www.php-fig.org">PHP-FIG</a>'s
-standards and basic unit testing, but we're sure you can learn that just by
-looking at other rules. Pick the simple ones like <code>Int</code> to begin.</p>
+<p>Please see the <a href="http://respect.github.io/Validation" title="Respect\Validation documentation">project documentation</a> before proceeding. You should also know
+about <a href="http://www.php-fig.org" title="PHP Framework Interop Group">PHP-FIG</a>'s standards and basic unit testing, but we're sure you can
+learn that just by looking at other rules. Pick the simple ones like <code>ArrayType</code>
+to begin.</p>
 <p>Before writing anything, make sure there is no validator that already does what
-you need. Also, it would be awesome if you
-<a href="http://github.com/Respect/Validation/issues">open an issue</a> before starting,
+you need. Also, it would be awesome if you <a href="http://github.com/Respect/Validation/issues">open an issue</a> before starting,
 so if anyone has the same idea the guy will see that you're already doing that.</p>
 <h2 id="adding-a-new-validator">Adding a new validator</h2>
 <p>A common validator (rule) on Respect\Validation is composed of three classes:</p>
 <ul>
 <li><code>library/Rules/YourRuleName.php</code>: the rule itself</li>
 <li><code>library/Exceptions/YourRuleNameException.php</code>: the exception thrown by the rule</li>
-<li><code>tests/Rules/YourRuleNameTest.php</code>: tests for the rule</li>
+<li><code>tests/unit/Rules/YourRuleNameTest.php</code>: tests for the rule</li>
 </ul>
 <p>Classes are pretty straightforward. In the sample below, we're going to create a
 validator that validates if a string is equal &quot;Hello World&quot;.</p>
-<h2 id="samples">Samples</h2>
+<h3 id="creating-the-rule">Creating the rule</h3>
 <p>The rule itself needs to implement the <code>Validatable</code> interface.
 Also, it is convenient to extend the <code>AbstractRule</code>.
 Doing that, you'll only need to declare one method: <code>validate($input)</code>.
 This method must return <code>true</code> or <code>false</code>.</p>
 <p>If your validator class is <code>HelloWorld</code>, it will be available as <code>v::helloWorld()</code>
 and will natively have support for chaining and everything else.</p>
-<pre><code class="language-php">namespace Respect\Validation\Rules;
+<pre><code class="language-php">&lt;?php
+
+/*
+ * This file is part of Respect/Validation.
+ *
+ * (c) Alexandre Gomes Gaigalas &lt;alexandre@gaigalas.net&gt;
+ *
+ * For the full copyright and license information, please view the "LICENSE.md"
+ * file that was distributed with this source code.
+ */
+
+namespace Respect\Validation\Rules;
 
 class HelloWorld extends AbstractRule
 {
@@ -113,69 +122,125 @@ class HelloWorld extends AbstractRule
         return $input === 'Hello World';
     }
 }</code></pre>
+<p>Docblocks with <code>@param</code>, <code>@return</code>, <code>{@inheritdoc}</code>, <code>@author</code> and other
+annotations for classes and methods are encouraged but not required.</p>
+<h3 id="creating-the-rule-exception">Creating the rule exception</h3>
 <p>Just that and we're done with the rule code. The Exception requires you to
 declare messages used by <code>assert()</code> and <code>check()</code>. Messages are declared in
 affirmative and negative moods, so if anyone calls <code>v::not(v::helloWorld())</code> the
 library will show the appropriate message.</p>
-<pre><code class="language-php">namespace Respect\Validation\Exceptions;
+<pre><code class="language-php">&lt;?php
+
+/*
+ * This file is part of Respect/Validation.
+ *
+ * (c) Alexandre Gomes Gaigalas &lt;alexandre@gaigalas.net&gt;
+ *
+ * For the full copyright and license information, please view the "LICENSE.md"
+ * file that was distributed with this source code.
+ */
+
+namespace Respect\Validation\Exceptions;
 
 class HelloWorldException extends ValidationException
 {
-    public static $defaultTemplates = array(
-        self::MODE_DEFAULT =&gt; array(
+    public static $defaultTemplates = [
+        self::MODE_DEFAULT =&gt; [
             self::STANDARD =&gt; '{{name}} must be a Hello World',
-        ),
-        self::MODE_NEGATIVE =&gt; array(
+        ],
+        self::MODE_NEGATIVE =&gt; [
             self::STANDARD =&gt; '{{name}} must not be a Hello World',
-        )
-    );
+        ]
+    ];
 }</code></pre>
-<p>Finally, we need to test if everything is running smooth:</p>
-<pre><code class="language-php">namespace Respect\Validation\Rules;
+<h3 id="creating-unit-tests">Creating unit tests</h3>
+<p>Finally, we need to test if everything is running smooth. We have <code>RuleTestCase</code>
+that allows us to make easier to test rules, but you fell free to use the
+<code>PHPUnit_Framework_TestCase</code> if you want or you need it's necessary.</p>
+<p>The <code>RuleTestCase</code> extends PHPUnit's <code>PHPUnit_Framework_TestCase</code> class, so you
+are able to use any method of them. By extending <code>RuleTestCase</code> you should
+implement two methods that should return a <a href="https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers" title="PHPUnit Data Providers">data provider</a> with the rule as
+first item of the arrays:</p>
+<ul>
+<li><code>providerForValidInput</code>: Will test when <code>validate()</code> should return <code>true</code></li>
+<li><code>providerForInvalidInput</code>: Will test when <code>validate()</code> should return <code>false</code></li>
+</ul>
+<pre><code class="language-php">&lt;?php
 
-class HelloWorldTest extends \PHPUnit_Framework_TestCase
+/*
+ * This file is part of Respect/Validation.
+ *
+ * (c) Alexandre Gomes Gaigalas &lt;alexandre@gaigalas.net&gt;
+ *
+ * For the full copyright and license information, please view the "LICENSE.md"
+ * file that was distributed with this source code.
+ */
+
+namespace Respect\Validation\Rules;
+
+/**
+ * @group  rule
+ * @covers Respect\Validation\Rules\HelloWorld
+ */
+class HelloWorldTest extends RuleTestCase
 {
-    public function testShouldValidateAValidHelloWorld()
+    public function providerForValidInput()
     {
         $rule = new HelloWorld();
 
-        $this-&gt;assertTrue($rule-&gt;validate('Hello World'));
+        return [
+            [$rule, 'Hello World'],
+        ];
     }
 
-    public function testNotValidateAnInvalidHelloWorld()
+    public function providerForInvalidInput()
     {
         $rule = new HelloWorld();
 
-        $this-&gt;assertFalse($rule-&gt;validate('Hello Moon'));
-    }
-
-    /**
-     * @expectedException Respect\Validation\Exceptions\HelloWorldException
-     * @expectedExceptionMessage "Hello Mars" must be a Hello World
-     */
-    public function testShouldThowsTheRightExceptionWhenChecking()
-    {
-        $rule = new HelloWorld();
-
-        $rule-&gt;check('Hello Mars');
+        return [
+            [$rule, 'Not a hello'],
+            [$rule, 'Hello darkness, my old friend'],
+            [$rule, 'Hello is it me you\'re looking for?'],
+        ];
     }
 }</code></pre>
-<p>PS.: We strongly recommend you use <a href="https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers">Data Providers</a>.</p>
+<p>If the constructor of your rule accepts arguments you may create specific tests
+for it other than what is covered by <code>RuleTestCase</code>.</p>
+<h3 id="helping-us-a-little-bit-more">Helping us a little bit more</h3>
+<p>You rule will be accepted only with these 3 files (rule, exception and unit test),
+but if you really want to help us, you can follow the example of <a href="https://github.com/Respect/Validation/commit/f08a1fa">ArrayType</a> by:</p>
+<ul>
+<li>Adding your new rule on the <code>Validator</code>'s class docblock;</li>
+<li>Writing a documentation for your new rule;</li>
+<li>Creating integration tests with PHPT.</li>
+</ul>
+<p>As I already said, none of them are required but you will help us a lot.</p>
 <h2 id="documentation">Documentation</h2>
 <p>Our docs at <a href="http://respect.github.io/Validation">http://respect.github.io/Validation</a> are generated from our Markdown
-files using <a href="http://couscous.io/">Couscous</a>. Add your brand new rule there and
+files using <a href="http://couscous.io/" title="Couscous">Couscous</a>. Add your brand new rule there and
 everything will be updated as soon as possible.</p>
 <h2 id="running-tests">Running Tests</h2>
 <p>After run <code>composer install</code> on the library's root directory you must run PHPUnit.</p>
 <h3 id="linux">Linux</h3>
 <p>You can test the project using the commands:</p>
 <pre><code class="language-sh">$ vendor/bin/phpunit</code></pre>
+<p>or</p>
+<pre><code class="language-sh">$ composer test</code></pre>
 <h3 id="windows">Windows</h3>
 <p>You can test the project using the commands:</p>
 <pre><code class="language-sh">&gt; vendor\bin\phpunit</code></pre>
+<p>or</p>
+<pre><code class="language-sh">&gt; composer test</code></pre>
 <p>No test should fail.</p>
 <p>You can tweak the PHPUnit's settings by copying <code>phpunit.xml.dist</code> to <code>phpunit.xml</code>
 and changing it according to your needs.</p>
+<h2 id="coding-style-and-standards">Coding style and standards</h2>
+<p>We follow the <a href="http://www.php-fig.org/psr/psr-2" title="PHP Standard Recommendation: Coding Style Guide">PSR-2</a> coding style and <a href="http://www.php-fig.org/psr/psr-4" title="PHP Standard Recommendation: Autoloader">PSR-4</a> autoloading standard.</p>
+<p>There are some preferences regarding code style which you can easily adhere to
+by using <a href="https://github.com/FriendsOfPHP/PHP-CS-Fixer" title="PHP Coding Standard Fixer">php-cs-fixer</a>.</p>
+<p>This will format all PHP files consistently using the preferences of this
+project.</p>
+<pre><code class="language-sh">$ vendor/bin/php-cs-fixer fix</code></pre>
 <hr />
 <p>See also:</p>
 <ul>
@@ -183,6 +248,7 @@ and changing it according to your needs.</p>
 <li><a href="docs/install.html">Installation</a></li>
 <li><a href="license.html">License</a></li>
 <li><a href="docs/validators.html">Validators</a></li>
+<li><a href="changelog.html">Changelog</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

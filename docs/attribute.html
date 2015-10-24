@@ -81,12 +81,13 @@
 <pre><code class="language-php">$obj = new stdClass;
 $obj-&gt;foo = 'bar';
 
-v::attribute('foo')-&gt;validate($obj); //true</code></pre>
+v::attribute('foo')-&gt;validate($obj); // true</code></pre>
 <p>You can also validate the attribute itself:</p>
-<pre><code class="language-php">v::attribute('foo', v::equals('bar'))-&gt;validate($obj); //true</code></pre>
+<pre><code class="language-php">v::attribute('foo', v::equals('bar'))-&gt;validate($obj); // true</code></pre>
 <p>Third parameter makes the attribute presence optional:</p>
-<pre><code class="language-php">v::attribute('lorem', v::string(), false)-&gt;validate($obj); // true</code></pre>
+<pre><code class="language-php">v::attribute('lorem', v::stringType(), false)-&gt;validate($obj); // true</code></pre>
 <p>The name of this validator is automatically set to the attribute name.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="key.html">Key</a></li>

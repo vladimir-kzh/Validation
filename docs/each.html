@@ -79,19 +79,20 @@
 </ul>
 <p>Iterates over an array or Iterator and validates the value or key
 of each entry:</p>
-<pre><code class="language-php">$releaseDates = array(
+<pre><code class="language-php">$releaseDates = [
     'validation' =&gt; '2010-01-01',
     'template'   =&gt; '2011-01-01',
     'relational' =&gt; '2011-02-05',
-);
+];
 
-v::arr()-&gt;each(v::date())-&gt;validate($releaseDates); //true
-v::arr()-&gt;each(v::date(), v::string()-&gt;lowercase())-&gt;validate($releaseDates); //true</code></pre>
+v::arrayVal()-&gt;each(v::date())-&gt;validate($releaseDates); // true
+v::arrayVal()-&gt;each(v::date(), v::stringType()-&gt;lowercase())-&gt;validate($releaseDates); // true</code></pre>
 <p>Using <code>arr()</code> before <code>each()</code> is a best practice.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="key.html">Key</a></li>
-<li><a href="arr.html">Arr</a></li>
+<li><a href="arrayval.html">ArrayVal</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

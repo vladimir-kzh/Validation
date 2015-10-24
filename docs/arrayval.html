@@ -71,13 +71,25 @@
                     </nav>
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="float">Float</h1>
+                    <h1 id="arrayval">ArrayVal</h1>
 <ul>
-<li><code>v::float()</code></li>
+<li><code>v::arrayVal()</code></li>
 </ul>
-<p>Validates a floating point number.</p>
-<pre><code class="language-php">v::float()-&gt;validate(1.5); //true
-v::float()-&gt;validate('1e5'); //true</code></pre>
+<p>Validates if the input is an array or if the input can be used as an array
+(instance of <code>ArrayAccess</code>).</p>
+<pre><code class="language-php">v::arrayVal()-&gt;validate([]); // true
+v::arrayVal()-&gt;validate(new ArrayObject); // true</code></pre>
+<hr />
+<p>See also:</p>
+<ul>
+<li><a href="arraytype.html">ArrayType</a></li>
+<li><a href="countable.html">Countable</a></li>
+<li><a href="each.html">Each</a></li>
+<li><a href="iterable.html">Iterable</a></li>
+<li><a href="key.html">Key</a></li>
+<li><a href="keyset.html">KeySet</a></li>
+<li><a href="keyvalue.html">KeyValue</a></li>
+</ul>
                     <div id="go-top">
                         <hr />
                         <p>

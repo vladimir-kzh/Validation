@@ -76,13 +76,14 @@
 <li><code>v::bic(string $countryCode)</code></li>
 </ul>
 <p>Validates a BIC (Bank Identifier Code) for a given country.</p>
-<pre><code class="language-php">v::bic("de")-&gt;validate("VZVDDED1XXX"); //true
-v::bic("de")-&gt;validate("VZVDDED1"); //true</code></pre>
+<pre><code class="language-php">v::bic("de")-&gt;validate("VZVDDED1XXX"); // true
+v::bic("de")-&gt;validate("VZVDDED1"); // true</code></pre>
 <p>Theses country codes are supported:</p>
 <ul>
 <li>&quot;de&quot; (Germany) - You must add <code>"malkusch/bav": "~1.0"</code> to your <code>require</code> property on composer.json file.</li>
 </ul>
-<p>See also</p>
+<hr />
+<p>See also:</p>
 <ul>
 <li><a href="bank.html">Bank</a></li>
 <li><a href="bankaccount.html">BankAccount</a></li>

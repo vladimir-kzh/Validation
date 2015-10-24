@@ -76,10 +76,16 @@
 <li><code>v::charset(mixed $charset)</code></li>
 </ul>
 <p>Validates if a string is in a specific charset.</p>
-<pre><code class="language-php">v::charset('ASCII')-&gt;validate('açúcar'); //false
+<pre><code class="language-php">v::charset('ASCII')-&gt;validate('açúcar'); // false
 v::charset('ASCII')-&gt;validate('sugar');  //true
-v::charset(array('ISO-8859-1', 'EUC-JP'))-&gt;validate('日本国'); // true</code></pre>
+v::charset(['ISO-8859-1', 'EUC-JP'])-&gt;validate('日本国'); // true</code></pre>
 <p>The array format is a logic OR, not AND.</p>
+<hr />
+<p>See also:</p>
+<ul>
+<li><a href="alnum.html">Alnum</a></li>
+<li><a href="alpha.html">Alpha</a></li>
+</ul>
                     <div id="go-top">
                         <hr />
                         <p>

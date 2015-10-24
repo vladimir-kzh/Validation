@@ -71,17 +71,26 @@
                     </nav>
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="int">Int</h1>
+                    <h1 id="objecttype">ObjectType</h1>
 <ul>
-<li><code>v::int()</code></li>
+<li><code>v::objectType()</code></li>
 </ul>
-<p>Validates if the input is an integer.</p>
-<pre><code class="language-php">v::int()-&gt;validate('10'); //true
-v::int()-&gt;validate(10); //true</code></pre>
+<p>Validates if the input is an object.</p>
+<pre><code class="language-php">v::objectType()-&gt;validate(new stdClass); // true</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
-<li><a href="numeric.html">Numeric</a></li>
-<li><a href="digit.html">Digit</a></li>
+<li><a href="attribute.html">Attribute</a></li>
+<li><a href="booltype.html">BoolType</a></li>
+<li><a href="callabletype.html">CallableType</a></li>
+<li><a href="floattype.html">FloatType</a></li>
+<li><a href="instance.html">Instance</a></li>
+<li><a href="inttype.html">IntType</a></li>
+<li><a href="nulltype.html">NullType</a></li>
+<li><a href="objecttype.html">ObjectType</a></li>
+<li><a href="resourcetype.html">ResourceType</a></li>
+<li><a href="stringtype.html">StringType</a></li>
+<li><a href="type.html">Type</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

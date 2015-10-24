@@ -71,15 +71,23 @@
                     </nav>
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="nullvalue">NullValue</h1>
+                    <h1 id="resourcetype">ResourceType</h1>
 <ul>
-<li><code>v::nullValue()</code></li>
+<li><code>v::resourceType()</code></li>
 </ul>
-<p>Validates if the input is null. This rule does not allow empty strings to avoid ambiguity.</p>
-<pre><code class="language-php">v::nullValue()-&gt;validate(null); //true</code></pre>
+<p>Validates if the input is a resource.</p>
+<pre><code class="language-php">v::resourceType()-&gt;validate(fopen('/path/to/file.txt', 'w')); // true</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
-<li><a href="notempty.html">NotEmpty</a></li>
+<li><a href="booltype.html">BoolType</a></li>
+<li><a href="callabletype.html">CallableType</a></li>
+<li><a href="floattype.html">FloatType</a></li>
+<li><a href="inttype.html">IntType</a></li>
+<li><a href="nulltype.html">NullType</a></li>
+<li><a href="objecttype.html">ObjectType</a></li>
+<li><a href="stringtype.html">StringType</a></li>
+<li><a href="type.html">Type</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

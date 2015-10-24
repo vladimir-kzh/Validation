@@ -79,12 +79,13 @@
 <p>This validator is similar to <code>v::contains()</code>, but validates
 only if the value is at the beginning of the input.</p>
 <p>For strings:</p>
-<pre><code class="language-php">v::startsWith('lorem')-&gt;validate('lorem ipsum'); //true</code></pre>
+<pre><code class="language-php">v::startsWith('lorem')-&gt;validate('lorem ipsum'); // true</code></pre>
 <p>For arrays:</p>
-<pre><code class="language-php">v::startsWith('lorem')-&gt;validate(array('lorem', 'ipsum')); //true</code></pre>
+<pre><code class="language-php">v::startsWith('lorem')-&gt;validate(['lorem', 'ipsum']); // true</code></pre>
 <p><code>true</code> may be passed as a parameter to indicate identical comparison
 instead of equal.</p>
 <p>Message template for this validator includes <code>{{startValue}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="endswith.html">EndsWith</a></li>

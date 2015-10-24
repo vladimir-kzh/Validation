@@ -74,20 +74,21 @@
                     <h1 id="max">Max</h1>
 <ul>
 <li><code>v::max(mixed $maxValue)</code></li>
-<li><code>v::max(mixed $maxValue, boolean $inclusive = false)</code></li>
+<li><code>v::max(mixed $maxValue, boolean $inclusive = true)</code></li>
 </ul>
 <p>Validates if the input doesn't exceed the maximum value.</p>
-<pre><code class="language-php">v::int()-&gt;max(15)-&gt;validate(20); //false
-v::int()-&gt;max(20)-&gt;validate(20); //false
-v::int()-&gt;max(20, true)-&gt;validate(20); //true</code></pre>
+<pre><code class="language-php">v::intVal()-&gt;max(15)-&gt;validate(20); // false
+v::intVal()-&gt;max(20)-&gt;validate(20); // false
+v::intVal()-&gt;max(20, true)-&gt;validate(20); // true</code></pre>
 <p>Also accepts dates:</p>
-<pre><code class="language-php">v::date()-&gt;max('2012-01-01')-&gt;validate('2010-01-01'); //true</code></pre>
+<pre><code class="language-php">v::date()-&gt;max('2012-01-01')-&gt;validate('2010-01-01'); // true</code></pre>
 <p>Also date intervals:</p>
 <pre><code class="language-php">// Same of minimum age validation
-v::date()-&gt;max('-18 years')-&gt;validate('1988-09-09'); //true</code></pre>
+v::date()-&gt;max('-18 years')-&gt;validate('1988-09-09'); // true</code></pre>
 <p><code>true</code> may be passed as a parameter to indicate that inclusive
 values must be used.</p>
 <p>Message template for this validator includes <code>{{maxValue}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="min.html">Min</a></li>

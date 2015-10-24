@@ -78,10 +78,11 @@
 <li><code>v::minimumAge(int $age, string $format)</code></li>
 </ul>
 <p>Validates a minimum age for a given date.</p>
-<pre><code class="language-php">v::minimumAge(18)-&gt;validate('1987-01-01'); //true
-v::minimumAge(18, 'd/m/Y')-&gt;validate('01/01/1987'); //true</code></pre>
+<pre><code class="language-php">v::minimumAge(18)-&gt;validate('1987-01-01'); // true
+v::minimumAge(18, 'd/m/Y')-&gt;validate('01/01/1987'); // true</code></pre>
 <p>Using <code>date()</code> before is a best-practice.</p>
 <p>Message template for this validator includes <code>{{age}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="age.html">Age</a></li>

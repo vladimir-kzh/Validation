@@ -76,15 +76,12 @@
 <li><code>v::not(v $negatedValidator)</code></li>
 </ul>
 <p>Negates any rule.</p>
-<pre><code class="language-php">v::not(v::ip())-&gt;validate('foo'); //true</code></pre>
-<p>using a shortcut</p>
-<pre><code class="language-php">v::ip()-&gt;not()-&gt;validate('foo'); //true</code></pre>
+<pre><code class="language-php">v::not(v::ip())-&gt;validate('foo'); // true</code></pre>
 <p>In the sample above, validator returns true because 'foo' isn't an IP Address.</p>
 <p>You can negate complex, grouped or chained validators as well:</p>
-<pre><code class="language-php">v::not(v::int()-&gt;positive())-&gt;validate(-1.5); //true</code></pre>
-<p>using a shortcut</p>
-<pre><code class="language-php">v::int()-&gt;positive()-&gt;not()-&gt;validate(-1.5); //true</code></pre>
+<pre><code class="language-php">v::not(v::intVal()-&gt;positive())-&gt;validate(-1.5); // true</code></pre>
 <p>Each other validation has custom messages for negated rules.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="noneof.html">NoneOf</a></li>

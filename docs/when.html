@@ -79,10 +79,11 @@
 <p>A ternary validator that accepts three parameters.</p>
 <p>When the <code>$if</code> validates, returns validation for <code>$then</code>.
 When the <code>$if</code> doesn't validate, returns validation for <code>$else</code>, if defined.</p>
-<pre><code class="language-php">v::when(v::int(), v::positive(), v::notEmpty())-&gt;validate($input);</code></pre>
+<pre><code class="language-php">v::when(v::intVal(), v::positive(), v::notEmpty())-&gt;validate($input);</code></pre>
 <p>In the sample above, if <code>$input</code> is an integer, then it must be positive.
 If <code>$input</code> is not an integer, then it must not me empty.
 When <code>$else</code> is not defined use <a href="alwaysinvalid.html">AlwaysInvalid</a></p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="allof.html">AllOf</a></li>

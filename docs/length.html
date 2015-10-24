@@ -79,17 +79,18 @@
 <li><code>v::length(int $min, int $max, boolean $inclusive = true)</code></li>
 </ul>
 <p>Validates lengths. Most simple example:</p>
-<pre><code class="language-php">v::string()-&gt;length(1, 5)-&gt;validate('abc'); //true</code></pre>
+<pre><code class="language-php">v::stringType()-&gt;length(1, 5)-&gt;validate('abc'); // true</code></pre>
 <p>You can also validate only minimum length:</p>
-<pre><code class="language-php">v::string()-&gt;length(5, null)-&gt;validate('abcdef'); // true</code></pre>
+<pre><code class="language-php">v::stringType()-&gt;length(5, null)-&gt;validate('abcdef'); // true</code></pre>
 <p>Only maximum length:</p>
-<pre><code class="language-php">v::string()-&gt;length(null, 5)-&gt;validate('abc'); // true</code></pre>
+<pre><code class="language-php">v::stringType()-&gt;length(null, 5)-&gt;validate('abc'); // true</code></pre>
 <p>The type as the first validator in a chain is a good practice,
 since length accepts many types:</p>
-<pre><code class="language-php">v::arr()-&gt;length(1, 5)-&gt;validate(array('foo', 'bar')); //true</code></pre>
+<pre><code class="language-php">v::arrayVal()-&gt;length(1, 5)-&gt;validate(['foo', 'bar']); // true</code></pre>
 <p>A third parameter may be passed to validate the passed values inclusive:</p>
-<pre><code class="language-php">v::string()-&gt;length(1, 5, true)-&gt;validate('a'); //true</code></pre>
+<pre><code class="language-php">v::stringType()-&gt;length(1, 5, true)-&gt;validate('a'); // true</code></pre>
 <p>Message template for this validator includes <code>{{minValue}}</code> and <code>{{maxValue}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="between.html">Between</a></li>

@@ -83,21 +83,22 @@ function to break its parts:</p>
 <pre><code class="language-php">$parts = parse_url($url);</code></pre>
 <p>This function returns an array containing <code>scheme</code>, <code>host</code>, <code>path</code> and <code>query</code>.
 We can validate them this way:</p>
-<pre><code class="language-php">v::arr()-&gt;key('scheme', v::startsWith('http'))
+<pre><code class="language-php">v::arrayVal()-&gt;key('scheme', v::startsWith('http'))
         -&gt;key('host',   v::domain())
-        -&gt;key('path',   v::string())
+        -&gt;key('path',   v::stringType())
         -&gt;key('query',  v::notEmpty());</code></pre>
 <p>Using <code>v::call()</code> you can do this in a single chain:</p>
 <pre><code class="language-php">v::call(
     'parse_url',
-     v::arr()-&gt;key('scheme', v::startsWith('http'))
+     v::arrayVal()-&gt;key('scheme', v::startsWith('http'))
         -&gt;key('host',   v::domain())
-        -&gt;key('path',   v::string())
+        -&gt;key('path',   v::stringType())
         -&gt;key('query',  v::notEmpty())
 )-&gt;validate($url);</code></pre>
 <p>It is possible to call methods and closures as the first parameter:</p>
-<pre><code class="language-php">v::call(array($myObj, 'methodName'), v::int())-&gt;validate($myInput);
-v::call(function($input) {}, v::int())-&gt;validate($myInput);</code></pre>
+<pre><code class="language-php">v::call([$myObj, 'methodName'], v::intVal())-&gt;validate($myInput);
+v::call(function($input) {}, v::intVal())-&gt;validate($myInput);</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="callback.html">Callback</a></li>

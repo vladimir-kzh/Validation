@@ -76,13 +76,14 @@
 <li><code>v::bankAccount(string $countryCode, string $bank)</code></li>
 </ul>
 <p>Validates a bank account for a given bank.</p>
-<pre><code class="language-php">v::bankAccount("de", "70169464")-&gt;validate("1112"); //true
-v::bankAccount("de", "70169464")-&gt;validate("1234"); //false</code></pre>
+<pre><code class="language-php">v::bankAccount("de", "70169464")-&gt;validate("1112"); // true
+v::bankAccount("de", "70169464")-&gt;validate("1234"); // false</code></pre>
 <p>These country codes are supported:</p>
 <ul>
 <li>&quot;de&quot; (Germany) - You must add <code>"malkusch/bav": "~1.0"</code> to your <code>require</code> property on composer.json file.</li>
 </ul>
-<p>See also</p>
+<hr />
+<p>See also:</p>
 <ul>
 <li><a href="bank.html">Bank</a></li>
 <li><a href="bic.html">Bic</a></li>

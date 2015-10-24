@@ -76,12 +76,13 @@
 <li><code>v::cpf()</code></li>
 </ul>
 <p>Validates a Brazillian CPF number.</p>
-<pre><code class="language-php">v::cpf()-&gt;validate('44455566820'); //true</code></pre>
+<pre><code class="language-php">v::cpf()-&gt;validate('44455566820'); // true</code></pre>
 <p>It ignores any non-digit char:</p>
-<pre><code class="language-php">v::cpf()-&gt;validate('444.555.668-20'); //true</code></pre>
+<pre><code class="language-php">v::cpf()-&gt;validate('444.555.668-20'); // true</code></pre>
 <p>If you need to validate digits only, add <code>-&gt;digit()</code> to
 the chain:</p>
-<pre><code class="language-php">v::digit()-&gt;cpf()-&gt;validate('44455566820'); //true</code></pre>
+<pre><code class="language-php">v::digit()-&gt;cpf()-&gt;validate('44455566820'); // true</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="cnpj.html">Cnpj</a></li>

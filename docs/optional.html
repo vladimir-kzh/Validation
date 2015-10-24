@@ -71,20 +71,22 @@
                     </nav>
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="false">False</h1>
+                    <h1 id="optional">Optional</h1>
 <ul>
-<li><code>v::false()</code></li>
+<li><code>v::optional(v $rule)</code></li>
 </ul>
-<p>Validates if a value is considered as <code>false</code>.</p>
-<pre><code class="language-php">v::false()-&gt;validate(false); //true
-v::false()-&gt;validate(0); //true
-v::false()-&gt;validate('0'); //true
-v::false()-&gt;validate('false'); //true
-v::false()-&gt;validate('off'); //true
-v::false()-&gt;validate('no'); //true</code></pre>
-<p>See also</p>
+<p>Validates if the given input is optional or not. By <em>optional</em> we consider <code>null</code>
+or an empty string (<code>''</code>).</p>
+<pre><code class="language-php">v::optional(v::alpha())-&gt;validate(''); // true
+v::optional(v::digit())-&gt;validate(null); // true</code></pre>
+<hr />
+<p>See also:</p>
 <ul>
-<li><a href="true.html">True</a></li>
+<li><a href="nowhitespace.html">NoWhitespace</a></li>
+<li><a href="notblank.html">NotBlank</a></li>
+<li><a href="notempty.html">NotEmpty</a></li>
+<li><a href="notoptional.html">NotOptional</a></li>
+<li><a href="nulltype.html">NullType</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

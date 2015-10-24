@@ -77,9 +77,10 @@
 <li><code>v::filterVar(int $filter, mixed $options)</code></li>
 </ul>
 <p>A wrapper for PHP's <a href="http://php.net/filter_var">filter_var()</a> function.</p>
-<pre><code class="language-php">v::filterVar(FILTER_VALIDATE_EMAIL)-&gt;validate('bob@example.com'); //true
-v::filterVar(FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)-&gt;validate('http://example.com'); //true</code></pre>
-<p>See also</p>
+<pre><code class="language-php">v::filterVar(FILTER_VALIDATE_EMAIL)-&gt;validate('bob@example.com'); // true
+v::filterVar(FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)-&gt;validate('http://example.com'); // true</code></pre>
+<hr />
+<p>See also:</p>
 <ul>
 <li><a href="callback.html">Callback</a></li>
 </ul>

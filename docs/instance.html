@@ -76,12 +76,13 @@
 <li><code>v::instance(string $instanceName)</code></li>
 </ul>
 <p>Validates if the input is an instance of the given class or interface.</p>
-<pre><code class="language-php">v::instance('DateTime')-&gt;validate(new DateTime); //true
-v::instance('Traversable')-&gt;validate(new ArrayObject); //true</code></pre>
+<pre><code class="language-php">v::instance('DateTime')-&gt;validate(new DateTime); // true
+v::instance('Traversable')-&gt;validate(new ArrayObject); // true</code></pre>
 <p>Message template for this validator includes <code>{{instanceName}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
-<li><a href="object.html">Object</a></li>
+<li><a href="objecttype.html">ObjectType</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

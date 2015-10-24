@@ -71,16 +71,19 @@
                     </nav>
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="object">Object</h1>
+                    <h1 id="floatval">FloatVal</h1>
 <ul>
-<li><code>v::object()</code></li>
+<li><code>v::floatVal()</code></li>
 </ul>
-<p>Validates if the input is an object.</p>
-<pre><code class="language-php">v::object()-&gt;validate(new stdClass); //true</code></pre>
+<p>Validates a floating point number.</p>
+<pre><code class="language-php">v::floatVal()-&gt;validate(1.5); // true
+v::floatVal()-&gt;validate('1e5'); // true</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
-<li><a href="instance.html">Instance</a></li>
-<li><a href="attribute.html">Attribute</a></li>
+<li><a href="floattype.html">FloatType</a></li>
+<li><a href="inttype.html">IntType</a></li>
+<li><a href="intval.html">IntVal</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

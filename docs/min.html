@@ -74,17 +74,18 @@
                     <h1 id="min">Min</h1>
 <ul>
 <li><code>v::min(mixed $minValue)</code></li>
-<li><code>v::min(mixed $minValue, boolean $inclusive = false)</code></li>
+<li><code>v::min(mixed $minValue, boolean $inclusive = true)</code></li>
 </ul>
 <p>Validates if the input is greater than the minimum value.</p>
-<pre><code class="language-php">v::int()-&gt;min(15)-&gt;validate(5); //false
-v::int()-&gt;min(5)-&gt;validate(5); //false
-v::int()-&gt;min(5, true)-&gt;validate(5); //true</code></pre>
+<pre><code class="language-php">v::intVal()-&gt;min(15)-&gt;validate(5); // false
+v::intVal()-&gt;min(5)-&gt;validate(5); // false
+v::intVal()-&gt;min(5, true)-&gt;validate(5); // true</code></pre>
 <p>Also accepts dates:</p>
-<pre><code class="language-php">v::date()-&gt;min('2012-01-01')-&gt;validate('2015-01-01'); //true</code></pre>
+<pre><code class="language-php">v::date()-&gt;min('2012-01-01')-&gt;validate('2015-01-01'); // true</code></pre>
 <p><code>true</code> may be passed as a parameter to indicate that inclusive
 values must be used.</p>
 <p>Message template for this validator includes <code>{{minValue}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="max.html">Max</a></li>

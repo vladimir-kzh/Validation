@@ -76,14 +76,23 @@
 <li><code>v::directory()</code></li>
 </ul>
 <p>Validates directories.</p>
-<pre><code class="language-php">v::directory()-&gt;validate(__DIR__); //true
-v::directory()-&gt;validate(__FILE__); //false</code></pre>
+<pre><code class="language-php">v::directory()-&gt;validate(__DIR__); // true
+v::directory()-&gt;validate(__FILE__); // false</code></pre>
 <p>This validator will consider SplFileInfo instances, so you can do something like:</p>
 <pre><code class="language-php">v::directory()-&gt;validate(new \SplFileInfo($directory));</code></pre>
-<p>See also</p>
+<hr />
+<p>See also:</p>
 <ul>
+<li><a href="executable.html">Executable</a></li>
 <li><a href="exists.html">Exists</a></li>
+<li><a href="extension.html">Extension</a></li>
 <li><a href="file.html">File</a></li>
+<li><a href="mimetype.html">Mimetype</a></li>
+<li><a href="readable.html">Readable</a></li>
+<li><a href="size.html">Size</a></li>
+<li><a href="symboliclink.html">SymbolicLink</a></li>
+<li><a href="uploaded.html">Uploaded</a></li>
+<li><a href="writable.html">Writable</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

@@ -77,20 +77,18 @@
 <li><code>v::alnum(string $additionalChars)</code></li>
 </ul>
 <p>Validates alphanumeric characters from a-Z and 0-9.</p>
-<pre><code class="language-php">v::alnum()-&gt;validate('foo 123'); //true</code></pre>
+<pre><code class="language-php">v::alnum()-&gt;validate('foo 123'); // true</code></pre>
 <p>A parameter for extra characters can be used:</p>
-<pre><code class="language-php">v::alnum('-')-&gt;validate('foo - 123'); //true</code></pre>
+<pre><code class="language-php">v::alnum('-')-&gt;validate('foo - 123'); // true</code></pre>
 <p>This validator allows whitespace, if you want to
 remove them add <code>-&gt;noWhitespace()</code> to the chain:</p>
-<pre><code class="language-php">v::alnum()-&gt;noWhitespace-&gt;validate('foo 123'); //false</code></pre>
-<p>By default empty values are allowed, if you want
-to invalidate them, add <code>-&gt;notEmpty()</code> to the chain:</p>
-<pre><code class="language-php">v::alnum()-&gt;notEmpty()-&gt;validate(''); //false</code></pre>
+<pre><code class="language-php">v::alnum()-&gt;noWhitespace()-&gt;validate('foo 123'); // false</code></pre>
 <p>You can restrict case using the <code>-&gt;lowercase()</code> and
 <code>-&gt;uppercase()</code> validators:</p>
-<pre><code class="language-php">v::alnum()-&gt;uppercase()-&gt;validate('aaa'); //false</code></pre>
+<pre><code class="language-php">v::alnum()-&gt;uppercase()-&gt;validate('aaa'); // false</code></pre>
 <p>Message template for this validator includes <code>{{additionalChars}}</code> as
 the string of extra chars passed as the parameter.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="alpha.html">Alpha</a></li>

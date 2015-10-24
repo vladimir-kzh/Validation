@@ -77,15 +77,16 @@
 <li><code>v::date(string $format)</code></li>
 </ul>
 <p>Validates if input is a date:</p>
-<pre><code class="language-php">v::date()-&gt;validate('2009-01-01'); //true</code></pre>
+<pre><code class="language-php">v::date()-&gt;validate('2009-01-01'); // true</code></pre>
 <p>Also accepts strtotime values:</p>
-<pre><code class="language-php">v::date()-&gt;validate('now'); //true</code></pre>
+<pre><code class="language-php">v::date()-&gt;validate('now'); // true</code></pre>
 <p>And DateTime instances:</p>
-<pre><code class="language-php">v::date()-&gt;validate(new DateTime); //true</code></pre>
+<pre><code class="language-php">v::date()-&gt;validate(new DateTime); // true</code></pre>
 <p>You can pass a format when validating strings:</p>
-<pre><code class="language-php">v::date('Y-m-d')-&gt;validate('01-01-2009'); //false</code></pre>
+<pre><code class="language-php">v::date('Y-m-d')-&gt;validate('01-01-2009'); // false</code></pre>
 <p>Format has no effect when validating DateTime instances.</p>
 <p>Message template for this validator includes <code>{{format}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="between.html">Between</a></li>

@@ -77,13 +77,14 @@
 <li><code>v::yes(boolean $locale)</code></li>
 </ul>
 <p>Validates if value is considered as &quot;Yes&quot;.</p>
-<pre><code class="language-php">v::yes()-&gt;validate('Y');//true
-v::yes()-&gt;validate('Yea');//true
-v::yes()-&gt;validate('Yeah');//true
-v::yes()-&gt;validate('Yep');//true
-v::yes()-&gt;validate('Yes');//true</code></pre>
+<pre><code class="language-php">v::yes()-&gt;validate('Y'); // true
+v::yes()-&gt;validate('Yea'); // true
+v::yes()-&gt;validate('Yeah'); // true
+v::yes()-&gt;validate('Yep'); // true
+v::yes()-&gt;validate('Yes'); // true</code></pre>
 <p>This rule is case insensitive.</p>
 <p>If <code>$locale</code> is TRUE, uses the value of <a href="http://php.net/nl_langinfo">nl_langinfo()</a> with <code>YESEXPR</code> constant.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="no.html">No</a></li>

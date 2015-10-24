@@ -74,20 +74,21 @@
                     <h1 id="between">Between</h1>
 <ul>
 <li><code>v::between(mixed $start, mixed $end)</code></li>
-<li><code>v::between(mixed $start, mixed $end, boolean $inclusive = false)</code></li>
+<li><code>v::between(mixed $start, mixed $end, boolean $inclusive = true)</code></li>
 </ul>
 <p>Validates ranges. Most simple example:</p>
-<pre><code class="language-php">v::int()-&gt;between(10, 20)-&gt;validate(15); //true</code></pre>
+<pre><code class="language-php">v::intVal()-&gt;between(10, 20)-&gt;validate(15); // true</code></pre>
 <p>The type as the first validator in a chain is a good practice,
 since between accepts many types:</p>
-<pre><code class="language-php">v::string()-&gt;between('a', 'f')-&gt;validate('c'); //true</code></pre>
+<pre><code class="language-php">v::stringType()-&gt;between('a', 'f')-&gt;validate('c'); // true</code></pre>
 <p>Also very powerful with dates:</p>
-<pre><code class="language-php">v::date()-&gt;between('2009-01-01', '2013-01-01')-&gt;validate('2010-01-01'); //true</code></pre>
+<pre><code class="language-php">v::date()-&gt;between('2009-01-01', '2013-01-01')-&gt;validate('2010-01-01'); // true</code></pre>
 <p>Date ranges accept strtotime values:</p>
-<pre><code class="language-php">v::date()-&gt;between('yesterday', 'tomorrow')-&gt;validate('now'); //true</code></pre>
+<pre><code class="language-php">v::date()-&gt;between('yesterday', 'tomorrow')-&gt;validate('now'); // true</code></pre>
 <p>A third parameter may be passed to validate the passed values inclusive:</p>
-<pre><code class="language-php">v::date()-&gt;between(10, 20, true)-&gt;validate(20); //true</code></pre>
+<pre><code class="language-php">v::date()-&gt;between(10, 20, true)-&gt;validate(20); // true</code></pre>
 <p>Message template for this validator includes <code>{{minValue}}</code> and <code>{{maxValue}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="length.html">Length</a></li>

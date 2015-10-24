@@ -76,10 +76,12 @@
 <li><code>v::postalCode(string $countryCode)</code></li>
 </ul>
 <p>Validates a postal code according to the given country code.</p>
-<pre><code class="language-php">v::numeric()-&gt;postalCode('BR')-&gt;validate('02179000'); //true
-v::numeric()-&gt;postalCode('BR')-&gt;validate('02179-000'); //true
-v::numeric()-&gt;postalCode('US')-&gt;validate('02179-000'); //false</code></pre>
+<pre><code class="language-php">v::numeric()-&gt;postalCode('BR')-&gt;validate('02179000'); // true
+v::numeric()-&gt;postalCode('BR')-&gt;validate('02179-000'); // true
+v::numeric()-&gt;postalCode('US')-&gt;validate('02179-000'); // false</code></pre>
+<p>Message template for this validator includes <code>{{countryCode}}</code>.</p>
 <p>Extracted from <a href="http://www.geonames.org/">GeoNames</a>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="countrycode.html">CountryCode</a></li>

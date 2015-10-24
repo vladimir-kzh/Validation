@@ -76,9 +76,10 @@
 <li><code>v::xdigit()</code></li>
 </ul>
 <p>Accepts an hexadecimal number:</p>
-<pre><code class="language-php">v::xdigit()-&gt;validate('abc123'); //true</code></pre>
+<pre><code class="language-php">v::xdigit()-&gt;validate('abc123'); // true</code></pre>
 <p>Notice, however, that it doesn't accept strings starting with 0x:</p>
-<pre><code class="language-php">v::xdigit()-&gt;validate('0x1f'); //false</code></pre>
+<pre><code class="language-php">v::xdigit()-&gt;validate('0x1f'); // false</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="digit.html">Digit</a></li>

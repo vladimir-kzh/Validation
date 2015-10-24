@@ -77,10 +77,11 @@
 </ul>
 <p>Validates if NONE of the given validators validate:</p>
 <pre><code class="language-php">v::noneOf(
-    v::int(),
-    v::float()
-)-&gt;validate('foo'); //true</code></pre>
+    v::intVal(),
+    v::floatVal()
+)-&gt;validate('foo'); // true</code></pre>
 <p>In the sample above, 'foo' isn't a integer nor a float, so noneOf returns true.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="not.html">Not</a></li>

@@ -78,20 +78,21 @@
 <p>Validates if the given input is not empty or in other words is input mandatory and
 required. This function also takes whitespace into account, use <code>noWhitespace()</code>
 if no spaces or linebreaks and other whitespace anywhere in the input is desired.</p>
-<pre><code class="language-php">v::string()-&gt;notEmpty()-&gt;validate(''); //false</code></pre>
+<pre><code class="language-php">v::stringType()-&gt;notEmpty()-&gt;validate(''); // false</code></pre>
 <p>Null values are empty:</p>
-<pre><code class="language-php">v::notEmpty()-&gt;validate(null); //false</code></pre>
+<pre><code class="language-php">v::notEmpty()-&gt;validate(null); // false</code></pre>
 <p>Numbers:</p>
-<pre><code class="language-php">v::int()-&gt;notEmpty()-&gt;validate(0); //false</code></pre>
+<pre><code class="language-php">v::intVal()-&gt;notEmpty()-&gt;validate(0); // false</code></pre>
 <p>Empty arrays:</p>
-<pre><code class="language-php">v::arr()-&gt;notEmpty()-&gt;validate(array()); //false</code></pre>
+<pre><code class="language-php">v::arrayVal()-&gt;notEmpty()-&gt;validate([]); // false</code></pre>
 <p>Whitespace:</p>
-<pre><code class="language-php">v::string()-&gt;notEmpty()-&gt;validate('        ');  //false
-v::string()-&gt;notEmpty()-&gt;validate("\t \n \r");  //false</code></pre>
+<pre><code class="language-php">v::stringType()-&gt;notEmpty()-&gt;validate('        ');  //false
+v::stringType()-&gt;notEmpty()-&gt;validate("\t \n \r");  //false</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="nowhitespace.html">NoWhitespace</a></li>
-<li><a href="nullvalue.html">NullValue</a></li>
+<li><a href="nulltype.html">NullType</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

@@ -74,17 +74,15 @@
                     <h1 id="equals">Equals</h1>
 <ul>
 <li><code>v::equals(mixed $value)</code></li>
-<li><code>v::equals(mixed $value, boolean $identical = false)</code></li>
 </ul>
-<p>Validates if the input is equal some value.</p>
-<pre><code class="language-php">v::equals('alganet')-&gt;validate('alganet'); //true</code></pre>
-<p>Identical validation (===) is possible:</p>
-<pre><code class="language-php">v::equals(10)-&gt;validate('10'); //true
-v::equals(10, true)-&gt;validate('10'); //false</code></pre>
+<p>Validates if the input is equal to some value.</p>
+<pre><code class="language-php">v::equals('alganet')-&gt;validate('alganet'); // true</code></pre>
 <p>Message template for this validator includes <code>{{compareTo}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="contains.html">Contains</a></li>
+<li><a href="identical.html">Identical</a></li>
 </ul>
                     <div id="go-top">
                         <hr />

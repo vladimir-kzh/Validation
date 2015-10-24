@@ -78,7 +78,7 @@ or magic methods. We'll use a traditional dependency injection approach.</p>
 <pre><code class="language-php">use Respect\Validation\Validator as v;
 
 $usernameValidator = v::alnum()-&gt;noWhitespace()-&gt;length(1,15);
-$usernameValidator-&gt;validate('alganet'); //true</code></pre>
+$usernameValidator-&gt;validate('alganet'); // true</code></pre>
 <p>If you <code>var_dump($usernameValidator)</code>, you'll see a composite of objects with
 <code>Respect\Validation\Rules\Alnum</code>, <code>Respect\Validation\Rules\NoWhitespace</code> and
 <code>Respect\Validation\Rules\Length</code>. There is a specific object for each rule, and
@@ -90,7 +90,7 @@ $usernameValidator = new Rules\AllOf(
     new Rules\NoWhitespace(),
     new Rules\Length(1, 15)
 );
-$usernameValidator-&gt;validate('alganet'); //true</code></pre>
+$usernameValidator-&gt;validate('alganet'); // true</code></pre>
 <p>This is still a very lean API. You can use it in any dependency injection
 container or test it in the way you want. Nesting is still possible:</p>
 <pre><code class="language-php">use Respect\Validation\Rules;
@@ -101,7 +101,7 @@ $usernameValidator = new Rules\AllOf(
     new Rules\Length(1, 15)
 );
 $userValidator = new Rules\Key('name', $usernameValidator);
-$userValidator-&gt;validate(['name' =&gt; 'alganet']); //true</code></pre>
+$userValidator-&gt;validate(['name' =&gt; 'alganet']); // true</code></pre>
 <h2 id="how-it-works">How It Works?</h2>
 <p>The Respect\Validation chain is an
 <a href="http://martinfowler.com/bliki/InternalDslStyle.html">internal DSL</a>.

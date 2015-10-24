@@ -79,12 +79,13 @@
 <p>This validator is similar to <code>v::contains()</code>, but validates
 only if the value is at the end of the input.</p>
 <p>For strings:</p>
-<pre><code class="language-php">v::endsWith('ipsum')-&gt;validate('lorem ipsum'); //true</code></pre>
+<pre><code class="language-php">v::endsWith('ipsum')-&gt;validate('lorem ipsum'); // true</code></pre>
 <p>For arrays:</p>
-<pre><code class="language-php">v::endsWith('ipsum')-&gt;validate(array('lorem', 'ipsum')); //true</code></pre>
+<pre><code class="language-php">v::endsWith('ipsum')-&gt;validate(['lorem', 'ipsum']); // true</code></pre>
 <p>A second parameter may be passed for identical comparison instead
 of equal comparison.</p>
 <p>Message template for this validator includes <code>{{endValue}}</code>.</p>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="startswith.html">StartsWith</a></li>

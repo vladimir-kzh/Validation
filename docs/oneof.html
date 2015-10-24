@@ -77,15 +77,14 @@
 </ul>
 <p>This is a group validator that acts as an OR operator.</p>
 <pre><code class="language-php">v::oneOf(
-    v::int(),
-    v::float()
-)-&gt;validate(15.5); //true</code></pre>
-<p>In the sample above, <code>v::int()</code> doesn't validates, but
-<code>v::float()</code> validates, so oneOf returns true.</p>
+    v::intVal(),
+    v::floatVal()
+)-&gt;validate(15.5); // true</code></pre>
+<p>In the sample above, <code>v::intVal()</code> doesn't validates, but
+<code>v::floatVal()</code> validates, so oneOf returns true.</p>
 <p><code>v::oneOf</code> returns true if at least one inner validator
 passes.</p>
-<p>Using a shortcut</p>
-<pre><code class="language-php">v::int()-&gt;addOr(v::float())-&gt;validate(15.5); //true</code></pre>
+<hr />
 <p>See also:</p>
 <ul>
 <li><a href="allof.html">AllOf</a></li>

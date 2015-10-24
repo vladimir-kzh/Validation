@@ -71,13 +71,34 @@
                     </nav>
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="bool">Bool</h1>
+                    <h1 id="booltype">BoolType</h1>
 <ul>
-<li><code>v::bool()</code></li>
+<li><code>v::boolVal()</code></li>
 </ul>
-<p>Validates if the input is a boolean value:</p>
-<pre><code class="language-php">v::bool()-&gt;validate(true); //true
-v::bool()-&gt;validate(false); //true</code></pre>
+<p>Validates if the input results in a boolean value:</p>
+<pre><code class="language-php">v::boolVal()-&gt;validate('on'); // true
+v::boolVal()-&gt;validate('off'); // true
+v::boolVal()-&gt;validate('yes'); // true
+v::boolVal()-&gt;validate('no'); // true
+v::boolVal()-&gt;validate(1); // true
+v::boolVal()-&gt;validate(0); // true</code></pre>
+<hr />
+<p>See also:</p>
+<ul>
+<li><a href="booltype.html">BoolType</a></li>
+<li><a href="callabletype.html">CallableType</a></li>
+<li><a href="floattype.html">FloatType</a></li>
+<li><a href="floatval.html">FloatVal</a></li>
+<li><a href="inttype.html">IntType</a></li>
+<li><a href="no.html">No</a></li>
+<li><a href="nulltype.html">NullType</a></li>
+<li><a href="objecttype.html">ObjectType</a></li>
+<li><a href="resourcetype.html">ResourceType</a></li>
+<li><a href="stringtype.html">StringType</a></li>
+<li><a href="trueval.html">TrueVal</a></li>
+<li><a href="type.html">Type</a></li>
+<li><a href="yes.html">Yes</a></li>
+</ul>
                     <div id="go-top">
                         <hr />
                         <p>

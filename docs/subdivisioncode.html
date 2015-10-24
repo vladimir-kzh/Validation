@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Respect\Validation</title>
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+        <link rel="stylesheet" href="http://respect.github.io/Validation/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://respect.github.io/Validation/">
+                Respect\Validation
+                <small class="hidden-xs hidden-sm">
+                    The most awesome validation engine ever created for PHP
+                </small>
+            </a>
+
+                            <a href="https://github.com/Respect/Validation">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+                                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                        
+                            
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/">
+                                            Home
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/contributing.html">
+                                            Contributing
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/">
+                                            Feature Guide
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/install.html">
+                                            Installation
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/license.html">
+                                            License
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://respect.github.io/Validation/docs/validators.html">
+                                            Validators
+                                        </a>
+                                    </li>
+                                                            </ul>
+
+                        
+                    </nav>
+                
+                <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="subdivisioncode">SubdivisionCode</h1>
+<ul>
+<li><code>v::subdivisionCode(string $countryCode)</code></li>
+</ul>
+<p>Validates subdivision country codes according to <a href="http://en.wikipedia.org/wiki/ISO_3166-2" title="ISO 3166-2">ISO 3166-2</a>.</p>
+<p>The <code>$countryCode</code> must be a country in <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" title="ISO 3166-1 alpha-2">ISO 3166-1 alpha-2</a> format.</p>
+<pre><code class="language-php">v::subdivisionCode('BR')-&gt;validate('SP'); // true
+v::subdivisionCode('US')-&gt;validate('CA'); // true</code></pre>
+<p>This rule is case sensitive.</p>
+<h2 id="available-country-codes">Available country codes</h2>
+<ul>
+<li><code>AD</code>: Andorra</li>
+<li><code>AE</code>: United Arab Emirates</li>
+<li><code>AF</code>: Afghanistan</li>
+<li><code>AG</code>: Antigua and Barbuda</li>
+<li><code>AI</code>: Anguilla</li>
+<li><code>AL</code>: Albania</li>
+<li><code>AM</code>: Armenia</li>
+<li><code>AN</code>: AN.html</li>
+<li><code>AO</code>: Angola</li>
+<li><code>AQ</code>: Antarctica</li>
+<li><code>AR</code>: Argentina</li>
+<li><code>AS</code>: American Samoa</li>
+<li><code>AT</code>: Austria</li>
+<li><code>AU</code>: Australia</li>
+<li><code>AW</code>: Aruba</li>
+<li><code>AX</code>: Åland</li>
+<li><code>AZ</code>: Azerbaijan</li>
+<li><code>BA</code>: Bosnia and Herzegovina</li>
+<li><code>BB</code>: Barbados</li>
+<li><code>BD</code>: Bangladesh</li>
+<li><code>BE</code>: Belgium</li>
+<li><code>BF</code>: Burkina Faso</li>
+<li><code>BG</code>: Bulgaria</li>
+<li><code>BH</code>: Bahrain</li>
+<li><code>BI</code>: Burundi</li>
+<li><code>BJ</code>: Benin</li>
+<li><code>BL</code>: Saint Barthélemy</li>
+<li><code>BM</code>: Bermuda</li>
+<li><code>BN</code>: Brunei</li>
+<li><code>BO</code>: Bolivia</li>
+<li><code>BQ</code>: Bonaire</li>
+<li><code>BR</code>: Brazil</li>
+<li><code>BS</code>: Bahamas</li>
+<li><code>BT</code>: Bhutan</li>
+<li><code>BV</code>: Bouvet Island</li>
+<li><code>BW</code>: Botswana</li>
+<li><code>BY</code>: Belarus</li>
+<li><code>BZ</code>: Belize</li>
+<li><code>CA</code>: Canada</li>
+<li><code>CC</code>: Cocos [Keeling] Islands</li>
+<li><code>CD</code>: Democratic Republic of the Congo</li>
+<li><code>CF</code>: Central African Republic</li>
+<li><code>CG</code>: Republic of the Congo</li>
+<li><code>CH</code>: Switzerland</li>
+<li><code>CI</code>: Ivory Coast</li>
+<li><code>CK</code>: Cook Islands</li>
+<li><code>CL</code>: Chile</li>
+<li><code>CM</code>: Cameroon</li>
+<li><code>CN</code>: China</li>
+<li><code>CO</code>: Colombia</li>
+<li><code>CR</code>: Costa Rica</li>
+<li><code>CS</code>: CS.html</li>
+<li><code>CU</code>: Cuba</li>
+<li><code>CV</code>: Cape Verde</li>
+<li><code>CW</code>: Curacao</li>
+<li><code>CX</code>: Christmas Island</li>
+<li><code>CY</code>: Cyprus</li>
+<li><code>CZ</code>: Czech Republic</li>
+<li><code>DE</code>: Germany</li>
+<li><code>DJ</code>: Djibouti</li>
+<li><code>DK</code>: Denmark</li>
+<li><code>DM</code>: Dominica</li>
+<li><code>DO</code>: Dominican Republic</li>
+<li><code>DZ</code>: Algeria</li>
+<li><code>EC</code>: Ecuador</li>
+<li><code>EE</code>: Estonia</li>
+<li><code>EG</code>: Egypt</li>
+<li><code>EH</code>: Western Sahara</li>
+<li><code>ER</code>: Eritrea</li>
+<li><code>ES</code>: Spain</li>
+<li><code>ET</code>: Ethiopia</li>
+<li><code>FI</code>: Finland</li>
+<li><code>FJ</code>: Fiji</li>
+<li><code>FK</code>: Falkland Islands</li>
+<li><code>FM</code>: Micronesia</li>
+<li><code>FO</code>: Faroe Islands</li>
+<li><code>FR</code>: France</li>
+<li><code>GA</code>: Gabon</li>
+<li><code>GB</code>: United Kingdom</li>
+<li><code>GD</code>: Grenada</li>
+<li><code>GE</code>: Georgia</li>
+<li><code>GF</code>: French Guiana</li>
+<li><code>GG</code>: Guernsey</li>
+<li><code>GH</code>: Ghana</li>
+<li><code>GI</code>: Gibraltar</li>
+<li><code>GL</code>: Greenland</li>
+<li><code>GM</code>: Gambia</li>
+<li><code>GN</code>: Guinea</li>
+<li><code>GP</code>: Guadeloupe</li>
+<li><code>GQ</code>: Equatorial Guinea</li>
+<li><code>GR</code>: Greece</li>
+<li><code>GS</code>: South Georgia and the South Sandwich Islands</li>
+<li><code>GT</code>: Guatemala</li>
+<li><code>GU</code>: Guam</li>
+<li><code>GW</code>: Guinea-Bissau</li>
+<li><code>GY</code>: Guyana</li>
+<li><code>HK</code>: Hong Kong</li>
+<li><code>HM</code>: Heard Island and McDonald Islands</li>
+<li><code>HN</code>: Honduras</li>
+<li><code>HR</code>: Croatia</li>
+<li><code>HT</code>: Haiti</li>
+<li><code>HU</code>: Hungary</li>
+<li><code>ID</code>: Indonesia</li>
+<li><code>IE</code>: Ireland</li>
+<li><code>IL</code>: Israel</li>
+<li><code>IM</code>: Isle of Man</li>
+<li><code>IN</code>: India</li>
+<li><code>IO</code>: British Indian Ocean Territory</li>
+<li><code>IQ</code>: Iraq</li>
+<li><code>IR</code>: Iran</li>
+<li><code>IS</code>: Iceland</li>
+<li><code>IT</code>: Italy</li>
+<li><code>JE</code>: Jersey</li>
+<li><code>JM</code>: Jamaica</li>
+<li><code>JO</code>: Jordan</li>
+<li><code>JP</code>: Japan</li>
+<li><code>KE</code>: Kenya</li>
+<li><code>KG</code>: Kyrgyzstan</li>
+<li><code>KH</code>: Cambodia</li>
+<li><code>KI</code>: Kiribati</li>
+<li><code>KM</code>: Comoros</li>
+<li><code>KN</code>: Saint Kitts and Nevis</li>
+<li><code>KP</code>: North Korea</li>
+<li><code>KR</code>: South Korea</li>
+<li><code>KW</code>: Kuwait</li>
+<li><code>KY</code>: Cayman Islands</li>
+<li><code>KZ</code>: Kazakhstan</li>
+<li><code>LA</code>: Laos</li>
+<li><code>LB</code>: Lebanon</li>
+<li><code>LC</code>: Saint Lucia</li>
+<li><code>LI</code>: Liechtenstein</li>
+<li><code>LK</code>: Sri Lanka</li>
+<li><code>LR</code>: Liberia</li>
+<li><code>LS</code>: Lesotho</li>
+<li><code>LT</code>: Lithuania</li>
+<li><code>LU</code>: Luxembourg</li>
+<li><code>LV</code>: Latvia</li>
+<li><code>LY</code>: Libya</li>
+<li><code>MA</code>: Morocco</li>
+<li><code>MC</code>: Monaco</li>
+<li><code>MD</code>: Moldova</li>
+<li><code>ME</code>: Montenegro</li>
+<li><code>MF</code>: Saint Martin</li>
+<li><code>MG</code>: Madagascar</li>
+<li><code>MH</code>: Marshall Islands</li>
+<li><code>MK</code>: Macedonia</li>
+<li><code>ML</code>: Mali</li>
+<li><code>MM</code>: Myanmar [Burma]</li>
+<li><code>MN</code>: Mongolia</li>
+<li><code>MO</code>: Macao</li>
+<li><code>MP</code>: Northern Mariana Islands</li>
+<li><code>MQ</code>: Martinique</li>
+<li><code>MR</code>: Mauritania</li>
+<li><code>MS</code>: Montserrat</li>
+<li><code>MT</code>: Malta</li>
+<li><code>MU</code>: Mauritius</li>
+<li><code>MV</code>: Maldives</li>
+<li><code>MW</code>: Malawi</li>
+<li><code>MX</code>: Mexico</li>
+<li><code>MY</code>: Malaysia</li>
+<li><code>MZ</code>: Mozambique</li>
+<li><code>NA</code>: Namibia</li>
+<li><code>NC</code>: New Caledonia</li>
+<li><code>NE</code>: Niger</li>
+<li><code>NF</code>: Norfolk Island</li>
+<li><code>NG</code>: Nigeria</li>
+<li><code>NI</code>: Nicaragua</li>
+<li><code>NL</code>: Netherlands</li>
+<li><code>NO</code>: Norway</li>
+<li><code>NP</code>: Nepal</li>
+<li><code>NR</code>: Nauru</li>
+<li><code>NU</code>: Niue</li>
+<li><code>NZ</code>: New Zealand</li>
+<li><code>OM</code>: Oman</li>
+<li><code>PA</code>: Panama</li>
+<li><code>PE</code>: Peru</li>
+<li><code>PF</code>: French Polynesia</li>
+<li><code>PG</code>: Papua New Guinea</li>
+<li><code>PH</code>: Philippines</li>
+<li><code>PK</code>: Pakistan</li>
+<li><code>PL</code>: Poland</li>
+<li><code>PM</code>: Saint Pierre and Miquelon</li>
+<li><code>PN</code>: Pitcairn Islands</li>
+<li><code>PR</code>: Puerto Rico</li>
+<li><code>PS</code>: Palestine</li>
+<li><code>PT</code>: Portugal</li>
+<li><code>PW</code>: Palau</li>
+<li><code>PY</code>: Paraguay</li>
+<li><code>QA</code>: Qatar</li>
+<li><code>RE</code>: Réunion</li>
+<li><code>RO</code>: Romania</li>
+<li><code>RS</code>: Serbia</li>
+<li><code>RU</code>: Russia</li>
+<li><code>RW</code>: Rwanda</li>
+<li><code>SA</code>: Saudi Arabia</li>
+<li><code>SB</code>: Solomon Islands</li>
+<li><code>SC</code>: Seychelles</li>
+<li><code>SD</code>: Sudan</li>
+<li><code>SE</code>: Sweden</li>
+<li><code>SG</code>: Singapore</li>
+<li><code>SH</code>: Saint Helena</li>
+<li><code>SI</code>: Slovenia</li>
+<li><code>SJ</code>: Svalbard and Jan Mayen</li>
+<li><code>SK</code>: Slovakia</li>
+<li><code>SL</code>: Sierra Leone</li>
+<li><code>SM</code>: San Marino</li>
+<li><code>SN</code>: Senegal</li>
+<li><code>SO</code>: Somalia</li>
+<li><code>SR</code>: Suriname</li>
+<li><code>SS</code>: South Sudan</li>
+<li><code>ST</code>: São Tomé and Príncipe</li>
+<li><code>SV</code>: El Salvador</li>
+<li><code>SX</code>: Sint Maarten</li>
+<li><code>SY</code>: Syria</li>
+<li><code>SZ</code>: Swaziland</li>
+<li><code>TC</code>: Turks and Caicos Islands</li>
+<li><code>TD</code>: Chad</li>
+<li><code>TF</code>: French Southern Territories</li>
+<li><code>TG</code>: Togo</li>
+<li><code>TH</code>: Thailand</li>
+<li><code>TJ</code>: Tajikistan</li>
+<li><code>TK</code>: Tokelau</li>
+<li><code>TL</code>: East Timor</li>
+<li><code>TM</code>: Turkmenistan</li>
+<li><code>TN</code>: Tunisia</li>
+<li><code>TO</code>: Tonga</li>
+<li><code>TR</code>: Turkey</li>
+<li><code>TT</code>: Trinidad and Tobago</li>
+<li><code>TV</code>: Tuvalu</li>
+<li><code>TW</code>: Taiwan</li>
+<li><code>TZ</code>: Tanzania</li>
+<li><code>UA</code>: Ukraine</li>
+<li><code>UG</code>: Uganda</li>
+<li><code>UM</code>: U.S. Minor Outlying Islands</li>
+<li><code>US</code>: United States</li>
+<li><code>UY</code>: Uruguay</li>
+<li><code>UZ</code>: Uzbekistan</li>
+<li><code>VA</code>: Vatican City</li>
+<li><code>VC</code>: Saint Vincent and the Grenadines</li>
+<li><code>VE</code>: Venezuela</li>
+<li><code>VG</code>: British Virgin Islands</li>
+<li><code>VI</code>: U.S. Virgin Islands</li>
+<li><code>VN</code>: Vietnam</li>
+<li><code>VU</code>: Vanuatu</li>
+<li><code>WF</code>: Wallis and Futuna</li>
+<li><code>WS</code>: Samoa</li>
+<li><code>XK</code>: Kosovo</li>
+<li><code>YE</code>: Yemen</li>
+<li><code>YT</code>: Mayotte</li>
+<li><code>ZA</code>: South Africa</li>
+<li><code>ZM</code>: Zambia</li>
+<li><code>ZW</code>: Zimbabwe</li>
+</ul>
+<p>All data was extrated from <a href="http://www.geonames.org" title="GetNames">GeoNames</a> which is licensed under a
+<a href="http://creativecommons.org/licenses/by/3.0" title="Creative Commons Attribution 3.0 License">Creative Commons Attribution 3.0 License</a>.</p>
+<hr />
+<p>See also:</p>
+<ul>
+<li><a href="countrycode.html">CountryCode</a></li>
+<li><a href="tld.html">Tld</a></li>
+</ul>
+                    <div id="go-top">
+                        <hr />
+                        <p>
+                            <a class="btn btn-primary btn-sm" href="#" role="button">
+                                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                            </a>
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                hljs.initHighlightingOnLoad();
+
+                var top = $('#go-top');
+
+                $(window).scroll(function() {
+                    if($(window).scrollTop() + $(window).height() <= $(document).height() - 100) {
+                        return;
+                    }
+
+                    top.fadeIn();
+                });
+            });
+
+            
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-59839366-1', 'auto');
+                ga('send', 'pageview');
+
+            
+        </script>
+    </body>
+</html>
