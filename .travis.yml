@@ -14,9 +14,9 @@ before_script:
   - composer install --no-interaction --prefer-source
 
 script:
-  - if [[ "5.6" == "${TRAVIS_PHP_VERSION}" ]]; then vendor/bin/phpcs --standard=PSR2 library; fi
-  - if [[ "5.6" == "${TRAVIS_PHP_VERSION}" ]]; then vendor/bin/phpmd library text cleancode,codesize,controversial,design,naming,unusedcode; fi
-  - vendor/bin/phpunit
+  - if [[ "5.6" == "${TRAVIS_PHP_VERSION}" ]]; then composer phpcs; fi
+  - if [[ "5.6" == "${TRAVIS_PHP_VERSION}" ]]; then composer phpmd; fi
+  - composer phpunit
 
 notifications:
   email: false

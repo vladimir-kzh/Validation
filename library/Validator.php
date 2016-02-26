@@ -27,32 +27,40 @@ class Validator extends AllOf
     /**
      * @var array
      */
-    protected $properties = ['label' => ''];
+    protected $label;
 
     /**
-     * @var Factory
+     * @var FactoryInterface
      */
     protected $factory;
 
     /**
-     * @var Factory
+     * @var FactoryInterface
      */
     protected static $defaultFactory;
 
     /**
      * Creates a new validator.
      *
-     * @param Factory $factory
+     * @param FactoryInterface $factory
      */
-    public function __construct(Factory $factory = null)
+    public function __construct(FactoryInterface $factory = null)
     {
         $this->factory = $factory ?: static::getDefaultFactory();
     }
 
     /**
+     * @return Factory
+     */
+    public function getFactory()
+    {
+        return $this->factory;
+    }
+
+    /**
      * Returns the default factory.
      *
-     * @return Factory
+     * @return FactoryInterface
      */
     public static function getDefaultFactory()
     {
@@ -64,57 +72,13 @@ class Validator extends AllOf
     }
 
     /**
-     * Appends a namespace to load rules and exceptions.
+     * Defines the default factory.
      *
-     * @param string $namespace
-     *
-     * @return self
+     * @param FactoryInterface $factory
      */
-    public function append($namespace)
+    public static function setDefaultFactory(FactoryInterface $factory)
     {
-        $this->factory->appendNamespace($namespace);
-
-        return $this;
-    }
-
-    /**
-     * Prepends a namespace to load rules and exceptions.
-     *
-     * @param string $namespace
-     *
-     * @return self
-     */
-    public function prepend($namespace)
-    {
-        $this->factory->prependNamespace($namespace);
-
-        return $this;
-    }
-
-    /**
-     * Defines a set of properties for the validation chain.
-     *
-     * @param array $properties
-     *
-     * @return self
-     */
-    public function setProperties(array $properties)
-    {
-        foreach ($properties as $name => $value) {
-            $this->properties[$name] = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Returns a set of properties for the validation chain.
-     *
-     * @return array
-     */
-    public function getProperties()
-    {
-        return $this->properties;
+        static::$defaultFactory = $factory;
     }
 
     /**
@@ -126,7 +90,7 @@ class Validator extends AllOf
      */
     public function setLabel($label)
     {
-        $this->properties['label'] = $label;
+        $this->label = $label;
 
         return $this;
     }
@@ -138,7 +102,7 @@ class Validator extends AllOf
      */
     public function getLabel()
     {
-        return $this->properties['label'];
+        return $this->label;
     }
 
     /**
@@ -151,7 +115,7 @@ class Validator extends AllOf
      */
     public static function __callStatic($ruleName, array $arguments)
     {
-        $validator = new static();
+        $validator = self::create();
         $validator->__call($ruleName, $arguments);
 
         return $validator;
@@ -181,10 +145,10 @@ class Validator extends AllOf
      */
     public function validate($input)
     {
-        $context = $this->factory->createContext($this, ['input' => $input]);
-        $context->applyRule();
+        $context = $this->factory->createContext($input);
+        $result = $this->apply($context);
 
-        return $context->isValid;
+        return $result->isValid();
     }
 
     /**
@@ -195,16 +159,15 @@ class Validator extends AllOf
      */
     public function check($input, array $properties = [])
     {
-        $properties = ['input' => $input] + $properties + $this->getProperties();
+        $context = $this->factory->createContext($input, $properties + ['label' => $this->label]);
         foreach ($this->getRules() as $childRule) {
-            $childContext = $this->factory->createContext($childRule, $properties);
-            $childContext->applyRule();
+            $result = $childRule->apply($context);
 
-            if ($childContext->isValid) {
+            if ($result->isValid()) {
                 continue;
             }
 
-            throw $this->factory->createFilteredException($childContext);
+            throw $this->factory->createFilteredException($result);
         }
     }
 
@@ -216,15 +179,23 @@ class Validator extends AllOf
      */
     public function assert($input, array $properties = [])
     {
-        $properties = ['input' => $input] + $properties + $this->getProperties();
-        $context = $this->factory->createContext($this, $properties);
-        $context->applyRule();
+        $properties += ['label' => $this->label];
+        $message = $properties['message'] ?? null;
+        unset($properties['message']);
 
-        if ($context->isValid) {
+        $context = $this->factory->createContext($input, $properties);
+
+        $result = $this->apply($context);
+
+        if ($result->isValid()) {
             return;
         }
 
-        throw $this->factory->createException($context);
+        if (null !== $message) {
+            $result->setProperty('message', $message);
+        }
+
+        throw $this->factory->createException($result);
     }
 
     /**

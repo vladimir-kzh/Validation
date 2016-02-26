@@ -11,18 +11,4 @@ namespace Respect\Validation\Exceptions;
 
 class NotEmptyException extends ValidationException
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getTemplates()
-    {
-        return [
-            self::MODE_AFFIRMATIVE => [
-                self::MESSAGE_STANDARD => '{{placeholder}} must not be empty',
-            ],
-            self::MODE_NEGATIVE => [
-                self::MESSAGE_STANDARD => '{{placeholder}} must be empty',
-            ],
-        ];
-    }
 }

@@ -9,13 +9,14 @@
 
 namespace Respect\Validation\Rules;
 
-use Respect\Validation\Context;
+use Respect\Validation\ContextInterface;
+use Respect\Validation\Result;
 use SplObjectStorage;
 
 /**
  * Will validate if all inner validators validates.
  */
-class AllOf implements RuleRequiredInterface
+class AllOf implements RuleInterface
 {
     /**
      * @var SplObjectStorage
@@ -69,13 +70,31 @@ class AllOf implements RuleRequiredInterface
     /**
      * {@inheritdoc}
      */
-    public function apply(Context $context)
+    public function getTemplates()
     {
-        foreach ($this->getRules() as $childRule) {
-            $childContext = $context->createChild($childRule);
-            $childContext->applyRule();
+        return [
+            self::MODE_AFFIRMATIVE => [
+                self::TEMPLATE_STANDARD => 'All rules must pass for {{placeholder}}',
+            ],
+            self::MODE_NEGATIVE => [
+                self::TEMPLATE_STANDARD => 'All rules must not pass for {{placeholder}}',
+            ],
+        ];
+    }
 
-            $context->isValid = ($context->isValid && $childContext->isValid);
+    /**
+     * {@inheritdoc}
+     */
+    public function apply(ContextInterface $context)
+    {
+        $result = new Result(true, $this, $context);
+        foreach ($this->getRules() as $childRule) {
+            $childResult = $childRule->apply($context);
+            $childResult->appendTo($result);
+
+            $result->setValid($result->isValid() && $childResult->isValid());
         }
+
+        return $result;
     }
 }

@@ -9,20 +9,36 @@
 
 namespace Respect\Validation\Rules;
 
-use Respect\Validation\Context;
+use Respect\Validation\ContextInterface;
+use Respect\Validation\Result;
 
 /**
- * Validates if the given input is not empty.
+ * Validates if the given context is not empty.
  */
-final class NotEmpty implements RuleRequiredInterface
+final class NotEmpty implements RuleInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function apply(Context $context)
+    public function getTemplates()
     {
-        $input = $context->input;
+        return [
+            self::MODE_AFFIRMATIVE => [
+                self::TEMPLATE_STANDARD => '{{placeholder}} must not be empty',
+            ],
+            self::MODE_NEGATIVE => [
+                self::TEMPLATE_STANDARD => '{{placeholder}} must be empty',
+            ],
+        ];
+    }
 
-        $context->isValid = !empty($input); //We need needs a variable to use empty()
+    /**
+     * {@inheritdoc}
+     */
+    public function apply(ContextInterface $context)
+    {
+        $input = $context->getInput();
+
+        return new Result(!empty($input), $this, $context);
     }
 }

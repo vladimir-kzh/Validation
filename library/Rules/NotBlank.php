@@ -9,13 +9,37 @@
 
 namespace Respect\Validation\Rules;
 
-use Respect\Validation\Context;
+use Respect\Validation\ContextInterface;
+use Respect\Validation\Result;
 
 /**
- * Validates if the given input is not blank.
+ * Validates if the given context is not blank.
  */
-final class NotBlank implements RuleRequiredInterface
+final class NotBlank implements RuleInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getTemplates()
+    {
+        return [
+            self::MODE_AFFIRMATIVE => [
+                self::TEMPLATE_STANDARD => '{{placeholder}} must not be empty',
+            ],
+            self::MODE_NEGATIVE => [
+                self::TEMPLATE_STANDARD => '{{placeholder}} must be empty',
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function apply(ContextInterface $context)
+    {
+        return new Result($this->isNotBlank($context->getInput()), $this, $context);
+    }
+
     /**
      * @param mixed $value
      *
@@ -36,13 +60,5 @@ final class NotBlank implements RuleRequiredInterface
         }
 
         return !empty($value);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function apply(Context $context)
-    {
-        $context->isValid = $this->isNotBlank($context->input);
     }
 }

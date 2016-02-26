@@ -9,16 +9,15 @@
 
 namespace Respect\Validation\Exceptions;
 
-use DateTime;
 use InvalidArgumentException;
 use IteratorAggregate;
-use Respect\Validation\Context;
 use Respect\Validation\Helpers\NormalizerHelper;
+use Respect\Validation\Result;
 use SplObjectStorage;
 
 class ValidationException extends InvalidArgumentException implements ExceptionInterface, IteratorAggregate
 {
-    const MESSAGE_STANDARD = 0;
+    const TEMPLATE_STANDARD = 0;
 
     const MODE_AFFIRMATIVE = 1;
     const MODE_NEGATIVE = 0;
@@ -28,9 +27,9 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
     }
 
     /**
-     * @var Context
+     * @var Result
      */
-    private $context;
+    private $result;
 
     /**
      * @var SplObjectStorage
@@ -38,59 +37,26 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
     private $children;
 
     /**
-     * @param Context $context
+     * @param Result $result
      */
-    public function __construct(Context $context)
+    public function __construct(Result $result)
     {
-        $this->context = $context;
+        $this->result = $result;
         $this->message = $this->createMessage();
     }
 
-    /**
-     * @return Context
-     */
-    public function getContext()
+    public function getResult()
     {
-        return $this->context;
+        return $this->result;
     }
 
-    /**
-     * Returns all available templates.
-     *
-     * You must overwrite this method for custom message.
-     *
-     * @return array
-     */
-    public function getTemplates()
+    private function getValue(array $array, $key)
     {
-        return [
-            self::MODE_AFFIRMATIVE => [
-                self::MESSAGE_STANDARD => '{{placeholder}} must be valid',
-            ],
-            self::MODE_NEGATIVE => [
-                self::MESSAGE_STANDARD => '{{placeholder}} must not be valid',
-            ],
-        ];
-    }
+        if (isset($array[$key])) {
+            return $array[$key];
+        }
 
-    /**
-     * Returns the current mode.
-     *
-     * @return int
-     */
-    public function getKeyMode()
-    {
-        return $this->context->mode;
-    }
-
-    /**
-     * Returns the current mode.
-     *
-     * @return int
-     */
-    public function getKeyTemplate()
-    {
-        return $this->context->template ?: self::MESSAGE_STANDARD;
+        return current($array);
     }
 
     /**
@@ -98,19 +64,17 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
      */
     private function getMessageTemplate()
     {
-        if ($this->context->message) {
-            return $this->context->message;
+        $result = $this->getResult();
+        if ($result->hasProperty('message')) {
+            return $result->getProperty('message');
         }
 
-        $keyMode = $this->getKeyMode();
-        $keyTemplate = $this->getKeyTemplate();
-        $templates = $this->getTemplates();
+        $keyMode = $result->getProperty('keyMode');
+        $keyTemplate = $result->getProperty('keyTemplate');
+        $templates = $result->getRule()->getTemplates();
+        $templatesMode = $this->getValue($templates, $keyMode);
 
-        if (isset($templates[$keyMode][$keyTemplate])) {
-            return $templates[$keyMode][$keyTemplate];
-        }
-
-        return current(current($templates));
+        return $this->getValue($templatesMode, $keyTemplate);
     }
 
     /**
@@ -118,15 +82,16 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
      */
     private function getPlaceholder()
     {
-        if ($this->context->label) {
-            return $this->context->label;
+        if ($this->result->hasProperty('label')
+            && ($label = $this->result->getProperty('label'))) {
+            return $label;
         }
 
-        if ($this->context->placeholder) {
-            return $this->context->placeholder;
+        if ($this->result->hasProperty('placeholder')) {
+            return $this->result->getProperty('placeholder');
         }
 
-        return $this->normalize($this->context->input);
+        return $this->normalize($this->result->getContext()->getInput());
     }
 
     /**
@@ -134,19 +99,14 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
      */
     private function createMessage()
     {
-        $params = $this->context->getProperties();
+        $params = $this->result->getProperties();
         $params['placeholder'] = $this->getPlaceholder();
-        $template = $this->getMessageTemplate();
-
-        if (isset($params['translator'])) {
-            $template = call_user_func($params['translator'], $template);
-        }
 
         return preg_replace_callback(
             '/{{(\w+)}}/',
             function ($match) use ($params) {
                 $value = $match[0];
-                if (isset($params[$match[1]])) {
+                if (array_key_exists($match[1], $params)) {
                     $value = $params[$match[1]];
                 }
 
@@ -156,7 +116,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
 
                 return $value;
             },
-            $template
+            call_user_func($this->result->getContext()->getTranslator(), $this->getMessageTemplate())
         );
     }
 
@@ -165,7 +125,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
      */
     private function getFactory()
     {
-        return $this->context->getFactory();
+        return $this->result->getContext()->getFactory();
     }
 
     /**
@@ -174,7 +134,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
     public function getIterator()
     {
         if (!$this->children instanceof SplObjectStorage) {
-            $this->children = $this->getFactory()->createChildrenExceptions($this->getContext());
+            $this->children = $this->getFactory()->createExceptionTree($this->result);
         }
 
         return $this->children;
@@ -191,7 +151,7 @@ class ValidationException extends InvalidArgumentException implements ExceptionI
         foreach ($exceptions as $exception) {
             $depth = $exceptions[$exception]['depth'];
             $prefix = str_repeat(' ', $depth * 2);
-            $messages[] .= sprintf('%s%s %s', $prefix, $marker, $exception->getMessage());
+            $messages[] = sprintf('%s%s %s', $prefix, $marker, $exception->getMessage());
         }
 
         return implode(PHP_EOL, $messages);

@@ -10,19 +10,19 @@
 namespace Respect\Validation\Rules;
 
 use RecursiveIteratorIterator;
-use Respect\Validation\Context;
-use Respect\Validation\Exceptions\ValidationException;
-use Respect\Validation\RecursiveContextIterator;
+use Respect\Validation\ContextInterface;
+use Respect\Validation\RecursiveResultIterator;
+use Respect\Validation\Result;
 
 /**
  * Negates any rule.
  */
-final class Not implements RuleRequiredInterface
+final class Not implements RuleInterface
 {
     /**
      * @var RuleInterface
      */
-    protected $rule;
+    private $rule;
 
     /**
      * @param RuleInterface $rule
@@ -43,23 +43,38 @@ final class Not implements RuleRequiredInterface
     /**
      * {@inheritdoc}
      */
-    public function apply(Context $context)
+    public function getTemplates()
     {
-        $childContext = $context->createChild($this->getRule());
-        $childContext->applyRule();
+        return [];
+    }
 
-        $contextIterator = new RecursiveContextIterator($context);
-        $iteratorIterator = new RecursiveIteratorIterator($contextIterator, RecursiveIteratorIterator::SELF_FIRST);
-        foreach ($iteratorIterator as $grandChildContext) {
-            if (!$grandChildContext->hasChildren()) {
-                $grandChildContext->mode = $grandChildContext->mode == ValidationException::MODE_NEGATIVE
-                                            ? ValidationException::MODE_AFFIRMATIVE
-                                            : ValidationException::MODE_NEGATIVE;
-            }
+    /**
+     * {@inheritdoc}
+     */
+    public function apply(ContextInterface $context)
+    {
+        $result = $this->getRule()->apply($context);
+        $resultIterator = new RecursiveResultIterator($result);
+        $iteratorIterator = new RecursiveIteratorIterator($resultIterator, RecursiveIteratorIterator::SELF_FIRST);
+        foreach ($iteratorIterator as $childResult) {
+            $this->reverse($childResult);
+        }
+        $this->reverse($result);
 
-            $grandChildContext->isValid = !$grandChildContext->isValid;
+        return $result;
+    }
+
+    /**
+     * @param Result $result
+     */
+    public function reverse(Result $result)
+    {
+        $keyMode = self::MODE_NEGATIVE;
+        if ($result->getProperty('keyMode') == self::MODE_NEGATIVE) {
+            $keyMode = self::MODE_AFFIRMATIVE;
         }
 
-        $context->isValid = $childContext->isValid;
+        $result->setProperty('keyMode', $keyMode);
+        $result->setValid(!$result->isValid());
     }
 }

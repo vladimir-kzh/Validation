@@ -13,19 +13,19 @@ use Countable;
 use RecursiveIterator;
 use SplObjectStorage;
 
-class RecursiveContextIterator implements RecursiveIterator, Countable
+class RecursiveResultIterator implements RecursiveIterator, Countable
 {
     /**
      * @var SplObjectStorage
      */
-    protected $contexts;
+    private $results;
 
     /**
-     * @param Context $context
+     * @param ResultInterface $result
      */
-    public function __construct(Context $context)
+    public function __construct(ResultInterface $result)
     {
-        $this->contexts = $context->getChildren();
+        $this->results = $result->getChildren();
     }
 
     /**
@@ -33,7 +33,7 @@ class RecursiveContextIterator implements RecursiveIterator, Countable
      */
     public function count()
     {
-        return $this->contexts->count();
+        return $this->results->count();
     }
 
     /**
@@ -49,7 +49,7 @@ class RecursiveContextIterator implements RecursiveIterator, Countable
     }
 
     /**
-     * @return RecursiveContextIterator
+     * @return RecursiveResultInterfaceIterator
      */
     public function getChildren()
     {
@@ -57,11 +57,11 @@ class RecursiveContextIterator implements RecursiveIterator, Countable
     }
 
     /**
-     * @return Context
+     * @return ResultInterface|null
      */
     public function current()
     {
-        return $this->contexts->current();
+        return $this->results->current();
     }
 
     /**
@@ -69,17 +69,17 @@ class RecursiveContextIterator implements RecursiveIterator, Countable
      */
     public function key()
     {
-        return $this->contexts->key();
+        return $this->results->key();
     }
 
     public function next()
     {
-        $this->contexts->next();
+        $this->results->next();
     }
 
     public function rewind()
     {
-        $this->contexts->rewind();
+        $this->results->rewind();
     }
 
     /**
@@ -87,6 +87,6 @@ class RecursiveContextIterator implements RecursiveIterator, Countable
      */
     public function valid()
     {
-        return $this->contexts->valid();
+        return $this->results->valid();
     }
 }

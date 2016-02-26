@@ -12,4 +12,4 @@ $rule = v::create()
 var_dump($rule(null));
 ?>
 --EXPECTF--
-bool(true)
+bool(false)

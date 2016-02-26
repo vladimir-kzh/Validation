@@ -9,7 +9,8 @@
 
 namespace Respect\Validation\Rules;
 
-use Respect\Validation\Context;
+use Respect\Validation\ContextInterface;
+use Respect\Validation\Result;
 
 final class Match implements RuleInterface
 {
@@ -27,11 +28,36 @@ final class Match implements RuleInterface
     }
 
     /**
+     * @return string
+     */
+    public function getPattern()
+    {
+        return $this->pattern;
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function apply(Context $context)
+    public function getTemplates()
     {
-        $context->pattern = $this->pattern;
-        $context->isValid = is_scalar($context->input) && preg_match($this->pattern, $context->input);
+        return [
+            self::MODE_AFFIRMATIVE => [
+                self::TEMPLATE_STANDARD => '{{placeholder}} must match `{{pattern}}`',
+            ],
+            self::MODE_NEGATIVE => [
+                self::TEMPLATE_STANDARD => '{{placeholder}} must not match `{{pattern}}`',
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function apply(ContextInterface $context)
+    {
+        $input = $context->getInput();
+        $isValid = is_scalar($input) && preg_match($this->pattern, $input);
+
+        return new Result($isValid, $this, $context, ['pattern' => $this->getPattern()]);
     }
 }

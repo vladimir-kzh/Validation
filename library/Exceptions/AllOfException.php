@@ -11,18 +11,4 @@ namespace Respect\Validation\Exceptions;
 
 class AllOfException extends ValidationException
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getTemplates()
-    {
-        return [
-            self::MODE_AFFIRMATIVE => [
-                self::MESSAGE_STANDARD => 'All rules must pass for {{placeholder}}',
-            ],
-            self::MODE_NEGATIVE => [
-                self::MESSAGE_STANDARD => 'All rules must not pass for {{placeholder}}',
-            ],
-        ];
-    }
 }

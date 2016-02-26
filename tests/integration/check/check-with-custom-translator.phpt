@@ -7,23 +7,23 @@ require 'vendor/autoload.php';
 use Respect\Validation\Exceptions\MatchException;
 use Respect\Validation\Validator as v;
 
-function my_translator($message)
-{
-    $ptBR = [
-        '{{placeholder}} must match `{{pattern}}`' => '{{placeholder}} deve casar com `{{pattern}}`',
-    ];
+v::getDefaultFactory()
+    ->setTranslator(function ($message) {
+        $ptBR = [
+            '{{placeholder}} must match `{{pattern}}`' => '{{placeholder}} deve casar com `{{pattern}}`',
+        ];
 
-    if (isset($ptBR[$message])) {
-        return $ptBR[$message];
-    }
+        if (isset($ptBR[$message])) {
+            return $ptBR[$message];
+        }
 
-    return $message;
-}
+        return $message;
+    });
 
 try {
     v::create()
         ->match('/^[a-z]{3}$/')
-        ->check('123', ['translator' => 'my_translator']);
+        ->check('123');
 } catch (MatchException $exception) {
     echo $exception->getMessage().PHP_EOL;
 }

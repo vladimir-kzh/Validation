@@ -8,7 +8,7 @@ use Respect\Validation\Validator as v;
 
 var_dump(
     v::create()
-        ->validate(null)
+        ->validate('Whatever')
 );
 ?>
 --EXPECTF--

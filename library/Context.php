@@ -9,25 +9,17 @@
 
 namespace Respect\Validation;
 
-use Respect\Validation\Exceptions\ValidationException;
-use Respect\Validation\Helpers\OptionalHelper;
-use Respect\Validation\Rules\RuleInterface;
-use Respect\Validation\Rules\RuleRequiredInterface;
-use SplObjectStorage;
-
-class Context
+final class Context implements ContextInterface
 {
-    use OptionalHelper;
+    /**
+     * @var mixed
+     */
+    private $input;
 
     /**
-     * @var SplObjectStorage
+     * @var array
      */
-    private $children;
-
-    /**
-     * @var RuleInterface
-     */
-    private $rule;
+    private $properties;
 
     /**
      * @var Factory
@@ -35,33 +27,30 @@ class Context
     private $factory;
 
     /**
-     * @var array
+     * @var callable
      */
-    protected $properties = [
-        'mode' => ValidationException::MODE_AFFIRMATIVE,
-        'isValid' => true,
-        'input' => null,
-    ];
+    private $translator;
 
     /**
-     * @param RuleInterface $rule
-     * @param array         $properties
-     * @param Factory       $factory
+     * @param mixed    $input
+     * @param array    $properties
+     * @param Factory  $factory
+     * @param callable $translator
      */
-    public function __construct(RuleInterface $rule, array $properties, Factory $factory)
+    public function __construct($input, array $properties, Factory $factory, callable $translator)
     {
-        $this->rule = $rule;
-        $this->properties = $properties + $this->properties;
+        $this->input = $input;
+        $this->properties = $properties;
         $this->factory = $factory;
-        $this->children = new SplObjectStorage();
+        $this->translator = $translator;
     }
 
     /**
-     * @return RuleInterface
+     * @return mixed
      */
-    public function getRule()
+    public function getInput()
     {
-        return $this->rule;
+        return $this->input;
     }
 
     /**
@@ -81,88 +70,10 @@ class Context
     }
 
     /**
-     * @param string $name
-     *
-     * @return mixed
+     * @return callable
      */
-    public function __get($name)
+    public function getTranslator()
     {
-        if (array_key_exists($name, $this->properties)) {
-            return $this->properties[$name];
-        }
-    }
-
-    /**
-     * @param string $name
-     * @param mixed  $value
-     */
-    public function __set($name, $value)
-    {
-        $this->properties[$name] = $value;
-    }
-
-    /**
-     * Apply rule to the context.
-     */
-    public function applyRule()
-    {
-        $rule = $this->getRule();
-
-        if (!$rule instanceof RuleRequiredInterface
-            && $this->isOptional($this->input)) {
-            $this->isValid = true;
-
-            return;
-        }
-
-        $rule->apply($this);
-    }
-
-    /**
-     * @param RuleInterface $rule
-     *
-     * @return Context
-     */
-    public function createChild(RuleInterface $rule)
-    {
-        $properties = $this->getProperties();
-        unset($properties['message']); // Should not be inherited, first level only
-
-        $childContext = $this->getFactory()->createContext($rule, $properties);
-        $childContext->appendTo($this);
-
-        return $childContext;
-    }
-
-    /**
-     * @param Context $parentContext
-     */
-    public function appendTo(Context $parentContext)
-    {
-        $parentContext->appendChild($this);
-    }
-
-    /**
-     * @param Context $childChild
-     */
-    public function appendChild(Context $childChild)
-    {
-        $this->children->attach($childChild);
-    }
-
-    /**
-     * @return SplObjectStorage
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasChildren()
-    {
-        return ($this->children->count() > 0);
+        return $this->translator;
     }
 }

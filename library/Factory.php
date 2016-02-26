@@ -16,17 +16,33 @@ use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Rules\RuleInterface;
 use SplObjectStorage;
 
-class Factory
+class Factory implements FactoryInterface
 {
     /**
      * @var array
      */
-    protected $namespaces = ['Respect\\Validation'];
+    private $namespaces = ['Respect\\Validation'];
 
     /**
-     * @var array
+     * @var callable
      */
-    protected $contextProperties = [];
+    private $translator;
+
+    public function setTranslator(callable $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    public function getTranslator()
+    {
+        if (!is_callable($this->translator)) {
+            $this->translator = function ($message) {
+                return $message;
+            };
+        }
+
+        return $this->translator;
+    }
 
     /**
      * @return array
@@ -53,20 +69,7 @@ class Factory
     }
 
     /**
-     * @param array $contextProperties
-     */
-    public function setContextProperties(array $contextProperties)
-    {
-        $this->contextProperties = $contextProperties;
-    }
-
-    /**
-     * @param string $ruleName
-     * @param array  $settings
-     *
-     * @throws ComponentException
-     *
-     * @return RuleInterface
+     * {@inheritdoc}
      */
     public function createRule($ruleName, array $settings = [])
     {
@@ -88,15 +91,11 @@ class Factory
     }
 
     /**
-     * @param Context $context
-     *
-     * @throws ComponentException
-     *
-     * @return ValidationException
+     * {@inheritdoc}
      */
-    public function createException(Context $context)
+    public function createException(ResultInterface $result)
     {
-        $ruleName = get_class($context->getRule());
+        $ruleName = get_class($result->getRule());
         $ruleShortName = substr(strrchr($ruleName, '\\'), 1);
         foreach ($this->getNamespaces() as $namespace) {
             $exceptionClassName = $namespace.'\\Exceptions\\'.$ruleShortName.'Exception';
@@ -109,51 +108,55 @@ class Factory
                 throw new ComponentException(sprintf('"%s" is not a validation exception', $exceptionClassName));
             }
 
-            return $reflection->newInstance($context);
+            return $reflection->newInstance($result);
         }
 
-        throw new ValidationException($context);
+        throw new ValidationException($result);
     }
 
     /**
-     * @param Context $context
+     * @param Result $result
      *
      * @throws ComponentException
      *
+     * @todo Remove and create a filter.
+     *
      * @return ValidationException
      */
-    public function createFilteredException(Context $context)
+    public function createFilteredException(Result $result)
     {
-        $contextIterator = new RecursiveContextIterator($context);
-        $iteratorIterator = new RecursiveIteratorIterator($contextIterator);
-        foreach ($iteratorIterator as $childContext) {
-            $context = $childContext;
+        $resultIterator = new RecursiveResultIterator($result);
+        $iteratorIterator = new RecursiveIteratorIterator($resultIterator);
+        foreach ($iteratorIterator as $childResult) {
+            $result = $childResult;
             break;
         }
 
-        return $this->createException($context);
+        return $this->createException($result);
     }
 
     /**
+     * @todo Remove and create a filter.
+     *
      * @return SplObjectStorage
      */
-    public function createChildrenExceptions(Context $context)
+    public function createExceptionTree(Result $result)
     {
         $childrenExceptions = new SplObjectStorage();
 
-        $contextIterator = new RecursiveContextIterator($context);
-        $iteratorIterator = new RecursiveIteratorIterator($contextIterator, RecursiveIteratorIterator::SELF_FIRST);
+        $resultIterator = new RecursiveResultIterator($result);
+        $iteratorIterator = new RecursiveIteratorIterator($resultIterator, RecursiveIteratorIterator::SELF_FIRST);
 
         $lastDepth = 0;
         $lastDepthOriginal = 0;
         $knownDepths = [];
-        foreach ($iteratorIterator as $childContext) {
-            if ($childContext->isValid) {
+        foreach ($iteratorIterator as $childResult) {
+            if ($childResult->isValid()) {
                 continue;
             }
 
-            if ($childContext->hasChildren()
-                && $childContext->getChildren()->count() < 2) {
+            if ($childResult->hasChildren()
+                && $childResult->getChildren()->count() < 2) {
                 continue;
             }
 
@@ -174,7 +177,7 @@ class Factory
             $lastDepthOriginal = $currentDepthOriginal;
 
             $childrenExceptions->attach(
-                $this->createException($childContext),
+                $this->createException($childResult),
                 [
                     'depth' => $currentDepth,
                     'depth_original' => $currentDepthOriginal,
@@ -188,12 +191,10 @@ class Factory
     }
 
     /**
-     * @return Context
+     * {@inheritdoc}
      */
-    public function createContext(RuleInterface $rule, array $properties)
+    public function createContext($input, array $properties = [])
     {
-        $contextProperties = $properties + $this->contextProperties;
-
-        return new Context($rule, $contextProperties, $this);
+        return new Context($input, $properties, $this, $this->getTranslator());
     }
 }

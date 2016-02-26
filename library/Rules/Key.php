@@ -9,14 +9,16 @@
 
 namespace Respect\Validation\Rules;
 
-use Respect\Validation\Context;
-use Respect\Validation\Exceptions\KeyException;
+use Respect\Validation\ContextInterface;
+use Respect\Validation\Result;
 
 /**
  * Validates if the given input is not empty.
  */
-final class Key implements RuleRequiredInterface
+final class Key implements RuleInterface
 {
+    const TEMPLATE_KEY = 1;
+
     private $key;
     private $rule;
     private $mandatory;
@@ -33,25 +35,65 @@ final class Key implements RuleRequiredInterface
         $this->mandatory = (bool) $mandatory;
     }
 
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    public function getRule()
+    {
+        return $this->rule;
+    }
+
+    public function isMandatory()
+    {
+        return $this->mandatory;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function apply(Context $context)
+    public function getTemplates()
     {
-        $context->key = $this->key;
+        return [
+            self::MODE_AFFIRMATIVE => [
+                self::TEMPLATE_STANDARD => '{{key}} key must be valid',
+                self::TEMPLATE_KEY => '{{key}} key must be present',
+            ],
+            self::MODE_NEGATIVE => [
+                self::TEMPLATE_STANDARD => '{{key}} key must not be valid',
+                self::TEMPLATE_KEY => '{{key}} key must not be present',
+            ],
+        ];
+    }
 
-        if (!isset($context->input[$this->key])) {
-            $context->isValid = !$this->mandatory;
-            $context->template = KeyException::MESSAGE_KEY;
+    /**
+     * {@inheritdoc}
+     */
+    public function apply(ContextInterface $context)
+    {
+        $input = $context->getInput();
 
-            return;
+        $keyExists = array_key_exists($this->key, $input);
+
+        $result = new Result(
+            ($keyExists || !$this->isMandatory()),
+            $this,
+            $context,
+            ['key' => $this->key, 'keyTemplate' => self::TEMPLATE_KEY]
+        );
+
+        if ($result->isValid() && $keyExists) {
+            $keyContext = $context->getFactory()->createContext($input[$this->key], ['label' => $this->key]);
+
+            $keyResult = $this->rule->apply($keyContext);
+            $keyResult->appendTo($result);
+
+            $result->appendChild($keyResult);
+            $result->setProperty('keyTemplate', self::TEMPLATE_STANDARD);
+            $result->setValid($keyResult->isValid());
         }
 
-        $childContext = $context->createChild($this->rule);
-        $childContext->label = $this->key;
-        $childContext->input = $context->input[$this->key];
-        $childContext->applyRule();
-
-        $context->isValid = $childContext->isValid;
+        return $result;
     }
 }

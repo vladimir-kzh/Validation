@@ -4,10 +4,12 @@ Should validate NotOptional rule
 <?php
 require 'vendor/autoload.php';
 
+use Respect\Validation\Factory;
 use Respect\Validation\Rules\NotOptional;
 use Respect\Validation\Validator;
 
-$validator = new Validator();
+$factory = new Factory();
+$validator = new Validator($factory);
 $validator->addRule(new NotOptional());
 
 $values = [null, '', [], ' ', 0, '0', 0.0, '0.0', false, [''], [' '], [0], ['0'], [false], [[''], [0]], -1];

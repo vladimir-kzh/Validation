@@ -11,18 +11,4 @@ namespace Respect\Validation\Exceptions;
 
 class NotOptionalException extends ValidationException
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getTemplates()
-    {
-        return [
-            self::MODE_AFFIRMATIVE => [
-                self::MESSAGE_STANDARD => '{{placeholder}} is required',
-            ],
-            self::MODE_NEGATIVE => [
-                self::MESSAGE_STANDARD => '{{placeholder}} is not required',
-            ],
-        ];
-    }
 }

@@ -9,21 +9,37 @@
 
 namespace Respect\Validation\Rules;
 
-use Respect\Validation\Context;
+use Respect\Validation\ContextInterface;
 use Respect\Validation\Helpers\OptionalHelper;
+use Respect\Validation\Result;
 
 /**
- * Validates if the given input is not optional.
+ * Validates if the given context is not optional.
  */
-final class NotOptional implements RuleRequiredInterface
+final class NotOptional implements RuleInterface
 {
     use OptionalHelper;
 
     /**
      * {@inheritdoc}
      */
-    public function apply(Context $context)
+    public function getTemplates()
     {
-        $context->isValid = !$this->isOptional($context->input);
+        return [
+            self::MODE_AFFIRMATIVE => [
+                self::TEMPLATE_STANDARD => '{{placeholder}} is required',
+            ],
+            self::MODE_NEGATIVE => [
+                self::TEMPLATE_STANDARD => '{{placeholder}} is not required',
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function apply(ContextInterface $context)
+    {
+        return new Result(!$this->isOptional($context->getInput()), $this, $context);
     }
 }

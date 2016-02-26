@@ -4,10 +4,12 @@ Should validate NotBlank rule
 <?php
 require 'vendor/autoload.php';
 
+use Respect\Validation\Factory;
 use Respect\Validation\Rules\NotBlank;
 use Respect\Validation\Validator;
 
-$validator = new Validator();
+$factory = new Factory();
+$validator = new Validator($factory);
 $validator->addRule(new NotBlank());
 
 $values = [null, '', [], ' ', 0, '0', 0.0, '0.0', false, [''], [' '], [0], ['0'], [false], [[''], [0]], -1];
