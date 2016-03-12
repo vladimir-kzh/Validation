@@ -1,0 +1,20 @@
+sudo:
+  false
+
+language:
+  php
+
+php:
+  - 7.0
+
+before_script:
+  - composer self-update
+  - composer install --no-interaction --prefer-source
+
+script:
+  - composer phpcs
+  - composer phpmd
+  - composer phpunit
+
+notifications:
+  email: false

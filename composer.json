@@ -1,0 +1,43 @@
+{
+    "name": "respect/validation",
+    "description": "The most awesome validation engine ever created for PHP",
+    "keywords": ["respect", "validation", "validator"],
+    "type": "library",
+    "homepage": "http://respect.li",
+    "license": "BSD Style",
+    "authors": [
+        {
+            "name": "Respect/Validation Contributors",
+            "homepage": "https://github.com/Respect/Validation/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpmd/phpmd" : "~2.4",
+        "phpunit/phpunit": "~5.2",
+        "squizlabs/php_codesniffer": "~2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Respect\\Validation\\": ["src/"]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Respect\\Validation\\": ["tests/src/"]
+        }
+    },
+    "scripts": {
+        "phpcs": "phpcs --standard=PSR2 src",
+        "phpmd": "phpmd src text cleancode,codesize,controversial,design,naming,unusedcode",
+        "phpunit": "phpunit",
+        "quality-assurance": ["@phpcs", "@phpmd", "@phpunit"]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    }
+}
