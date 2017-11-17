@@ -15,10 +15,9 @@ namespace Respect\Validation\Exceptions;
 
 use DateTime;
 use Exception;
-use InvalidArgumentException;
 use Traversable;
 
-class ValidationException extends InvalidArgumentException implements ExceptionInterface
+class ValidationException extends RuleException implements ExceptionInterface
 {
     const MODE_DEFAULT = 1;
     const MODE_NEGATIVE = 2;
