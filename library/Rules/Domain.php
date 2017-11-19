@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
 
 use Respect\Validation\Exceptions\ValidationException;
@@ -35,7 +37,7 @@ class Domain extends AbstractComposite
                 new AllOf(
                     new StartsWith('xn--'),
                     new Callback(function ($str) {
-                        return mb_substr_count($str, '--') == 1;
+                        return 1 == mb_substr_count($str, '--');
                     })
                 )
             )
@@ -44,7 +46,7 @@ class Domain extends AbstractComposite
 
     public function tldCheck($do = true)
     {
-        if ($do === true) {
+        if (true === $do) {
             $this->tld = new Tld();
         } else {
             $this->tld = new AllOf(
@@ -88,7 +90,7 @@ class Domain extends AbstractComposite
             $this->collectAssertException($e, $chk, $input);
         }
 
-        if (count($parts = explode('.', $input)) >= 2) {
+        if (count($parts = explode('.', (string) $input)) >= 2) {
             $this->collectAssertException($e, $this->tld, array_pop($parts));
         }
 
@@ -103,7 +105,7 @@ class Domain extends AbstractComposite
         return true;
     }
 
-    protected function collectAssertException(&$exceptions, $validator, $input)
+    protected function collectAssertException(&$exceptions, $validator, $input): void
     {
         try {
             $validator->assert($input);
